@@ -100,6 +100,8 @@ make_client(const ym_client_options& options) noexcept
 
         client->max_response_bytes = options.max_response_bytes;
         client->max_pending_requests = options.max_pending_requests;
+        client->execution->max_pending = options.max_pending_requests;
+        client->execution->max_response_bytes = options.max_response_bytes;
 
         return client;
     } catch (const std::bad_alloc&) {
@@ -152,11 +154,6 @@ ym_status YM_CALL ym_client_create(const ym_client_options* input, ym_client** o
 
     *out = client->release();
     return YM_OK;
-}
-
-void YM_CALL ym_client_destroy(ym_client* client) YM_NOEXCEPT
-{
-    delete client;
 }
 
 ym_string_view YM_CALL ym_client_language(const ym_client* client) YM_NOEXCEPT
