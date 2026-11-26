@@ -8,6 +8,7 @@ endif()
 
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 option(YM_BUILD_TESTS "Build SDK tests" ${PROJECT_IS_TOP_LEVEL})
+option(YM_INSTALL "Install SDK headers, libraries and CMake targets" ${PROJECT_IS_TOP_LEVEL})
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 configure_file(cmake/version_config.hpp.in generated/version_config.hpp @ONLY)
@@ -28,9 +29,19 @@ target_compile_features(yandex_music_cpp INTERFACE cxx_std_23)
 target_link_libraries(yandex_music_cpp INTERFACE yandex_music_c)
 target_include_directories(yandex_music_cpp INTERFACE "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/cpp>")
 
+target_sources(yandex_music_c PUBLIC FILE_SET HEADERS BASE_DIRS src/c FILES src/c/yandex_music/yandex_music.h src/c/yandex_music/export.h)
+target_sources(yandex_music_cpp INTERFACE FILE_SET HEADERS BASE_DIRS src/cpp FILES src/cpp/yandex_music/yandex_music.hpp)
+set_target_properties(yandex_music_c PROPERTIES EXPORT_NAME c VERSION ${PROJECT_VERSION} SOVERSION 0 POSITION_INDEPENDENT_CODE ON)
+set_target_properties(yandex_music_cpp PROPERTIES EXPORT_NAME cpp)
+
+if(YM_INSTALL)
+    include(cmake/install.cmake)
+endif()
+
 if(PROJECT_IS_TOP_LEVEL)
     include(CTest)
     if(BUILD_TESTING AND YM_BUILD_TESTS)
         add_test(NAME consumers.source COMMAND "${CMAKE_COMMAND}" -DYM_SOURCE=${CMAKE_CURRENT_SOURCE_DIR} -DYM_BINARY=${CMAKE_CURRENT_BINARY_DIR}/consumer-source -DYM_SHARED=${BUILD_SHARED_LIBS} -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/consumer.cmake)
+        add_test(NAME consumers.installed COMMAND "${CMAKE_COMMAND}" -DYM_SOURCE=${CMAKE_CURRENT_SOURCE_DIR} -DYM_BINARY=${CMAKE_CURRENT_BINARY_DIR}/consumer-installed -DYM_SHARED=${BUILD_SHARED_LIBS} -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/package.cmake)
     endif()
 endif()

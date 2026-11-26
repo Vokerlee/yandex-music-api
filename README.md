@@ -29,3 +29,10 @@ ctest --test-dir build --output-on-failure --no-tests=error
 
 `BUILD_SHARED_LIBS=ON` selects a shared library. SDK tests default off when used
 as a subproject. The library is distributed under the [GNU GPLv3](LICENSE).
+
+Install with `cmake --install build --prefix /desired/prefix`. Consumers then use
+`find_package(yandex_music CONFIG REQUIRED)` and link the same `yandex_music::c`
+or `yandex_music::cpp` target. Set `CMAKE_PREFIX_PATH` for a nonstandard prefix.
+`YM_INSTALL` defaults on for standalone builds and off for subprojects. Static C
+consumers enable both C and CXX; installed shared libraries also support C-only
+projects. Installed headers and targets remain usable after relocating the prefix.
