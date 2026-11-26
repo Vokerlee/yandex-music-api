@@ -15,3 +15,6 @@ write_basic_package_version_file("${CMAKE_CURRENT_BINARY_DIR}/yandex_musicConfig
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/yandex_musicConfig.cmake"
     "${CMAKE_CURRENT_BINARY_DIR}/yandex_musicConfigVersion.cmake" DESTINATION ${config_dir})
 install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE" DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/yandex_music)
+
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/THIRD_PARTY_NOTICES.md" DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/yandex_music)
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/LICENSES/" DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/yandex_music)

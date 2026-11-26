@@ -36,3 +36,11 @@ or `yandex_music::cpp` target. Set `CMAKE_PREFIX_PATH` for a nonstandard prefix.
 `YM_INSTALL` defaults on for standalone builds and off for subprojects. Static C
 consumers enable both C and CXX; installed shared libraries also support C-only
 projects. Installed headers and targets remain usable after relocating the prefix.
+
+Dependencies are private. `YM_DEPENDENCY_MODE=AUTO` uses an existing compatible
+`nlohmann_json` package or fetches the pinned 3.12.0 archive with SHA-256 verification.
+`SYSTEM` never downloads; `FETCH` selects the pinned source unless the parent already
+provides the target. Standard FetchContent source overrides and CMake dependency providers
+are supported. The installed SDK does not require JSON headers in the application.
+No test framework is downloaded. libcurl will be introduced with the HTTP adapter;
+this version does not prepare unused networking or media libraries.
