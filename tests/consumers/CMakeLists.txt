@@ -1,8 +1,16 @@
 cmake_minimum_required(VERSION 3.28)
 
-project(yandex_music_consumer LANGUAGES C CXX)
+project(yandex_music_consumer LANGUAGES C)
 
-add_subdirectory("${YM_SOURCE}" sdk)
+if(NOT YM_C_ONLY)
+    enable_language(CXX)
+endif()
+
+if(YM_INSTALLED)
+    find_package(yandex_music 0.1 CONFIG REQUIRED)
+else()
+    add_subdirectory("${YM_SOURCE}" sdk)
+endif()
 
 add_executable(c_consumer main.c)
 
@@ -13,17 +21,27 @@ set_target_properties(
 
 target_link_libraries(c_consumer PRIVATE yandex_music::c)
 
-add_executable(cpp_consumer main.cpp)
+if(NOT YM_C_ONLY)
+    add_executable(cpp_consumer main.cpp)
 
-target_link_libraries(cpp_consumer PRIVATE yandex_music::cpp)
+    target_link_libraries(cpp_consumer PRIVATE yandex_music::cpp)
+endif()
 
 enable_testing()
 
 add_test(NAME consumer.c COMMAND c_consumer)
-add_test(NAME consumer.cpp COMMAND cpp_consumer)
 
 set_tests_properties(
     consumer.c
-    consumer.cpp
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )
+
+if(NOT YM_C_ONLY)
+    add_test(NAME consumer.cpp COMMAND cpp_consumer)
+
+    set_tests_properties(
+        consumer.cpp
+        PROPERTIES
+            ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
+    )
+endif()

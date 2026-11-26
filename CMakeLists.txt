@@ -53,6 +53,19 @@ target_sources(
     INTERFACE FILE_SET HEADERS BASE_DIRS src/cpp FILES src/cpp/yandex_music/yandex_music.hpp
 )
 
+option(YM_INSTALL "Install SDK headers, libraries and CMake targets" ${PROJECT_IS_TOP_LEVEL})
+
+set_target_properties(
+    yandex_music_c
+    PROPERTIES EXPORT_NAME c VERSION ${PROJECT_VERSION} SOVERSION 0
+)
+
+set_target_properties(yandex_music_cpp PROPERTIES EXPORT_NAME cpp)
+
+if(YM_INSTALL)
+    include(cmake/install.cmake)
+endif()
+
 if(PROJECT_IS_TOP_LEVEL)
     include(CTest)
 
@@ -65,6 +78,13 @@ if(PROJECT_IS_TOP_LEVEL)
                 "${CMAKE_COMMAND}" -DYM_SOURCE=${CMAKE_CURRENT_SOURCE_DIR}
                 -DYM_BINARY=${CMAKE_CURRENT_BINARY_DIR}/consumers.source
                 -DYM_SHARED=${BUILD_SHARED_LIBS} -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/consumer.cmake
+        )
+        add_test(
+            NAME consumers.installed
+            COMMAND
+                "${CMAKE_COMMAND}" -DYM_SOURCE=${CMAKE_CURRENT_SOURCE_DIR}
+                -DYM_BINARY=${CMAKE_CURRENT_BINARY_DIR}/consumers.installed
+                -DYM_SHARED=${BUILD_SHARED_LIBS} -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/package.cmake
         )
     endif()
 endif()
