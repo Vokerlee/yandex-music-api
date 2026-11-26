@@ -21,6 +21,7 @@
 #include <yandex_music/error.h>
 #include <yandex_music/export.h>
 #include <yandex_music/request.h>
+#include <yandex_music/response.h>
 #include <yandex_music/result.h>
 #include <yandex_music/types.h>
 

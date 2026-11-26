@@ -25,5 +25,11 @@ int main(void)
         fputs("Invalid C version/build contract\n", stderr);
         return 1;
     }
+    const char bytes[] = "{\"result\":true}";
+    const ym_string_view view = {bytes, sizeof(bytes) - 1};
+    ym_result* result = NULL;
+    if (ym_response_parse(200, view, NULL, &result, NULL) != YM_OK)
+        return 2;
+    ym_result_destroy(result);
     return 0;
 }

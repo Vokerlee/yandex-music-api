@@ -28,6 +28,7 @@ set(YM_CORE_SOURCES
     src/protocol/json_read.cpp
     src/protocol/envelope.cpp
     src/protocol/response_error.cpp
+    src/c/response.cpp
 )
 
 add_library(yandex_music_c src/c/version.cpp ${YM_CORE_SOURCES})
@@ -65,6 +66,7 @@ target_sources(
                 src/c/yandex_music/client.h
                 src/c/yandex_music/result.h
                 src/c/yandex_music/request.h
+                src/c/yandex_music/response.h
 )
 
 target_link_libraries(yandex_music_c PRIVATE "$<BUILD_INTERFACE:nlohmann_json::nlohmann_json>")
