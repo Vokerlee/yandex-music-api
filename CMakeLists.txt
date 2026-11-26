@@ -41,6 +41,18 @@ target_sources(
             FILES src/c/yandex_music/yandex_music.h src/c/yandex_music/export.h
 )
 
+add_library(yandex_music_cpp INTERFACE)
+add_library(yandex_music::cpp ALIAS yandex_music_cpp)
+
+target_compile_features(yandex_music_cpp INTERFACE cxx_std_23)
+
+target_link_libraries(yandex_music_cpp INTERFACE yandex_music_c)
+
+target_sources(
+    yandex_music_cpp
+    INTERFACE FILE_SET HEADERS BASE_DIRS src/cpp FILES src/cpp/yandex_music/yandex_music.hpp
+)
+
 if(PROJECT_IS_TOP_LEVEL)
     include(CTest)
 
