@@ -18,6 +18,7 @@
 
 #include <string_view>
 
+#include <yandex_music/error.hpp>
 #include <yandex_music/yandex_music.h>
 
 namespace ym
