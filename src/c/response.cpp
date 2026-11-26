@@ -71,6 +71,7 @@ std::unique_ptr<ym_result> parse_payload(uint32_t http, ym_string_view body,
     ym_error detail;
     try {
         auto result = std::make_unique<ym_result>();
+        result->http_status = http;
         if (!body.size && (http == 204 || http == 205) && options.envelope != YM_RESPONSE_RESULT) {
             return result;
         }
@@ -90,6 +91,7 @@ std::unique_ptr<ym_result> parse_payload(uint32_t http, ym_string_view body,
                 *error = *failure;
             return nullptr;
         }
+        result->request_id = response_request_id(*parsed);
         auto payload =
             select_payload(std::move(*parsed), static_cast<EnvelopePolicy>(options.envelope));
         if (!payload) {

@@ -42,4 +42,6 @@ struct ym_value {
 
 struct ym_result {
     ym_value root;
+    uint32_t http_status = 0;
+    std::string request_id{};
 };

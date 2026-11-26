@@ -190,3 +190,14 @@ ym_status YM_CALL ym_value_at(const ym_value* value, size_t index, const ym_valu
     *out = &(*array)[index];
     return YM_OK;
 }
+
+uint32_t YM_CALL ym_result_http_status(const ym_result* result) YM_NOEXCEPT
+{
+    return result ? result->http_status : 0;
+}
+
+ym_string_view YM_CALL ym_result_request_id(const ym_result* result) YM_NOEXCEPT
+{
+    return result ? ym_string_view{result->request_id.data(), result->request_id.size()}
+                  : ym_string_view{};
+}
