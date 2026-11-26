@@ -335,6 +335,16 @@ set_target_properties(
 add_test(NAME protocol.response_conformance COMMAND protocol_response_conformance)
 ym_build_controls(protocol_response_conformance)
 
+add_executable(transport_curl_runtime transport.curl_runtime.cpp)
+target_include_directories(transport_curl_runtime PRIVATE "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(transport_curl_runtime PRIVATE ym_test_core)
+set_target_properties(
+    transport_curl_runtime
+    PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}"
+)
+add_test(NAME transport.curl_runtime COMMAND transport_curl_runtime)
+ym_build_controls(transport_curl_runtime)
+
 set_tests_properties(
     c.version
     cpp.version
@@ -374,5 +384,6 @@ set_tests_properties(
     protocol.response_metadata
     cpp.response_decode
     protocol.response_conformance
+    transport.curl_runtime
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )

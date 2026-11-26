@@ -36,5 +36,8 @@ It reuses a parent `CURL::libcurl` target, otherwise AUTO searches before fetchi
 the pinned source. SYSTEM never downloads. The fetched build uses native Windows
 TLS or OpenSSL on Unix; install OpenSSL development headers on Unix.
 
+A shared SDK requires a shared curl library or a position-independent static curl.
+The fetched curl build enables position-independent code automatically.
+
 For development, install `requirements-dev.txt` and run `python3 scripts/format.py`
 (or `--check` to verify formatting).
