@@ -11,3 +11,6 @@ target_link_libraries(cpp_consumer PRIVATE yandex_music::cpp)
 enable_testing()
 add_test(NAME consumer.c COMMAND c_consumer)
 add_test(NAME consumer.cpp COMMAND cpp_consumer)
+
+set_tests_properties(consumer.c consumer.cpp PROPERTIES
+    ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>")
