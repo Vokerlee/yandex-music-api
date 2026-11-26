@@ -217,6 +217,13 @@ set_target_properties(text_utf8 PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_B
 add_test(NAME text.utf8 COMMAND text_utf8)
 ym_build_controls(text_utf8)
 
+add_executable(protocol_percent protocol.percent.cpp)
+target_include_directories(protocol_percent PRIVATE "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(protocol_percent PRIVATE ym_test_core)
+set_target_properties(protocol_percent PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
+add_test(NAME protocol.percent COMMAND protocol_percent)
+ym_build_controls(protocol_percent)
+
 set_tests_properties(
     c.version
     cpp.version
@@ -243,5 +250,6 @@ set_tests_properties(
     engine.callback_lifetimes
     cpp.request_owner
     text.utf8
+    protocol.percent
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )
