@@ -24,3 +24,19 @@ formatting them. An optional `--install-hook` installs the check without overwri
 custom hook; it checks working-tree contents, including partially staged files.
 
 Keep credentials and local research/plans out of commits. Do not force-add `.cache/`.
+
+Every PR declares `Upstream-Reuse: none` or
+`Upstream-Reuse: MarshalX/yandex-music-api@<40-hex-SHA>`. Ported behavior, models,
+fixtures and schemas need pinned source/native paths in `third_party/provenance.json`,
+preserved notices, and this commit trailer:
+
+```text
+Co-authored-by: Ilya Siamionau <15520314+MarshalX@users.noreply.github.com>
+```
+
+Preserve that trailer in the final squash/merge. It credits adapted upstream work;
+it does not imply the upstream author reviewed or endorsed this port. Co-authorship
+does not replace license obligations. Independently authored infrastructure does
+not receive fabricated credit. The metadata checker cannot detect undeclared copying;
+review the actual diff and provenance. Run it locally with
+`python3 scripts/check_attribution.py --repository Vokerlee/yandex-music-api --pr NUMBER`.

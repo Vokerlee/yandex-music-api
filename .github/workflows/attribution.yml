@@ -1,0 +1,21 @@
+name: Attribution
+on:
+  pull_request_target:
+    types: [opened, synchronize, edited, reopened]
+permissions:
+  contents: read
+  pull-requests: read
+jobs:
+  metadata:
+    runs-on: ubuntu-24.04
+    steps:
+      # Run the trusted base's checker, never a script from the PR head.
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          persist-credentials: false
+      - run: python3 scripts/check_attribution.py --repository "$REPOSITORY" --pr "$PR_NUMBER"
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
