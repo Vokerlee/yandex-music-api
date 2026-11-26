@@ -41,10 +41,24 @@ set_target_properties(cpp_errors PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_
 
 add_test(NAME cpp.errors COMMAND cpp_errors)
 
+add_executable(abi_client_options abi.client_options.cpp)
+
+target_include_directories(abi_client_options PRIVATE "${PROJECT_SOURCE_DIR}/src")
+
+target_link_libraries(abi_client_options PRIVATE yandex_music::cpp)
+
+set_target_properties(
+    abi_client_options
+    PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}"
+)
+
+add_test(NAME abi.client_options COMMAND abi_client_options)
+
 set_tests_properties(
     c.version
     cpp.version
     abi.errors
     cpp.errors
+    abi.client_options
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )
