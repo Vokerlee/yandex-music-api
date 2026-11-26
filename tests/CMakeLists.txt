@@ -395,6 +395,16 @@ set_target_properties(
 add_test(NAME transport.multi_owner COMMAND transport_multi_owner)
 ym_build_controls(transport_multi_owner)
 
+add_executable(transport_multi_failure transport.multi_failure.cpp)
+target_include_directories(transport_multi_failure PRIVATE "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(transport_multi_failure PRIVATE ym_test_core)
+set_target_properties(
+    transport_multi_failure
+    PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}"
+)
+add_test(NAME transport.multi_failure COMMAND transport_multi_failure)
+ym_build_controls(transport_multi_failure)
+
 set_tests_properties(
     c.version
     cpp.version
@@ -440,5 +450,6 @@ set_tests_properties(
     transport.url_policy
     transport.request_policy
     transport.multi_owner
+    transport.multi_failure
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )
