@@ -62,8 +62,18 @@ def check(data):
 def api(path, paginate=False):
     command = ['gh', 'api']
     if paginate:
-        command += ['--paginate', '--slurp']
-    return json.loads(subprocess.check_output([*command, path], text=True))
+        command += ['--paginate']
+    payload = subprocess.check_output([*command, path], text=True)
+    if not paginate:
+        return json.loads(payload)
+    pages = []
+    decoder = json.JSONDecoder()
+    while payload.strip():
+        payload = payload.lstrip()
+        page, end = decoder.raw_decode(payload)
+        pages.append(page)
+        payload = payload[end:]
+    return pages
 
 
 def from_github(repository, number):
