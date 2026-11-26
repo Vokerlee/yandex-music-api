@@ -1,0 +1,7 @@
+# Contributing
+
+Keep each implementation PR focused on one reviewable responsibility, with relevant tests.
+Local research/plans stay ignored. Install pinned formatters from requirements-dev.txt.
+Run `python3 scripts/format.py` or `python3 scripts/format.py --check`.
+Only tracked files are selected; explicit --files paths must be relative and tracked.
+Missing tools, incorrect versions and formatter failures fail the check.
