@@ -124,3 +124,69 @@ ym_status YM_CALL ym_value_bool(const ym_value* value, uint32_t* out, ym_error* 
         *out = result ? 1 : 0;
     return status;
 }
+
+ym_status YM_CALL ym_value_size(const ym_value* value, size_t* out, ym_error* error) YM_NOEXCEPT
+{
+    using namespace ym::detail;
+    clear(error);
+    if (!out)
+        return fail(error, YM_INVALID_ARGUMENT, "Size output is required");
+
+    *out = 0;
+    if (const auto* array = value_data<ym_value::Array>(value)) {
+        *out = array->size();
+        return YM_OK;
+    }
+    if (const auto* object = value_data<ym_value::Object>(value)) {
+        *out = object->size();
+        return YM_OK;
+    }
+
+    return fail(error, YM_SCHEMA_ERROR, "Value is not a collection");
+}
+
+ym_status YM_CALL ym_value_member(const ym_value* value, ym_string_view key, const ym_value** out,
+    ym_error* error) YM_NOEXCEPT
+{
+    using namespace ym::detail;
+    clear(error);
+    if (!out)
+        return fail(error, YM_INVALID_ARGUMENT, "Member output is required");
+
+    *out = nullptr;
+    if (!key.data && key.size)
+        return fail(error, YM_INVALID_ARGUMENT, "Invalid key span");
+
+    const auto* object = value_data<ym_value::Object>(value);
+    if (!object)
+        return fail(error, YM_SCHEMA_ERROR, "Value is not an object");
+
+    const auto name = key.size ? std::string_view{key.data, key.size} : std::string_view{};
+    for (const auto& [field, item] : *object) {
+        if (field == name) {
+            *out = &item;
+            return YM_OK;
+        }
+    }
+
+    return fail(error, YM_NOT_FOUND, "Member is missing");
+}
+
+ym_status YM_CALL ym_value_at(const ym_value* value, size_t index, const ym_value** out,
+    ym_error* error) YM_NOEXCEPT
+{
+    using namespace ym::detail;
+    clear(error);
+    if (!out)
+        return fail(error, YM_INVALID_ARGUMENT, "Element output is required");
+
+    *out = nullptr;
+    const auto* array = value_data<ym_value::Array>(value);
+    if (!array)
+        return fail(error, YM_SCHEMA_ERROR, "Value is not an array");
+    if (index >= array->size())
+        return fail(error, YM_NOT_FOUND, "Index is out of range");
+
+    *out = &(*array)[index];
+    return YM_OK;
+}

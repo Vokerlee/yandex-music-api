@@ -67,6 +67,17 @@ YM_API ym_status YM_CALL ym_value_double(const ym_value* value, double* out,
 YM_API ym_status YM_CALL ym_value_bool(const ym_value* value, uint32_t* out,
     ym_error* error) YM_NOEXCEPT;
 
+/** Array/object element count. Scalar input returns YM_SCHEMA_ERROR. */
+YM_API ym_status YM_CALL ym_value_size(const ym_value* value, size_t* out,
+    ym_error* error) YM_NOEXCEPT;
+
+/** Missing key/index returns YM_NOT_FOUND and sets *out to NULL. */
+YM_API ym_status YM_CALL ym_value_member(const ym_value* value, ym_string_view key,
+    const ym_value** out, ym_error* error) YM_NOEXCEPT;
+
+YM_API ym_status YM_CALL ym_value_at(const ym_value* value, size_t index, const ym_value** out,
+    ym_error* error) YM_NOEXCEPT;
+
 #ifdef __cplusplus
 }
 #endif
