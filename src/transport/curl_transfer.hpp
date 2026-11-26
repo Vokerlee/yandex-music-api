@@ -55,6 +55,8 @@ struct CurlTransfer {
     uint64_t ticket{0};
 };
 
+void configure_request(CurlTransfer&, const RequestInput&);
+
 template<class T>
 void curl_option(CURL* handle, CURLoption option, T value)
 {
