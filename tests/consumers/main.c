@@ -16,6 +16,7 @@
 
 #include <stdio.h>
 #include <string.h>
+
 #include <yandex_music/yandex_music.h>
 
 int main(void)
