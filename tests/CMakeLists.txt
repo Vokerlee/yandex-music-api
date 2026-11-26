@@ -128,6 +128,15 @@ target_link_libraries(domain_identities PRIVATE yandex_music::cpp)
 set_target_properties(domain_identities PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
 add_test(NAME domain.identities COMMAND domain_identities)
 
+add_executable(transport_contract transport.contract.cpp)
+target_include_directories(transport_contract PRIVATE "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(transport_contract PRIVATE ym_test_core)
+set_target_properties(
+    transport_contract
+    PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}"
+)
+add_test(NAME transport.contract COMMAND transport_contract)
+
 set_tests_properties(
     c.version
     cpp.version
@@ -145,5 +154,6 @@ set_tests_properties(
     cpp.scalar_views
     cpp.collection_views
     domain.identities
+    transport.contract
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )
