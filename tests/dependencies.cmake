@@ -7,12 +7,10 @@ function(run)
 endfunction()
 
 run("${CMAKE_COMMAND}" -S "${YM_JSON_SOURCE}" -B "${YM_BINARY}/json" -DJSON_BuildTests=OFF -DJSON_Install=ON -DJSON_MultipleHeaders=ON -DCMAKE_INSTALL_PREFIX=${YM_BINARY}/prefix)
-
 run("${CMAKE_COMMAND}" --install "${YM_BINARY}/json")
 
 foreach(mode SYSTEM AUTO)
     run("${CMAKE_COMMAND}" -S "${YM_SOURCE}" -B "${YM_BINARY}/${mode}" -DYM_DEPENDENCY_MODE=${mode} -DCMAKE_PREFIX_PATH=${YM_BINARY}/prefix -DYM_BUILD_TESTS=OFF -DFETCHCONTENT_FULLY_DISCONNECTED=ON)
-
     run("${CMAKE_COMMAND}" --build "${YM_BINARY}/${mode}" --config Debug --parallel 2)
 endforeach()
 

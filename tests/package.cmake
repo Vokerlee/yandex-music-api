@@ -22,7 +22,6 @@ file(
 )
 
 run("${CMAKE_COMMAND}" -S "${YM_BINARY}/source" -B "${YM_BINARY}/build" -DYM_BUILD_TESTS=OFF -DYM_INSTALL=ON -DBUILD_SHARED_LIBS=${YM_SHARED} -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=${YM_BINARY}/prefix-a -DFETCHCONTENT_SOURCE_DIR_NLOHMANN_JSON=${YM_JSON_SOURCE} "-DCMAKE_PREFIX_PATH=${YM_PREFIX_PATH}" -DYM_DEPENDENCY_MODE=${YM_MODE})
-
 run("${CMAKE_COMMAND}" --build "${YM_BINARY}/build" --config Debug --parallel 2)
 
 run("${CMAKE_COMMAND}" --install "${YM_BINARY}/build" --config Debug)
@@ -34,14 +33,12 @@ file(RENAME "${YM_BINARY}/source" "${YM_BINARY}/unavailable-source")
 file(RENAME "${YM_BINARY}/build" "${YM_BINARY}/unavailable-build")
 
 run("${CMAKE_COMMAND}" -S "${YM_SOURCE}/tests/consumers" -B "${YM_BINARY}/consumer" -DYM_INSTALLED=ON -DCMAKE_PREFIX_PATH=${YM_BINARY}/prefix-b)
-
 run("${CMAKE_COMMAND}" --build "${YM_BINARY}/consumer" --config Debug --parallel 2)
 
 run("${CMAKE_CTEST_COMMAND}" --test-dir "${YM_BINARY}/consumer" -C Debug --output-on-failure --no-tests=error)
 
 if(YM_SHARED)
     run("${CMAKE_COMMAND}" -S "${YM_SOURCE}/tests/consumers" -B "${YM_BINARY}/c-only" -DYM_INSTALLED=ON -DYM_C_ONLY=ON -DCMAKE_PREFIX_PATH=${YM_BINARY}/prefix-b)
-
     run("${CMAKE_COMMAND}" --build "${YM_BINARY}/c-only" --config Debug --parallel 2)
 
     run("${CMAKE_CTEST_COMMAND}" --test-dir "${YM_BINARY}/c-only" -C Debug --output-on-failure --no-tests=error)

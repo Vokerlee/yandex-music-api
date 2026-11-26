@@ -1,7 +1,6 @@
 include(FetchContent)
 
 set(YM_DEPENDENCY_MODE AUTO CACHE STRING "Dependency resolution: AUTO, SYSTEM or FETCH")
-
 set_property(CACHE YM_DEPENDENCY_MODE PROPERTY STRINGS AUTO SYSTEM FETCH)
 
 if(NOT YM_DEPENDENCY_MODE MATCHES "^(AUTO|SYSTEM|FETCH)$")
@@ -30,11 +29,8 @@ function(ym_resolve_json)
 
     # Normal variables are scoped here: dependency options must not change parent caches.
     set(CMAKE_POLICY_DEFAULT_CMP0077 NEW)
-
     set(JSON_BuildTests OFF)
-
     set(JSON_Install OFF)
-
     set(JSON_MultipleHeaders ON)
 
     FetchContent_Declare(

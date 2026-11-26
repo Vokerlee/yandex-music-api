@@ -285,6 +285,16 @@ set_target_properties(
 add_test(NAME protocol.envelopes COMMAND protocol_envelopes)
 ym_build_controls(protocol_envelopes)
 
+add_executable(protocol_response_errors protocol.response_errors.cpp)
+target_include_directories(protocol_response_errors PRIVATE "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(protocol_response_errors PRIVATE ym_test_core)
+set_target_properties(
+    protocol_response_errors
+    PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}"
+)
+add_test(NAME protocol.response_errors COMMAND protocol_response_errors)
+ym_build_controls(protocol_response_errors)
+
 set_tests_properties(
     c.version
     cpp.version
@@ -319,5 +329,6 @@ set_tests_properties(
     protocol.headers
     protocol.json_read
     protocol.envelopes
+    protocol.response_errors
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )
