@@ -34,7 +34,13 @@ include(cmake/build.cmake)
 
 add_library(yandex_music_c src/c/version.cpp)
 ym_build_controls(yandex_music_c)
-set(YM_CORE_SOURCES src/core/client.cpp src/core/error.cpp src/core/result.cpp src/core/engine.cpp)
+set(YM_CORE_SOURCES
+    src/core/client.cpp
+    src/core/error.cpp
+    src/core/result.cpp
+    src/core/engine.cpp
+    src/protocol/encode.cpp
+)
 target_sources(yandex_music_c PRIVATE ${YM_CORE_SOURCES})
 target_include_directories(yandex_music_c PRIVATE src)
 add_library(yandex_music::c ALIAS yandex_music_c)

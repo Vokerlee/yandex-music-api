@@ -16,6 +16,7 @@
 
 #include "client.hpp"
 #include "error.hpp"
+#include "text.hpp"
 #include <cstring>
 #include <memory>
 #include <new>
@@ -25,7 +26,9 @@ namespace
 bool valid(ym_string_view input) noexcept
 {
     return (input.data || input.size == 0)
-        && (!input.size || !std::memchr(input.data, 0, input.size));
+        && (!input.size
+            || (!std::memchr(input.data, 0, input.size)
+                && ym::detail::valid_utf8({ input.data, input.size })));
 }
 void read_options(const ym_client_options* input, size_t size, ym_client_options& out) noexcept
 {

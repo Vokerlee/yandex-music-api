@@ -72,3 +72,10 @@ For development, `YM_ENABLE_ASAN=ON` instruments SDK/tests with ASan+UBSan;
 `YM_ENABLE_TSAN=ON` selects a separate TSan build. Instrumented static SDKs require a
 matching sanitizer runtime in their application. Normal exported targets carry neither
 sanitizer nor SDK warning flags.
+
+Endpoint request construction uses one private encoder: UTF-8 path segments and queries,
+space-as-plus form bodies, ordered repeated fields, and JSON with exact wire key names and
+64-bit integers. Missing fields are omitted; JSON null remains explicit. Null/nested form
+values require an endpoint-specific text representation. Encoding validates headers/origins
+and enforces byte/node/depth limits. Both future public service interfaces use this same
+encoder rather than independently rebuilding HTTP payloads.

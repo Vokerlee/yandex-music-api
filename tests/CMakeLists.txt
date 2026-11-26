@@ -23,6 +23,16 @@ target_link_libraries(ym_test_core PRIVATE nlohmann_json::nlohmann_json)
 add_executable(engine_test test_engine.cpp)
 target_link_libraries(engine_test PRIVATE ym_test_core)
 add_test(NAME core.engine COMMAND engine_test)
-foreach(target client_test result_test ym_test_core engine_test)
+add_executable(encoding_test test_encoding.cpp)
+target_link_libraries(encoding_test PRIVATE ym_test_core)
+add_test(NAME protocol.encoding COMMAND encoding_test)
+foreach(
+    target
+    client_test
+    result_test
+    ym_test_core
+    engine_test
+    encoding_test
+)
     ym_build_controls(${target})
 endforeach()
