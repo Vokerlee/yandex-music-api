@@ -26,7 +26,11 @@ run("${CMAKE_COMMAND}" --build "${YM_BINARY}/build" --config Debug --parallel 2)
 
 run("${CMAKE_COMMAND}" --install "${YM_BINARY}/build" --config Debug)
 
-file(COPY "${YM_BINARY}/prefix-a/" DESTINATION "${YM_BINARY}/prefix-b")
+file(RENAME "${YM_BINARY}/prefix-a" "${YM_BINARY}/prefix-b")
+
+file(RENAME "${YM_BINARY}/source" "${YM_BINARY}/unavailable-source")
+
+file(RENAME "${YM_BINARY}/build" "${YM_BINARY}/unavailable-build")
 
 run("${CMAKE_COMMAND}" -S "${YM_SOURCE}/tests/consumers" -B "${YM_BINARY}/consumer" -DYM_INSTALLED=ON -DCMAKE_PREFIX_PATH=${YM_BINARY}/prefix-b)
 
