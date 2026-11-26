@@ -170,6 +170,15 @@ target_link_libraries(engine_callbacks PRIVATE ym_test_core)
 set_target_properties(engine_callbacks PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
 add_test(NAME engine.callbacks COMMAND engine_callbacks)
 
+add_executable(engine_callback_lifetimes engine.callback_lifetimes.cpp)
+target_include_directories(engine_callback_lifetimes PRIVATE "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(engine_callback_lifetimes PRIVATE ym_test_core)
+set_target_properties(
+    engine_callback_lifetimes
+    PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}"
+)
+add_test(NAME engine.callback_lifetimes COMMAND engine_callback_lifetimes)
+
 set_tests_properties(
     c.version
     cpp.version
@@ -193,5 +202,6 @@ set_tests_properties(
     engine.cancellation
     engine.limits
     engine.callbacks
+    engine.callback_lifetimes
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )
