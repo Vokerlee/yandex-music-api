@@ -87,7 +87,12 @@ queue_state(const std::shared_ptr<Engine>& owner, RequestInput input, ResponseDe
         if (!owner->driving)
             std::erase_if(owner->requests,
                 [](const auto& s) { return !pending(*s) && (s->delivered || s->suppressed); });
-        /* QUEUE_LIMIT */
+        const auto active = std::count_if(owner->requests.begin(), owner->requests.end(),
+            [](const auto& s) { return pending(*s) || (!s->delivered && !s->suppressed); });
+        if (static_cast<size_t>(active) >= owner->max_pending || owner->next_ticket == 0) {
+            fail(&error, YM_RESOURCE_LIMIT, "Pending request limit exceeded");
+            return std::unexpected(error);
+        }
         auto s = std::make_shared<RequestState>();
         s->owner = owner;
         s->input = std::move(input);
@@ -115,7 +120,10 @@ ym_status poll_engine(Engine& owner, uint64_t now, size_t budget, ym_error* erro
         return fail(error, YM_REENTRANT_CALL, "Recursive polling is not allowed");
     if (owner.closed)
         return fail(error, YM_CLOSED, "Client is closed");
-    /* MONOTONIC_TIME */
+    if (owner.has_time && now < owner.last_time)
+        return fail(error, YM_INVALID_ARGUMENT, "Monotonic time moved backwards");
+    owner.last_time = now;
+    owner.has_time = true;
     owner.driving = true;
     ym_status status = YM_OK;
     try {
@@ -125,7 +133,11 @@ ym_status poll_engine(Engine& owner, uint64_t now, size_t budget, ym_error* erro
             auto s = owner.requests[i];
             if (!pending(*s))
                 continue;
-            /* DEADLINE */
+            if (s->options.deadline_ms != UINT64_MAX && now >= s->options.deadline_ms) {
+                cancel_state(*s, YM_DEADLINE_EXCEEDED);
+                ++used;
+                continue;
+            }
             if (s->phase == YM_REQUEST_QUEUED) {
                 try {
                     owner.adapter->start(s->ticket, s->input);
@@ -151,7 +163,8 @@ ym_status poll_engine(Engine& owner, uint64_t now, size_t budget, ym_error* erro
                         s->input.mutating ? static_cast<ym_status>(YM_OUTCOME_UNKNOWN)
                                           : response->status,
                         "Transport failed");
-                /* RESPONSE_LIMIT */
+                else if (response->body.size() > owner.max_response_bytes)
+                    finish(*s, YM_RESOURCE_LIMIT, "Response body exceeds configured limit");
                 else {
                     ym_result* raw = nullptr;
                     const auto code = s->decode(*response, &raw, &s->failure);

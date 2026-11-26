@@ -158,6 +158,12 @@ set_target_properties(
 )
 add_test(NAME engine.cancellation COMMAND engine_cancellation)
 
+add_executable(engine_limits engine.limits.cpp)
+target_include_directories(engine_limits PRIVATE "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(engine_limits PRIVATE ym_test_core)
+set_target_properties(engine_limits PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
+add_test(NAME engine.limits COMMAND engine_limits)
+
 set_tests_properties(
     c.version
     cpp.version
@@ -179,5 +185,6 @@ set_tests_properties(
     engine.scheduling
     abi.request_owner
     engine.cancellation
+    engine.limits
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )
