@@ -18,6 +18,7 @@ set(YM_CORE_SOURCES
     src/core/client.cpp
     src/core/result.cpp
     src/core/request_options.cpp
+    src/core/scheduler.cpp
 )
 
 add_library(yandex_music_c src/c/version.cpp ${YM_CORE_SOURCES})
