@@ -122,6 +122,12 @@ set_target_properties(
 )
 add_test(NAME cpp.collection_views COMMAND cpp_collection_views)
 
+add_executable(domain_identities domain.identities.cpp)
+target_include_directories(domain_identities PRIVATE "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(domain_identities PRIVATE yandex_music::cpp)
+set_target_properties(domain_identities PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
+add_test(NAME domain.identities COMMAND domain_identities)
+
 set_tests_properties(
     c.version
     cpp.version
@@ -138,5 +144,6 @@ set_tests_properties(
     cpp.document_owner
     cpp.scalar_views
     cpp.collection_views
+    domain.identities
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )
