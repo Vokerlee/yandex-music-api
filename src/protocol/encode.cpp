@@ -113,6 +113,28 @@ std::expected<RequestInput, ym_error> encode(const RequestSpec& spec, size_t lim
         } else if (spec.encoding != BodyKind::none || !spec.body.empty() || spec.json_root)
             return encoding_failure(YM_INVALID_ARGUMENT,
                 "Body data supplied without matching encoding");
+        if (spec.headers.size() > 256)
+            return encoding_failure(YM_RESOURCE_LIMIT, "Too many headers");
+        std::set<std::string> names;
+        if (!output.headers.empty())
+            names.insert("content-type");
+        for (const auto& [key, value] : spec.headers) {
+            if (key.empty() || !valid_utf8(value) ||
+                value.find_first_of("\r\n\0", 0, 3) != std::string::npos)
+                return encoding_failure(YM_INVALID_ARGUMENT, "Invalid request header");
+            std::string lower;
+            for (unsigned char c : key) {
+                if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') ||
+                        std::string_view("!#$%&'*+-.^_`|~").find(static_cast<char>(c)) !=
+                            std::string_view::npos))
+                    return encoding_failure(YM_INVALID_ARGUMENT, "Invalid header name");
+                lower.push_back(c >= 'A' && c <= 'Z' ? static_cast<char>(c + 'a' - 'A')
+                                                     : static_cast<char>(c));
+            }
+            if (!names.insert(lower).second)
+                return encoding_failure(YM_INVALID_ARGUMENT, "Duplicate header name");
+            output.headers.emplace_back(key, value);
+        }
         size_t total = output.url.size();
         auto count = [&](size_t amount) {
             if (amount > limit - total)
