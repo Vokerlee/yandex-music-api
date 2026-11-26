@@ -345,6 +345,16 @@ set_target_properties(
 add_test(NAME transport.curl_runtime COMMAND transport_curl_runtime)
 ym_build_controls(transport_curl_runtime)
 
+add_executable(transport_body_sink transport.body_sink.cpp)
+target_include_directories(transport_body_sink PRIVATE "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(transport_body_sink PRIVATE ym_test_core)
+set_target_properties(
+    transport_body_sink
+    PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}"
+)
+add_test(NAME transport.body_sink COMMAND transport_body_sink)
+ym_build_controls(transport_body_sink)
+
 set_tests_properties(
     c.version
     cpp.version
@@ -385,5 +395,6 @@ set_tests_properties(
     cpp.response_decode
     protocol.response_conformance
     transport.curl_runtime
+    transport.body_sink
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )
