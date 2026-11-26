@@ -1,0 +1,85 @@
+/*
+ * Copyright (c) 2026 Vokerlee <vokerlee@gmail.com>
+ *
+ * Yandex Music Native is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as published
+ * by the Free Software Foundation.
+ *
+ * Yandex Music Native is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
+#pragma once
+
+#include <string_view>
+#include <utility>
+
+#include <yandex_music/error.hpp>
+#include <yandex_music/result.h>
+
+namespace ym {
+
+class ValueView {
+public:
+    explicit ValueView(const ym_value* value = nullptr) noexcept
+        : value_{value}
+    {
+    }
+
+    [[nodiscard]] ym_value_type type() const noexcept { return ym_value_typeof(value_); }
+
+private:
+    const ym_value* value_{nullptr};
+};
+
+class Document {
+public:
+    Document() noexcept = default;
+
+    explicit Document(ym_result* handle) noexcept
+        : handle_{handle}
+    {
+    }
+
+    Document(const Document&) = delete;
+    Document& operator=(const Document&) = delete;
+
+    Document(Document&& other) noexcept
+        : handle_{std::exchange(other.handle_, nullptr)}
+    {
+    }
+
+    Document& operator=(Document&& other) noexcept
+    {
+        if (this != &other) {
+            ym_result_destroy(handle_);
+            handle_ = std::exchange(other.handle_, nullptr);
+        }
+        return *this;
+    }
+
+    ~Document() { ym_result_destroy(handle_); }
+
+    [[nodiscard]] ValueView root() const noexcept { return ValueView{ym_result_root(handle_)}; }
+
+    [[nodiscard]] Result<Document> clone() const noexcept
+    {
+        ym_result* copy = nullptr;
+        ym_error failure;
+        if (ym_result_clone(handle_, &copy, &failure) != YM_OK)
+            return std::unexpected(Error{failure});
+        return Document{copy};
+    }
+
+    [[nodiscard]] ym_result* native_handle() const noexcept { return handle_; }
+
+private:
+    ym_result* handle_{nullptr};
+};
+
+} // namespace ym
