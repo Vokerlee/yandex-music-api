@@ -31,5 +31,10 @@ Offline response decoding supports bounded JSON, explicit root/result selection,
 HTTP/service errors and owned metadata. Unknown wire fields are preserved.
 Reference-derived work credits Ilya (Marshal); see LICENSES/THIRD_PARTY_NOTICES.md. No endpoint or full Python parity is claimed yet.
 
+The private curl resolver accepts `YM_CURL_DEPENDENCY_MODE=AUTO|SYSTEM|FETCH`.
+It reuses a parent `CURL::libcurl` target, otherwise AUTO searches before fetching
+the pinned source. SYSTEM never downloads. The fetched build uses native Windows
+TLS or OpenSSL on Unix; install OpenSSL development headers on Unix.
+
 For development, install `requirements-dev.txt` and run `python3 scripts/format.py`
 (or `--check` to verify formatting).
