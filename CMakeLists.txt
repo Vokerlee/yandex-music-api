@@ -33,6 +33,7 @@ include(cmake/dependencies.cmake)
 
 add_library(yandex_music_c src/c/version.cpp)
 target_sources(yandex_music_c PRIVATE src/core/client.cpp src/core/error.cpp)
+target_sources(yandex_music_c PRIVATE src/core/result.cpp)
 target_include_directories(yandex_music_c PRIVATE src)
 add_library(yandex_music::c ALIAS yandex_music_c)
 set_target_properties(
@@ -90,6 +91,11 @@ set_target_properties(
     PROPERTIES EXPORT_NAME c VERSION ${PROJECT_VERSION} SOVERSION 0 POSITION_INDEPENDENT_CODE ON
 )
 set_target_properties(yandex_music_cpp PROPERTIES EXPORT_NAME cpp)
+target_sources(yandex_music_c PUBLIC FILE_SET HEADERS FILES src/c/yandex_music/result.h)
+target_sources(
+    yandex_music_cpp
+    INTERFACE FILE_SET HEADERS FILES src/cpp/yandex_music/result.hpp src/cpp/yandex_music/ids.hpp
+)
 
 if(YM_INSTALL)
     include(cmake/install.cmake)

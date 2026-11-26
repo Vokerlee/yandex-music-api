@@ -19,6 +19,7 @@
 
 #include <yandex_music/client.h>
 #include <yandex_music/export.h>
+#include <yandex_music/result.h>
 
 #ifdef __cplusplus
 extern "C" {

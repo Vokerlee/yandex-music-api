@@ -52,3 +52,10 @@ perform no network I/O on creation. C uses `ym_client_options_init`,
 including allocation failures; no exception or global last-error crosses the C ABI.
 Options accept older complete prefixes and ignore unknown tail fields of version 1.
 Destroying NULL is harmless; use one driving thread per client.
+
+Results use independent immutable storage: `ym_result_destroy` releases C owners,
+and C++ `ym::document` releases them through RAII. `clone()` creates an independent
+copy. Nested value views borrow from that document, never from the client. Missing,
+null, empty, zero and false remain distinct; signed/unsigned integers never pass
+through floating point. Strong C++ resource IDs prevent mixing track/album/artist
+identities. These are low-level response primitives, not implemented catalog endpoints.
