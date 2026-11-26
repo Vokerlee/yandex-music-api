@@ -29,10 +29,15 @@ struct ResponseSink {
     }
 
     size_t max_body;
+    size_t max_headers{64 * 1024};
+    size_t header_bytes{0};
+    std::string request_id;
+    int64_t retry_after_ms{-1};
     std::string body;
     ym_status failure{YM_OK};
 };
 
+size_t collect_header(char*, size_t, size_t, void*) noexcept;
 size_t collect_body(char*, size_t, size_t, void*) noexcept;
 
 } // namespace ym::detail
