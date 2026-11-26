@@ -11,6 +11,8 @@ option(YM_BUILD_TESTS "Build SDK tests" ${PROJECT_IS_TOP_LEVEL})
 
 configure_file(cmake/version_config.hpp.in generated/version_config.hpp @ONLY)
 
+include(cmake/dependencies.cmake)
+
 add_library(yandex_music_c src/c/version.cpp)
 add_library(yandex_music::c ALIAS yandex_music_c)
 
@@ -40,6 +42,8 @@ target_sources(
             BASE_DIRS src/c
             FILES src/c/yandex_music/yandex_music.h src/c/yandex_music/export.h
 )
+
+target_link_libraries(yandex_music_c PRIVATE "$<BUILD_INTERFACE:nlohmann_json::nlohmann_json>")
 
 add_library(yandex_music_cpp INTERFACE)
 add_library(yandex_music::cpp ALIAS yandex_music_cpp)
@@ -77,14 +81,18 @@ if(PROJECT_IS_TOP_LEVEL)
             COMMAND
                 "${CMAKE_COMMAND}" -DYM_SOURCE=${CMAKE_CURRENT_SOURCE_DIR}
                 -DYM_BINARY=${CMAKE_CURRENT_BINARY_DIR}/consumers.source
-                -DYM_SHARED=${BUILD_SHARED_LIBS} -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/consumer.cmake
+                -DYM_SHARED=${BUILD_SHARED_LIBS} -DYM_JSON_SOURCE=${YM_JSON_SOURCE_DIR}
+                "-DYM_PREFIX_PATH=${CMAKE_PREFIX_PATH}" -DYM_MODE=${YM_DEPENDENCY_MODE} -P
+                ${CMAKE_CURRENT_SOURCE_DIR}/tests/consumer.cmake
         )
         add_test(
             NAME consumers.installed
             COMMAND
                 "${CMAKE_COMMAND}" -DYM_SOURCE=${CMAKE_CURRENT_SOURCE_DIR}
                 -DYM_BINARY=${CMAKE_CURRENT_BINARY_DIR}/consumers.installed
-                -DYM_SHARED=${BUILD_SHARED_LIBS} -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/package.cmake
+                -DYM_SHARED=${BUILD_SHARED_LIBS} -DYM_JSON_SOURCE=${YM_JSON_SOURCE_DIR}
+                "-DYM_PREFIX_PATH=${CMAKE_PREFIX_PATH}" -DYM_MODE=${YM_DEPENDENCY_MODE} -P
+                ${CMAKE_CURRENT_SOURCE_DIR}/tests/package.cmake
         )
     endif()
 endif()

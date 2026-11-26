@@ -19,3 +19,7 @@ and call `ym::version()` / `ym::build_info()`. The target supplies C++23.
 
 Install with `cmake --install build --prefix /prefix`. Applications then use
 `find_package(yandex_music CONFIG REQUIRED)` and link the same target.
+
+Private JSON dependency resolution supports AUTO, SYSTEM (never downloads), and FETCH.
+The fallback JSON 3.12.0 archive is pinned by SHA-256 in cmake/dependencies.cmake.
+Installed consumers do not need JSON headers.
