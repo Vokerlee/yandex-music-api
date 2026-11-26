@@ -453,3 +453,15 @@ set_tests_properties(
     transport.multi_failure
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )
+
+find_package(Python3 COMPONENTS Interpreter REQUIRED)
+
+add_executable(transport_http transport_http.cpp)
+target_link_libraries(transport_http PRIVATE ym_test_core)
+ym_build_controls(transport_http)
+add_test(
+    NAME transport.http
+    COMMAND
+        "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/http_fixture.py"
+        "$<TARGET_FILE:transport_http>"
+)
