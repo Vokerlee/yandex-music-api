@@ -1,0 +1,9 @@
+BasedOnStyle: WebKit
+ColumnLimit: 100
+NamespaceIndentation: None
+FixNamespaceComments: true
+BreakBeforeBraces: Linux
+AllowShortFunctionsOnASingleLine: Inline
+SortIncludes: CaseSensitive
+MaxEmptyLinesToKeep: 1
+SeparateDefinitionBlocks: Always
