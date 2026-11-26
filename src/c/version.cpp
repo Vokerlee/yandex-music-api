@@ -14,23 +14,23 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <yandex_music/yandex_music.h>
 #include "version_config.hpp"
 #include <nlohmann/json.hpp>
+#include <yandex_music/yandex_music.h>
 
 static_assert(NLOHMANN_JSON_VERSION_MAJOR == 3 && NLOHMANN_JSON_VERSION_MINOR >= 12,
     "The SDK requires nlohmann_json >= 3.12");
 #define YM_STRINGIFY_IMPL(value) #value
 #define YM_STRINGIFY(value) YM_STRINGIFY_IMPL(value)
 
-const char *YM_CALL ym_version(void)
+const char* YM_CALL ym_version(void)
 {
     return YM_VERSION;
 }
 
-const char *YM_CALL ym_build_info(void)
+const char* YM_CALL ym_build_info(void)
 {
-    return "Yandex Music Native " YM_VERSION "; C++23 core; C ABI v1; JSON "
-        YM_STRINGIFY(NLOHMANN_JSON_VERSION_MAJOR) "." YM_STRINGIFY(NLOHMANN_JSON_VERSION_MINOR)
-        "." YM_STRINGIFY(NLOHMANN_JSON_VERSION_PATCH);
+    return "Yandex Music Native " YM_VERSION
+           "; C++23 core; C ABI v1; JSON " YM_STRINGIFY(NLOHMANN_JSON_VERSION_MAJOR) "." YM_STRINGIFY(
+               NLOHMANN_JSON_VERSION_MINOR) "." YM_STRINGIFY(NLOHMANN_JSON_VERSION_PATCH);
 }

@@ -16,24 +16,46 @@ include(cmake/dependencies.cmake)
 
 add_library(yandex_music_c src/c/version.cpp)
 add_library(yandex_music::c ALIAS yandex_music_c)
-set_target_properties(yandex_music_c PROPERTIES CXX_EXTENSIONS OFF CXX_VISIBILITY_PRESET hidden VISIBILITY_INLINES_HIDDEN ON)
+set_target_properties(
+    yandex_music_c
+    PROPERTIES CXX_EXTENSIONS OFF CXX_VISIBILITY_PRESET hidden VISIBILITY_INLINES_HIDDEN ON
+)
 target_compile_features(yandex_music_c PRIVATE cxx_std_23)
 target_compile_definitions(yandex_music_c PRIVATE YM_BUILDING_LIBRARY)
 if(NOT BUILD_SHARED_LIBS)
     target_compile_definitions(yandex_music_c PUBLIC YM_STATIC)
 endif()
-target_include_directories(yandex_music_c PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/c>" PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/generated")
+target_include_directories(
+    yandex_music_c
+    PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/c>"
+    PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/generated"
+)
 target_link_libraries(yandex_music_c PRIVATE "$<BUILD_INTERFACE:nlohmann_json::nlohmann_json>")
 
 add_library(yandex_music_cpp INTERFACE)
 add_library(yandex_music::cpp ALIAS yandex_music_cpp)
 target_compile_features(yandex_music_cpp INTERFACE cxx_std_23)
 target_link_libraries(yandex_music_cpp INTERFACE yandex_music_c)
-target_include_directories(yandex_music_cpp INTERFACE "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/cpp>")
+target_include_directories(
+    yandex_music_cpp
+    INTERFACE "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/cpp>"
+)
 
-target_sources(yandex_music_c PUBLIC FILE_SET HEADERS BASE_DIRS src/c FILES src/c/yandex_music/yandex_music.h src/c/yandex_music/export.h)
-target_sources(yandex_music_cpp INTERFACE FILE_SET HEADERS BASE_DIRS src/cpp FILES src/cpp/yandex_music/yandex_music.hpp)
-set_target_properties(yandex_music_c PROPERTIES EXPORT_NAME c VERSION ${PROJECT_VERSION} SOVERSION 0 POSITION_INDEPENDENT_CODE ON)
+target_sources(
+    yandex_music_c
+    PUBLIC
+        FILE_SET HEADERS
+            BASE_DIRS src/c
+            FILES src/c/yandex_music/yandex_music.h src/c/yandex_music/export.h
+)
+target_sources(
+    yandex_music_cpp
+    INTERFACE FILE_SET HEADERS BASE_DIRS src/cpp FILES src/cpp/yandex_music/yandex_music.hpp
+)
+set_target_properties(
+    yandex_music_c
+    PROPERTIES EXPORT_NAME c VERSION ${PROJECT_VERSION} SOVERSION 0 POSITION_INDEPENDENT_CODE ON
+)
 set_target_properties(yandex_music_cpp PROPERTIES EXPORT_NAME cpp)
 
 if(YM_INSTALL)
@@ -43,10 +65,34 @@ endif()
 if(PROJECT_IS_TOP_LEVEL)
     include(CTest)
     if(BUILD_TESTING AND YM_BUILD_TESTS)
-        add_test(NAME consumers.source COMMAND "${CMAKE_COMMAND}" -DYM_SOURCE=${CMAKE_CURRENT_SOURCE_DIR} -DYM_BINARY=${CMAKE_CURRENT_BINARY_DIR}/consumer-source -DYM_SHARED=${BUILD_SHARED_LIBS} -DYM_JSON_SOURCE=${YM_JSON_SOURCE_DIR} "-DYM_PREFIX_PATH=${CMAKE_PREFIX_PATH}" -DYM_MODE=${YM_DEPENDENCY_MODE} -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/consumer.cmake)
-        add_test(NAME consumers.installed COMMAND "${CMAKE_COMMAND}" -DYM_SOURCE=${CMAKE_CURRENT_SOURCE_DIR} -DYM_BINARY=${CMAKE_CURRENT_BINARY_DIR}/consumer-installed -DYM_SHARED=${BUILD_SHARED_LIBS} -DYM_JSON_SOURCE=${YM_JSON_SOURCE_DIR} "-DYM_PREFIX_PATH=${CMAKE_PREFIX_PATH}" -DYM_MODE=${YM_DEPENDENCY_MODE} -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/package.cmake)
+        add_test(
+            NAME consumers.source
+            COMMAND
+                "${CMAKE_COMMAND}" -DYM_SOURCE=${CMAKE_CURRENT_SOURCE_DIR}
+                -DYM_BINARY=${CMAKE_CURRENT_BINARY_DIR}/consumer-source
+                -DYM_SHARED=${BUILD_SHARED_LIBS} -DYM_JSON_SOURCE=${YM_JSON_SOURCE_DIR}
+                "-DYM_PREFIX_PATH=${CMAKE_PREFIX_PATH}" -DYM_MODE=${YM_DEPENDENCY_MODE} -P
+                ${CMAKE_CURRENT_SOURCE_DIR}/tests/consumer.cmake
+        )
+        add_test(
+            NAME consumers.installed
+            COMMAND
+                "${CMAKE_COMMAND}" -DYM_SOURCE=${CMAKE_CURRENT_SOURCE_DIR}
+                -DYM_BINARY=${CMAKE_CURRENT_BINARY_DIR}/consumer-installed
+                -DYM_SHARED=${BUILD_SHARED_LIBS} -DYM_JSON_SOURCE=${YM_JSON_SOURCE_DIR}
+                "-DYM_PREFIX_PATH=${CMAKE_PREFIX_PATH}" -DYM_MODE=${YM_DEPENDENCY_MODE} -P
+                ${CMAKE_CURRENT_SOURCE_DIR}/tests/package.cmake
+        )
         if(YM_JSON_SOURCE_DIR)
-            add_test(NAME dependencies.modes COMMAND "${CMAKE_COMMAND}" -DYM_SOURCE=${CMAKE_CURRENT_SOURCE_DIR} -DYM_BINARY=${CMAKE_CURRENT_BINARY_DIR}/dependency-modes -DYM_JSON_SOURCE=${YM_JSON_SOURCE_DIR} "-DYM_PREFIX_PATH=${CMAKE_PREFIX_PATH}" -DYM_MODE=${YM_DEPENDENCY_MODE} -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/dependencies.cmake)
+            add_test(
+                NAME dependencies.modes
+                COMMAND
+                    "${CMAKE_COMMAND}" -DYM_SOURCE=${CMAKE_CURRENT_SOURCE_DIR}
+                    -DYM_BINARY=${CMAKE_CURRENT_BINARY_DIR}/dependency-modes
+                    -DYM_JSON_SOURCE=${YM_JSON_SOURCE_DIR} "-DYM_PREFIX_PATH=${CMAKE_PREFIX_PATH}"
+                    -DYM_MODE=${YM_DEPENDENCY_MODE} -P
+                    ${CMAKE_CURRENT_SOURCE_DIR}/tests/dependencies.cmake
+            )
         endif()
     endif()
 endif()

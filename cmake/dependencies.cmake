@@ -17,7 +17,10 @@ function(ym_resolve_json)
         return()
     endif()
     if(YM_DEPENDENCY_MODE STREQUAL "SYSTEM")
-        message(FATAL_ERROR "Install nlohmann_json >= 3.12 or set CMAKE_PREFIX_PATH; SYSTEM mode never downloads dependencies")
+        message(
+            FATAL_ERROR
+            "Install nlohmann_json >= 3.12 or set CMAKE_PREFIX_PATH; SYSTEM mode never downloads dependencies"
+        )
     endif()
 
     # Normal variables are scoped here: dependency options must not change parent caches.
@@ -25,10 +28,12 @@ function(ym_resolve_json)
     set(JSON_BuildTests OFF)
     set(JSON_Install OFF)
     set(JSON_MultipleHeaders ON)
-    FetchContent_Declare(nlohmann_json
+    FetchContent_Declare(
+        nlohmann_json
         URL https://codeload.github.com/nlohmann/json/tar.gz/refs/tags/v3.12.0
         URL_HASH SHA256=4b92eb0c06d10683f7447ce9406cb97cd4b453be18d7279320f7b2f025c10187
-        DOWNLOAD_EXTRACT_TIMESTAMP TRUE)
+        DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+    )
     FetchContent_MakeAvailable(nlohmann_json)
 endfunction()
 

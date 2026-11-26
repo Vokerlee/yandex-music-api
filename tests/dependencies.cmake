@@ -11,12 +11,28 @@ foreach(mode SYSTEM AUTO)
     run("${CMAKE_COMMAND}" -S "${YM_SOURCE}" -B "${YM_BINARY}/${mode}" -DYM_DEPENDENCY_MODE=${mode} -DCMAKE_PREFIX_PATH=${YM_BINARY}/prefix -DYM_BUILD_TESTS=OFF -DFETCHCONTENT_FULLY_DISCONNECTED=ON)
     run("${CMAKE_COMMAND}" --build "${YM_BINARY}/${mode}" --config Debug --parallel 2)
 endforeach()
-execute_process(COMMAND "${CMAKE_COMMAND}" -S "${YM_SOURCE}" -B "${YM_BINARY}/invalid" -DYM_DEPENDENCY_MODE=invalid RESULT_VARIABLE invalid_result OUTPUT_QUIET ERROR_QUIET)
+execute_process(
+    COMMAND
+        "${CMAKE_COMMAND}" -S "${YM_SOURCE}" -B "${YM_BINARY}/invalid" -DYM_DEPENDENCY_MODE=invalid
+    RESULT_VARIABLE invalid_result
+    OUTPUT_QUIET
+    ERROR_QUIET
+)
 if(invalid_result EQUAL 0)
     message(FATAL_ERROR "Invalid dependency mode was accepted")
 endif()
-execute_process(COMMAND "${CMAKE_COMMAND}" -S "${YM_SOURCE}" -B "${YM_BINARY}/missing" -DYM_DEPENDENCY_MODE=SYSTEM -DCMAKE_DISABLE_FIND_PACKAGE_nlohmann_json=ON RESULT_VARIABLE missing_result OUTPUT_VARIABLE output ERROR_VARIABLE errors)
+execute_process(
+    COMMAND
+        "${CMAKE_COMMAND}" -S "${YM_SOURCE}" -B "${YM_BINARY}/missing" -DYM_DEPENDENCY_MODE=SYSTEM
+        -DCMAKE_DISABLE_FIND_PACKAGE_nlohmann_json=ON
+    RESULT_VARIABLE missing_result
+    OUTPUT_VARIABLE output
+    ERROR_VARIABLE errors
+)
 string(REGEX REPLACE "[ \t\r\n]+" " " errors "${errors}")
 if(missing_result EQUAL 0 OR NOT errors MATCHES "SYSTEM mode never downloads")
-    message(FATAL_ERROR "Missing system package did not produce the expected diagnostic: ${output}${errors}")
+    message(
+        FATAL_ERROR
+        "Missing system package did not produce the expected diagnostic: ${output}${errors}"
+    )
 endif()

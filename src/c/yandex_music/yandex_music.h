@@ -24,9 +24,9 @@ extern "C" {
 #endif
 
 /** Immutable SDK version; storage has process lifetime. No initialization needed. */
-YM_API const char *YM_CALL ym_version(void);
+YM_API const char* YM_CALL ym_version(void);
 /** Immutable build identification. Does not contain tokens or local build paths. */
-YM_API const char *YM_CALL ym_build_info(void);
+YM_API const char* YM_CALL ym_build_info(void);
 
 #ifdef __cplusplus
 }

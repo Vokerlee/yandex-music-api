@@ -18,21 +18,21 @@
 #define YANDEX_MUSIC_EXPORT_H
 
 #if defined(_WIN32) && !defined(YM_STATIC)
-# if defined(YM_BUILDING_LIBRARY)
-#  define YM_API __declspec(dllexport)
-# else
-#  define YM_API __declspec(dllimport)
-# endif
-#elif defined(__GNUC__) && !defined(YM_STATIC)
-# define YM_API __attribute__((visibility("default")))
+#if defined(YM_BUILDING_LIBRARY)
+#define YM_API __declspec(dllexport)
 #else
-# define YM_API
+#define YM_API __declspec(dllimport)
+#endif
+#elif defined(__GNUC__) && !defined(YM_STATIC)
+#define YM_API __attribute__((visibility("default")))
+#else
+#define YM_API
 #endif
 
 #if defined(_WIN32)
-# define YM_CALL __cdecl
+#define YM_CALL __cdecl
 #else
-# define YM_CALL
+#define YM_CALL
 #endif
 
 #endif

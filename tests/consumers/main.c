@@ -14,9 +14,9 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <yandex_music/yandex_music.h>
 #include <stdio.h>
 #include <string.h>
+#include <yandex_music/yandex_music.h>
 
 int main(void)
 {

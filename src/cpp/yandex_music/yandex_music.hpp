@@ -16,10 +16,11 @@
 
 #pragma once
 
-#include <yandex_music/yandex_music.h>
 #include <string_view>
+#include <yandex_music/yandex_music.h>
 
-namespace ym {
+namespace ym
+{
 
 [[nodiscard]] inline std::string_view version() noexcept
 {

@@ -14,8 +14,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <yandex_music/yandex_music.hpp>
 #include <iostream>
+#include <yandex_music/yandex_music.hpp>
 
 int main()
 {

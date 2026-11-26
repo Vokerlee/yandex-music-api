@@ -10,7 +10,10 @@ else()
     add_subdirectory("${YM_SOURCE}" sdk)
 endif()
 add_executable(c_consumer main.c)
-set_target_properties(c_consumer PROPERTIES C_STANDARD 11 C_STANDARD_REQUIRED ON C_EXTENSIONS OFF)
+set_target_properties(
+    c_consumer
+    PROPERTIES C_STANDARD 11 C_STANDARD_REQUIRED ON C_EXTENSIONS OFF
+)
 target_link_libraries(c_consumer PRIVATE yandex_music::c)
 if(NOT YM_C_ONLY)
     add_executable(cpp_consumer main.cpp)
@@ -19,10 +22,15 @@ endif()
 
 enable_testing()
 add_test(NAME consumer.c COMMAND c_consumer)
-set_tests_properties(consumer.c PROPERTIES
-    ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>")
+set_tests_properties(
+    consumer.c
+    PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
+)
 if(NOT YM_C_ONLY)
     add_test(NAME consumer.cpp COMMAND cpp_consumer)
-    set_tests_properties(consumer.cpp PROPERTIES
-        ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>")
+    set_tests_properties(
+        consumer.cpp
+        PROPERTIES
+            ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
+    )
 endif()
