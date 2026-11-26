@@ -63,7 +63,8 @@ const ym_value* YM_CALL ym_result_root(const ym_result* result)
 }
 ym_value_type YM_CALL ym_value_typeof(const ym_value* value)
 {
-    return value ? static_cast<ym_value_type>(value->data.index() + 1) : YM_VALUE_MISSING;
+    return value ? static_cast<ym_value_type>(value->data.index() + 1)
+                 : static_cast<ym_value_type>(YM_VALUE_MISSING);
 }
 ym_status YM_CALL ym_value_string(const ym_value* value, ym_string_view* out, ym_error* error)
 {

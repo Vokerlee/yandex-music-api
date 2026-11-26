@@ -19,11 +19,12 @@
 #include <utility>
 #include <yandex_music/client.h>
 #include <yandex_music/error.hpp>
+#include <yandex_music/request.h>
 
 namespace ym
 {
 struct client_options {
-    std::string_view token;
+    std::string_view token { };
     std::string_view language = "ru";
     size_t max_response_bytes = 8 * 1024 * 1024;
     size_t max_pending_requests = 64;
@@ -72,5 +73,19 @@ public:
         return value.size ? std::string_view(value.data, value.size) : std::string_view { };
     }
     [[nodiscard]] ym_client* native_handle() const noexcept { return handle_; }
+    [[nodiscard]] result<void> poll(uint64_t now_ms, size_t budget = 64) noexcept
+    {
+        ym_error failure;
+        if (ym_client_poll(handle_, now_ms, budget, &failure) != YM_OK)
+            return std::unexpected(error(failure));
+        return { };
+    }
+    [[nodiscard]] result<void> close() noexcept
+    {
+        ym_error failure;
+        if (ym_client_close(handle_, &failure) != YM_OK)
+            return std::unexpected(error(failure));
+        return { };
+    }
 };
 } // namespace ym

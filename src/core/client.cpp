@@ -97,10 +97,6 @@ ym_status YM_CALL ym_client_create(const ym_client_options* input, ym_client** o
     }
 }
 
-void YM_CALL ym_client_destroy(ym_client* client)
-{
-    delete client;
-}
 ym_string_view YM_CALL ym_client_language(const ym_client* client)
 {
     if (!client)

@@ -59,3 +59,16 @@ copy. Nested value views borrow from that document, never from the client. Missi
 null, empty, zero and false remain distinct; signed/unsigned integers never pass
 through floating point. Strong C++ resource IDs prevent mixing track/album/artist
 identities. These are low-level response primitives, not implemented catalog endpoints.
+
+The request engine is caller-driven: `ym_client_poll` / `client.poll` advances bounded
+work using supplied monotonic milliseconds. Requests own copied inputs; results transfer
+once. Cancellation detaches transport access before releasing inputs. Started mutations
+can have an unknown server-side outcome. `close()` cancels and suppresses pending callbacks;
+request handles remain queryable afterward. Poll/close inside a callback is rejected;
+destruction inside a callback is deferred safely. Service submission and the real HTTP
+adapter are introduced separately; this foundation is tested through a private fake adapter.
+
+For development, `YM_ENABLE_ASAN=ON` instruments SDK/tests with ASan+UBSan;
+`YM_ENABLE_TSAN=ON` selects a separate TSan build. Instrumented static SDKs require a
+matching sanitizer runtime in their application. Normal exported targets carry neither
+sanitizer nor SDK warning flags.
