@@ -24,5 +24,12 @@ Private JSON dependency resolution supports AUTO, SYSTEM (never downloads), and 
 The fallback JSON 3.12.0 archive is pinned by SHA-256 in cmake/dependencies.cmake.
 Installed consumers do not need JSON headers.
 
+The implemented foundations provide owned C error/client/result/request handles and
+C++23 RAII/expected facades. The request engine is caller-driven and uses a private
+transport seam; service endpoints and the real HTTP adapter are separate additions.
+Offline response decoding supports bounded JSON, explicit root/result selection,
+HTTP/service errors and owned metadata. Unknown wire fields are preserved.
+Reference-derived work credits Ilya (Marshal); see LICENSES/THIRD_PARTY_NOTICES.md. No endpoint or full Python parity is claimed yet.
+
 For development, install `requirements-dev.txt` and run `python3 scripts/format.py`
 (or `--check` to verify formatting).
