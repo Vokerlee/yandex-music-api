@@ -33,6 +33,51 @@ public:
 
     [[nodiscard]] ym_value_type type() const noexcept { return ym_value_typeof(value_); }
 
+    [[nodiscard]] Result<std::string_view> string() const noexcept
+    {
+        ym_string_view text{};
+        ym_error failure;
+        if (ym_value_string(value_, &text, &failure) != YM_OK)
+            return std::unexpected(Error{failure});
+        return text.size ? std::string_view(text.data, text.size) : std::string_view{};
+    }
+
+    [[nodiscard]] Result<uint64_t> unsigned_integer() const noexcept
+    {
+        uint64_t value{};
+        ym_error failure;
+        if (ym_value_uint64(value_, &value, &failure) != YM_OK)
+            return std::unexpected(Error{failure});
+        return value;
+    }
+
+    [[nodiscard]] Result<int64_t> integer() const noexcept
+    {
+        int64_t value{};
+        ym_error failure;
+        if (ym_value_int64(value_, &value, &failure) != YM_OK)
+            return std::unexpected(Error{failure});
+        return value;
+    }
+
+    [[nodiscard]] Result<double> number() const noexcept
+    {
+        double value{};
+        ym_error failure;
+        if (ym_value_double(value_, &value, &failure) != YM_OK)
+            return std::unexpected(Error{failure});
+        return value;
+    }
+
+    [[nodiscard]] Result<bool> boolean() const noexcept
+    {
+        uint32_t value{};
+        ym_error failure;
+        if (ym_value_bool(value_, &value, &failure) != YM_OK)
+            return std::unexpected(Error{failure});
+        return value != 0;
+    }
+
 private:
     const ym_value* value_{nullptr};
 };
