@@ -58,5 +58,13 @@ if(PROJECT_IS_TOP_LEVEL)
 
     if(BUILD_TESTING AND YM_BUILD_TESTS)
         add_subdirectory(tests)
+
+        add_test(
+            NAME consumers.source
+            COMMAND
+                "${CMAKE_COMMAND}" -DYM_SOURCE=${CMAKE_CURRENT_SOURCE_DIR}
+                -DYM_BINARY=${CMAKE_CURRENT_BINARY_DIR}/consumers.source
+                -DYM_SHARED=${BUILD_SHARED_LIBS} -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/consumer.cmake
+        )
     endif()
 endif()
