@@ -16,13 +16,19 @@
 
 #ifndef YANDEX_MUSIC_H
 #define YANDEX_MUSIC_H
+
 #include <yandex_music/export.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 YM_API const char* YM_CALL ym_version(void);
+
 YM_API const char* YM_CALL ym_build_info(void);
+
 #ifdef __cplusplus
 }
 #endif
+
 #endif
