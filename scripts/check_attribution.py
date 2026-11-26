@@ -59,16 +59,61 @@ def check(data):
             raise ValueError('Every commit in a declared reuse PR must retain the MarshalX co-author trailer')
 
 
+def api(path, paginate=False):
+    command = ['gh', 'api']
+    if paginate:
+        command += ['--paginate']
+    payload = subprocess.check_output([*command, path], text=True)
+    if not paginate:
+        return json.loads(payload)
+    pages = []
+    decoder = json.JSONDecoder()
+    while payload.strip():
+        payload = payload.lstrip()
+        page, end = decoder.raw_decode(payload)
+        pages.append(page)
+        payload = payload[end:]
+    return pages
+
+
+def from_github(repository, number):
+    if not re.fullmatch(r'[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+', repository) or number < 1:
+        raise ValueError('Invalid repository/PR')
+    prefix = f'repos/{repository}'
+    pr = api(f'{prefix}/pulls/{number}')
+    head = pr['head']['sha']
+    manifest = api(f'{prefix}/contents/{MANIFEST}?ref={head}')
+    if manifest.get('size', 0) > 1024 * 1024:
+        raise ValueError('Provenance manifest is too large')
+    tree = api(f'{prefix}/git/trees/{head}?recursive=1')
+    if tree.get('truncated'):
+        raise ValueError('Repository tree is truncated; cannot validate notice coverage')
+    return dict(body=pr.get('body') or '',
+                provenance=json.loads(base64.b64decode(manifest['content'])),
+                files=[f['filename'] for page in api(f'{prefix}/pulls/{number}/files', True) for f in page],
+                commits=[c['commit']['message'] for page in api(f'{prefix}/pulls/{number}/commits', True) for c in page],
+                available_files=[f['path'] for f in tree['tree']])
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--input', type=pathlib.Path, required=True)
+    parser.add_argument('--input', type=pathlib.Path)
+    parser.add_argument('--repository')
+    parser.add_argument('--pr', type=int)
     args = parser.parse_args()
-    check(json.loads(args.input.read_text()))
+    if args.input:
+        data = json.loads(args.input.read_text())
+    elif args.repository and args.pr:
+        data = from_github(args.repository, args.pr)
+    else:
+        parser.error('Use --input or --repository and --pr')
+    check(data)
     print('Upstream attribution metadata passes')
+
 
 if __name__ == '__main__':
     try:
         main()
-    except (OSError, ValueError, KeyError, TypeError) as error:
+    except (OSError, ValueError, KeyError, TypeError, subprocess.CalledProcessError) as error:
         print(error, file=sys.stderr)
         sys.exit(1)
