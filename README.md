@@ -16,3 +16,6 @@ License: [GPLv3](LICENSE).
 
 C++ applications link `yandex_music::cpp`, include `<yandex_music/yandex_music.hpp>`,
 and call `ym::version()` / `ym::build_info()`. The target supplies C++23.
+
+Install with `cmake --install build --prefix /prefix`. Applications then use
+`find_package(yandex_music CONFIG REQUIRED)` and link the same target.
