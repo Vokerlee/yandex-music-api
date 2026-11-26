@@ -17,6 +17,7 @@
 #include "core/text.hpp"
 #include "encode.hpp"
 #include "encoding_error.hpp"
+#include "json_write.hpp"
 #include "percent.hpp"
 
 #include <set>
@@ -84,12 +85,32 @@ std::expected<RequestInput, ym_error> encode(const RequestSpec& spec, size_t lim
             (!append_bounded(output.url, "?", limit) || !append_bounded(output.url, *query, limit)))
             return encoding_failure(YM_RESOURCE_LIMIT, "URL exceeds byte limit");
         if (spec.encoding == BodyKind::form) {
+            if (spec.json_root)
+                return encoding_failure(YM_INVALID_ARGUMENT, "JSON supplied for form body");
             auto body = encode_fields(spec.body, true, limit);
             if (!body)
                 return std::unexpected(body.error());
             output.body = std::move(*body);
             output.headers.emplace_back("Content-Type", "application/x-www-form-urlencoded");
-        } else if (spec.encoding != BodyKind::none || !spec.body.empty())
+        } else if (spec.encoding == BodyKind::json) {
+            if (spec.json_root && !spec.body.empty())
+                return encoding_failure(YM_INVALID_ARGUMENT, "Two JSON body sources supplied");
+            ym_value value;
+            if (spec.json_root)
+                value = *spec.json_root;
+            else {
+                ym_value::Object object;
+                for (const auto& field : spec.body)
+                    if (field.value)
+                        object.emplace_back(field.key, *field.value);
+                value = ym_value(std::move(object));
+            }
+            auto body = encode_json(value, limit);
+            if (!body)
+                return std::unexpected(body.error());
+            output.body = std::move(*body);
+            output.headers.emplace_back("Content-Type", "application/json");
+        } else if (spec.encoding != BodyKind::none || !spec.body.empty() || spec.json_root)
             return encoding_failure(YM_INVALID_ARGUMENT,
                 "Body data supplied without matching encoding");
         size_t total = output.url.size();

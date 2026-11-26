@@ -32,6 +32,7 @@ enum class HttpMethod {
 enum class BodyKind {
     none,
     form,
+    json,
 };
 
 struct RequestSpec {
@@ -42,6 +43,7 @@ struct RequestSpec {
     bool mutating = false;
     BodyKind encoding = BodyKind::none;
     std::vector<RequestField> body{};
+    std::optional<ym_value> json_root{};
 };
 
 std::expected<RequestInput, ym_error> encode(const RequestSpec&,
