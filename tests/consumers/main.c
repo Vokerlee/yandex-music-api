@@ -24,5 +24,12 @@ int main(void)
         fputs("Invalid C version/build contract\n", stderr);
         return 1;
     }
+    ym_client* client = NULL;
+    ym_error error;
+    if (ym_client_create(NULL, &client, &error) != YM_OK)
+        return 2;
+    if (ym_client_language(client).size != 2)
+        return 3;
+    ym_client_destroy(client);
     return 0;
 }

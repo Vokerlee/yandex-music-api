@@ -17,6 +17,7 @@
 #pragma once
 
 #include <string_view>
+#include <yandex_music/client.hpp>
 #include <yandex_music/yandex_music.h>
 
 namespace ym

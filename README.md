@@ -44,3 +44,11 @@ provides the target. Standard FetchContent source overrides and CMake dependency
 are supported. The installed SDK does not require JSON headers in the application.
 No test framework is downloaded. libcurl will be introduced with the HTTP adapter;
 this version does not prepare unused networking or media libraries.
+
+`ym::client::create({.token = token, .language = "en"})` returns
+`std::expected<ym::client, ym::error>`. Clients own their copied configuration and
+perform no network I/O on creation. C uses `ym_client_options_init`,
+`ym_client_create` and `ym_client_destroy`. Errors are caller-owned bounded values,
+including allocation failures; no exception or global last-error crosses the C ABI.
+Options accept older complete prefixes and ignore unknown tail fields of version 1.
+Destroying NULL is harmless; use one driving thread per client.

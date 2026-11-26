@@ -11,10 +11,29 @@ option(YM_BUILD_TESTS "Build SDK tests" ${PROJECT_IS_TOP_LEVEL})
 option(YM_INSTALL "Install SDK headers, libraries and CMake targets" ${PROJECT_IS_TOP_LEVEL})
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+include(CheckCXXSourceCompiles)
+function(ym_check_standard_library)
+    set(CMAKE_CXX_STANDARD 23)
+    set(CMAKE_CXX_STANDARD_REQUIRED ON)
+    check_cxx_source_compiles(
+        "#include <expected>\nint main() { std::expected<int, int> value(1); return *value - 1; }"
+        YM_HAS_STD_EXPECTED
+    )
+    if(NOT YM_HAS_STD_EXPECTED)
+        message(
+            FATAL_ERROR
+            "The selected C++23 compiler/standard library must provide std::expected (for example GCC 13+)."
+        )
+    endif()
+endfunction()
+ym_check_standard_library()
+
 configure_file(cmake/version_config.hpp.in generated/version_config.hpp @ONLY)
 include(cmake/dependencies.cmake)
 
 add_library(yandex_music_c src/c/version.cpp)
+target_sources(yandex_music_c PRIVATE src/core/client.cpp src/core/error.cpp)
+target_include_directories(yandex_music_c PRIVATE src)
 add_library(yandex_music::c ALIAS yandex_music_c)
 set_target_properties(
     yandex_music_c
@@ -48,6 +67,20 @@ target_sources(
             BASE_DIRS src/c
             FILES src/c/yandex_music/yandex_music.h src/c/yandex_music/export.h
 )
+
+target_sources(
+    yandex_music_c
+    PUBLIC
+        FILE_SET HEADERS
+            FILES src/c/yandex_music/types.h src/c/yandex_music/error.h src/c/yandex_music/client.h
+)
+target_sources(
+    yandex_music_cpp
+    INTERFACE
+        FILE_SET HEADERS
+            BASE_DIRS src/cpp
+            FILES src/cpp/yandex_music/error.hpp src/cpp/yandex_music/client.hpp
+)
 target_sources(
     yandex_music_cpp
     INTERFACE FILE_SET HEADERS BASE_DIRS src/cpp FILES src/cpp/yandex_music/yandex_music.hpp
@@ -65,6 +98,7 @@ endif()
 if(PROJECT_IS_TOP_LEVEL)
     include(CTest)
     if(BUILD_TESTING AND YM_BUILD_TESTS)
+        add_subdirectory(tests)
         add_test(
             NAME consumers.source
             COMMAND

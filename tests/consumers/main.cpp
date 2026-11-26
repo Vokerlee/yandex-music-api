@@ -19,6 +19,9 @@
 
 int main()
 {
+    auto client = ym::client::create();
+    if (!client || client->language() != "ru")
+        return 2;
     if (ym::version() != "0.1.0" || ym::build_info().empty()) {
         std::cerr << "Invalid C++ version/build contract\n";
         return 1;
