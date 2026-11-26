@@ -37,3 +37,11 @@ run("${CMAKE_COMMAND}" -S "${YM_SOURCE}/tests/consumers" -B "${YM_BINARY}/consum
 run("${CMAKE_COMMAND}" --build "${YM_BINARY}/consumer" --config Debug --parallel 2)
 
 run("${CMAKE_CTEST_COMMAND}" --test-dir "${YM_BINARY}/consumer" -C Debug --output-on-failure --no-tests=error)
+
+if(YM_SHARED)
+    run("${CMAKE_COMMAND}" -S "${YM_SOURCE}/tests/consumers" -B "${YM_BINARY}/c-only" -DYM_INSTALLED=ON -DYM_C_ONLY=ON -DCMAKE_PREFIX_PATH=${YM_BINARY}/prefix-b)
+
+    run("${CMAKE_COMMAND}" --build "${YM_BINARY}/c-only" --config Debug --parallel 2)
+
+    run("${CMAKE_CTEST_COMMAND}" --test-dir "${YM_BINARY}/c-only" -C Debug --output-on-failure --no-tests=error)
+endif()
