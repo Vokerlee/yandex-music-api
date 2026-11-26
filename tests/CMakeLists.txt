@@ -1,4 +1,5 @@
 add_executable(c_version consumers/main.c)
+
 set_target_properties(
     c_version
     PROPERTIES
@@ -7,12 +8,19 @@ set_target_properties(
         C_EXTENSIONS OFF
         RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}"
 )
+
 target_link_libraries(c_version PRIVATE yandex_music::c)
+
 add_test(NAME c.version COMMAND c_version)
+
 add_executable(cpp_version consumers/main.cpp)
+
 set_target_properties(cpp_version PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
+
 target_link_libraries(cpp_version PRIVATE yandex_music::cpp)
+
 add_test(NAME cpp.version COMMAND cpp_version)
+
 set_tests_properties(
     c.version
     cpp.version
