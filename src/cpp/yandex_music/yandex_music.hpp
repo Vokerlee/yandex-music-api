@@ -20,6 +20,7 @@
 #include <yandex_music/client.hpp>
 #include <yandex_music/ids.hpp>
 #include <yandex_music/request.hpp>
+#include <yandex_music/response.hpp>
 #include <yandex_music/result.hpp>
 #include <yandex_music/yandex_music.h>
 

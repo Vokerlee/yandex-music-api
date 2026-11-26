@@ -36,6 +36,8 @@ struct transport_response {
     ym_status status = YM_OK;
     uint32_t http_status = 200;
     std::string body { };
+    std::string request_id { };
+    int64_t retry_after_ms = -1;
 };
 /** start is atomic on throw; cancel synchronously detaches all borrowed input access.
  * No callback is invoked by an adapter. Completion tickets must be preserved exactly. */

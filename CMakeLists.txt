@@ -40,6 +40,7 @@ set(YM_CORE_SOURCES
     src/core/result.cpp
     src/core/engine.cpp
     src/protocol/encode.cpp
+    src/protocol/response.cpp
 )
 target_sources(yandex_music_c PRIVATE ${YM_CORE_SOURCES})
 target_include_directories(yandex_music_c PRIVATE src)
@@ -99,6 +100,8 @@ set_target_properties(
     PROPERTIES EXPORT_NAME c VERSION ${PROJECT_VERSION} SOVERSION 0 POSITION_INDEPENDENT_CODE ON
 )
 set_target_properties(yandex_music_cpp PROPERTIES EXPORT_NAME cpp)
+target_sources(yandex_music_c PUBLIC FILE_SET HEADERS FILES src/c/yandex_music/response.h)
+target_sources(yandex_music_cpp INTERFACE FILE_SET HEADERS FILES src/cpp/yandex_music/response.hpp)
 target_sources(yandex_music_c PUBLIC FILE_SET HEADERS FILES src/c/yandex_music/request.h)
 target_sources(yandex_music_cpp INTERFACE FILE_SET HEADERS FILES src/cpp/yandex_music/request.hpp)
 target_sources(yandex_music_c PUBLIC FILE_SET HEADERS FILES src/c/yandex_music/result.h)

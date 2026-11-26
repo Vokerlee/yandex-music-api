@@ -19,6 +19,9 @@
 
 int main()
 {
+    auto response = ym::parse_response("{\"result\":true}");
+    if (!response || !*response->root().boolean())
+        return 3;
     auto client = ym::client::create();
     if (!client || client->language() != "ru")
         return 2;

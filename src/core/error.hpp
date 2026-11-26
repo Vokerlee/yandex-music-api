@@ -24,7 +24,10 @@ namespace ym::detail
 {
 template <size_t N> void copy_text(char (&out)[N], std::string_view text) noexcept
 {
-    const auto length = std::min(text.size(), N - 1);
+    auto length = std::min(text.size(), N - 1);
+    if (length < text.size())
+        while (length && (static_cast<unsigned char>(text[length]) & 0xc0) == 0x80)
+            --length;
     if (length)
         std::memcpy(out, text.data(), length);
     out[length] = '\0';

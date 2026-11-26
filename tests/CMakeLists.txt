@@ -26,6 +26,9 @@ add_test(NAME core.engine COMMAND engine_test)
 add_executable(encoding_test test_encoding.cpp)
 target_link_libraries(encoding_test PRIVATE ym_test_core)
 add_test(NAME protocol.encoding COMMAND encoding_test)
+add_executable(response_test test_response.cpp)
+target_link_libraries(response_test PRIVATE ym_test_core)
+add_test(NAME protocol.response COMMAND response_test)
 foreach(
     target
     client_test
@@ -33,6 +36,7 @@ foreach(
     ym_test_core
     engine_test
     encoding_test
+    response_test
 )
     ym_build_controls(${target})
 endforeach()

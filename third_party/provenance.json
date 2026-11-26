@@ -1,4 +1,19 @@
 {
   "version": 1,
-  "adaptations": []
+  "adaptations": [
+    {
+      "repository": "MarshalX/yandex-music-api",
+      "revision": "9ca132e5c18a72aab779c1fc68c169380a9357d0",
+      "source_paths": [
+        "yandex_music/utils/request_base.py",
+        "yandex_music/utils/response.py",
+        "tests/test_request_base.py"
+      ],
+      "native_paths": [
+        "src/protocol/response.cpp",
+        "tests/test_response.cpp"
+      ],
+      "license": "LGPL-3.0-only"
+    }
+  ]
 }

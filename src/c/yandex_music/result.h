@@ -39,6 +39,8 @@ enum {
 YM_API void YM_CALL ym_result_destroy(ym_result* result);
 YM_API ym_status YM_CALL ym_result_clone(const ym_result* input, ym_result** out, ym_error* error);
 YM_API const ym_value* YM_CALL ym_result_root(const ym_result* result);
+YM_API uint32_t YM_CALL ym_result_http_status(const ym_result* result);
+YM_API ym_string_view YM_CALL ym_result_request_id(const ym_result* result);
 /** NULL view is missing, distinct from JSON null and empty/zero/false values. */
 YM_API ym_value_type YM_CALL ym_value_typeof(const ym_value* value);
 YM_API ym_status YM_CALL ym_value_string(

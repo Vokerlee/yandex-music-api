@@ -31,5 +31,14 @@ int main(void)
     if (ym_client_language(client).size != 2)
         return 3;
     ym_client_destroy(client);
+    const char body[] = "{\"result\":true}";
+    ym_result* response = NULL;
+    uint32_t flag = 0;
+    if (ym_response_parse(200, (ym_string_view) { body, sizeof(body) - 1 }, NULL, &response, &error)
+        != YM_OK)
+        return 4;
+    if (ym_value_bool(ym_result_root(response), &flag, &error) != YM_OK || flag != 1)
+        return 5;
+    ym_result_destroy(response);
     return 0;
 }

@@ -79,3 +79,16 @@ space-as-plus form bodies, ordered repeated fields, and JSON with exact wire key
 values require an endpoint-specific text representation. Encoding validates headers/origins
 and enforces byte/node/depth limits. Both future public service interfaces use this same
 encoder rather than independently rebuilding HTTP payloads.
+
+Offline response decoding is available as `ym::parse_response(body, http_status)`
+and `ym_response_parse`. The default envelope policy follows the Python reference:
+unwrap a non-null `result`, otherwise retain the root object. Explicit ROOT/RESULT
+policies support endpoint-specific semantics. A bounded SAX mapper preserves wire
+keys and unknown fields, rejects duplicate keys and integer overflow, and limits
+bytes, nesting, nodes and collection lengths. Errors retain bounded server metadata;
+known HTTP errors remain typed even when the body is malformed. HTTP-200 service
+errors also fail, an intentional improvement over blindly returning their payload.
+
+Response handling/tests are adapted from [MarshalX's Python SDK](https://github.com/MarshalX/yandex-music-api).
+See [third-party notices](THIRD_PARTY_NOTICES.md) for the retained LGPL notices and
+source provenance. Other first-party files retain their GPLv3 notices.
