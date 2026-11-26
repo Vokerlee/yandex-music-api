@@ -93,6 +93,7 @@ target_sources(
                 src/cpp/yandex_music/result.hpp
                 src/cpp/yandex_music/ids.hpp
                 src/cpp/yandex_music/request.hpp
+                src/cpp/yandex_music/response.hpp
 )
 
 option(YM_INSTALL "Install SDK headers, libraries and CMake targets" ${PROJECT_IS_TOP_LEVEL})
