@@ -231,6 +231,13 @@ set_target_properties(protocol_fields PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PRO
 add_test(NAME protocol.fields COMMAND protocol_fields)
 ym_build_controls(protocol_fields)
 
+add_executable(protocol_uri protocol.uri.cpp)
+target_include_directories(protocol_uri PRIVATE "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(protocol_uri PRIVATE ym_test_core)
+set_target_properties(protocol_uri PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
+add_test(NAME protocol.uri COMMAND protocol_uri)
+ym_build_controls(protocol_uri)
+
 set_tests_properties(
     c.version
     cpp.version
@@ -259,5 +266,6 @@ set_tests_properties(
     text.utf8
     protocol.percent
     protocol.fields
+    protocol.uri
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )

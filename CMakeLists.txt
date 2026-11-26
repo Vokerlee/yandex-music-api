@@ -23,6 +23,7 @@ set(YM_CORE_SOURCES
     src/core/request_api.cpp
     src/protocol/percent.cpp
     src/protocol/fields.cpp
+    src/protocol/encode.cpp
 )
 
 add_library(yandex_music_c src/c/version.cpp ${YM_CORE_SOURCES})
