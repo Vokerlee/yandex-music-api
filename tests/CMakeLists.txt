@@ -179,6 +179,12 @@ set_target_properties(
 )
 add_test(NAME engine.callback_lifetimes COMMAND engine_callback_lifetimes)
 
+add_executable(cpp_request_owner cpp.request_owner.cpp)
+target_include_directories(cpp_request_owner PRIVATE "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(cpp_request_owner PRIVATE ym_test_core)
+set_target_properties(cpp_request_owner PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
+add_test(NAME cpp.request_owner COMMAND cpp_request_owner)
+
 set_tests_properties(
     c.version
     cpp.version
@@ -203,5 +209,6 @@ set_tests_properties(
     engine.limits
     engine.callbacks
     engine.callback_lifetimes
+    cpp.request_owner
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )
