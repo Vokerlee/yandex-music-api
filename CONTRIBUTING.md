@@ -5,3 +5,6 @@ Local research/plans stay ignored. Install pinned formatters from requirements-d
 Run `python3 scripts/format.py` or `python3 scripts/format.py --check`.
 Only tracked files are selected; explicit --files paths must be relative and tracked.
 Missing tools, incorrect versions and formatter failures fail the check.
+
+`python3 scripts/format.py --install-hook` installs an optional pre-commit check.
+Custom hooks are preserved; checks inspect working-tree contents, including partial stages.

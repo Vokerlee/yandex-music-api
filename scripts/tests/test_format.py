@@ -21,6 +21,15 @@ class FormattingContract(unittest.TestCase):
             with self.assertRaises(ValueError):
                 formatting.tracked_files(root, ['untracked.cpp'])
 
+    def test_custom_hook_is_preserved(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            subprocess.run(['git', 'init', '-q', str(root)], check=True)
+            hook = root / '.git/hooks/pre-commit'
+            hook.write_text('custom hook\n')
+            with self.assertRaises(ValueError):
+                formatting.install_hook(root)
+            self.assertEqual(hook.read_text(), 'custom hook\n')
 
 
 if __name__ == '__main__':

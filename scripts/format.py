@@ -21,13 +21,26 @@ def tracked_files(root=ROOT, explicit=None):
     return sorted(p for p in selected if (root / p).is_file())
 
 
+def install_hook(root=ROOT):
+    path = subprocess.check_output(['git', 'rev-parse', '--git-path', 'hooks/pre-commit'],
+                                   cwd=root, text=True).strip()
+    hook = root / path
+    if hook.exists() and hook.read_text() != HOOK:
+        raise ValueError(f'Preserving existing hook: {hook}')
+    hook.parent.mkdir(parents=True, exist_ok=True)
+    hook.write_text(HOOK)
+    hook.chmod(0o755)
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true')
     parser.add_argument('--files', nargs='+')
+    parser.add_argument('--install-hook', action='store_true')
     args = parser.parse_args()
+    if args.install_hook:
+        install_hook()
+        return
     files = tracked_files(explicit=args.files)
     pins = dict(line.strip().split('==') for line in
                 (ROOT / 'requirements-dev.txt').read_text().splitlines() if '==' in line)
