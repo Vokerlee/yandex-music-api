@@ -113,6 +113,15 @@ target_link_libraries(cpp_scalar_views PRIVATE ym_test_core)
 set_target_properties(cpp_scalar_views PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
 add_test(NAME cpp.scalar_views COMMAND cpp_scalar_views)
 
+add_executable(cpp_collection_views cpp.collection_views.cpp)
+target_include_directories(cpp_collection_views PRIVATE "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(cpp_collection_views PRIVATE ym_test_core)
+set_target_properties(
+    cpp_collection_views
+    PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}"
+)
+add_test(NAME cpp.collection_views COMMAND cpp_collection_views)
+
 set_tests_properties(
     c.version
     cpp.version
@@ -128,5 +137,6 @@ set_tests_properties(
     abi.collection_views
     cpp.document_owner
     cpp.scalar_views
+    cpp.collection_views
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )
