@@ -83,6 +83,15 @@ std::expected<RequestInput, ym_error> encode(const RequestSpec& spec, size_t lim
         if (!query->empty() &&
             (!append_bounded(output.url, "?", limit) || !append_bounded(output.url, *query, limit)))
             return encoding_failure(YM_RESOURCE_LIMIT, "URL exceeds byte limit");
+        if (spec.encoding == BodyKind::form) {
+            auto body = encode_fields(spec.body, true, limit);
+            if (!body)
+                return std::unexpected(body.error());
+            output.body = std::move(*body);
+            output.headers.emplace_back("Content-Type", "application/x-www-form-urlencoded");
+        } else if (spec.encoding != BodyKind::none || !spec.body.empty())
+            return encoding_failure(YM_INVALID_ARGUMENT,
+                "Body data supplied without matching encoding");
         size_t total = output.url.size();
         auto count = [&](size_t amount) {
             if (amount > limit - total)
