@@ -1,5 +1,11 @@
 function(run)
-    execute_process(COMMAND ${ARGV} RESULT_VARIABLE result COMMAND_ECHO STDOUT)
+    cmake_parse_arguments(PARSE_ARGV 0 command "" "" "")
+
+    execute_process(
+        COMMAND ${command_UNPARSED_ARGUMENTS}
+        RESULT_VARIABLE result
+        COMMAND_ECHO STDOUT
+    )
 
     if(NOT result EQUAL 0)
         message(FATAL_ERROR "Dependency contract failed: ${ARGV}")
@@ -10,7 +16,7 @@ run("${CMAKE_COMMAND}" -S "${YM_JSON_SOURCE}" -B "${YM_BINARY}/json" -DJSON_Buil
 run("${CMAKE_COMMAND}" --install "${YM_BINARY}/json")
 
 foreach(mode SYSTEM AUTO)
-    run("${CMAKE_COMMAND}" -S "${YM_SOURCE}" -B "${YM_BINARY}/${mode}" -DYM_DEPENDENCY_MODE=${mode} -DCMAKE_PREFIX_PATH=${YM_BINARY}/prefix -DYM_BUILD_TESTS=OFF -DFETCHCONTENT_FULLY_DISCONNECTED=ON)
+    run("${CMAKE_COMMAND}" -S "${YM_SOURCE}" -B "${YM_BINARY}/${mode}" -DYM_DEPENDENCY_MODE=${mode} "-DCMAKE_PREFIX_PATH=${YM_BINARY}/prefix;${YM_PREFIX_PATH}" -DYM_CURL_DEPENDENCY_MODE=${YM_CURL_MODE} -DFETCHCONTENT_SOURCE_DIR_YM_CURL=${YM_CURL_SOURCE} -DYM_BUILD_TESTS=OFF -DFETCHCONTENT_FULLY_DISCONNECTED=ON)
     run("${CMAKE_COMMAND}" --build "${YM_BINARY}/${mode}" --config Debug --parallel 2)
 endforeach()
 

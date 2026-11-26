@@ -26,7 +26,7 @@ target_include_directories(
 )
 target_compile_features(ym_test_core PUBLIC cxx_std_23)
 target_compile_definitions(ym_test_core PUBLIC YM_STATIC)
-target_link_libraries(ym_test_core PRIVATE nlohmann_json::nlohmann_json)
+target_link_libraries(ym_test_core PRIVATE nlohmann_json::nlohmann_json CURL::libcurl)
 ym_build_controls(ym_test_core)
 
 add_executable(abi_errors abi.errors.cpp)
