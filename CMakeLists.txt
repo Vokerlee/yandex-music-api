@@ -94,5 +94,14 @@ if(PROJECT_IS_TOP_LEVEL)
                 "-DYM_PREFIX_PATH=${CMAKE_PREFIX_PATH}" -DYM_MODE=${YM_DEPENDENCY_MODE} -P
                 ${CMAKE_CURRENT_SOURCE_DIR}/tests/package.cmake
         )
+        add_test(
+            NAME dependencies.modes
+            COMMAND
+                "${CMAKE_COMMAND}" -DYM_SOURCE=${CMAKE_CURRENT_SOURCE_DIR}
+                -DYM_BINARY=${CMAKE_CURRENT_BINARY_DIR}/dependencies.modes
+                -DYM_SHARED=${BUILD_SHARED_LIBS} -DYM_JSON_SOURCE=${YM_JSON_SOURCE_DIR}
+                "-DYM_PREFIX_PATH=${CMAKE_PREFIX_PATH}" -DYM_MODE=${YM_DEPENDENCY_MODE} -P
+                ${CMAKE_CURRENT_SOURCE_DIR}/tests/dependencies.cmake
+        )
     endif()
 endif()
