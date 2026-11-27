@@ -1,43 +1,101 @@
 # Yandex Music Native
 
-Unofficial Yandex Music SDK with a C++23 implementation and a C11-compatible API.
-This initial component exposes SDK version/build information without network calls.
+An unofficial Yandex Music library for C and C++.
+
+**Development status:** the current public API supports client setup and reading API responses. It does not yet expose methods for making music-service requests.
+
+## Add it to your application
+
+Requirements: CMake 3.28 or newer and a compiler with C++23 support. On Linux and macOS, OpenSSL development headers are needed when building libcurl from source. Windows uses its native TLS support.
+
+Fetch the library from GitHub and link the C++ target:
 
 ```cmake
+include(FetchContent)
+
+FetchContent_Declare(yandex_music
+    GIT_REPOSITORY https://github.com/Vokerlee/yandex-music-api.git
+    GIT_TAG master
+)
+FetchContent_MakeAvailable(yandex_music)
+
+target_link_libraries(my_app PRIVATE yandex_music::cpp)
+```
+
+You can also clone it into your project and use `add_subdirectory(external/yandex-music-api)`. Use a specific commit instead of `master` to pin the version.
+
+For a C application, enable both languages in your project and link the C target:
+
+```cmake
+project(my_app LANGUAGES C CXX)
 add_subdirectory(external/yandex-music-api)
 target_link_libraries(my_app PRIVATE yandex_music::c)
 ```
 
-Include `<yandex_music/yandex_music.h>` and call `ym_version()`.
-C consumers enable `LANGUAGES C CXX` so CMake supplies the implementation runtime.
-Build with `cmake -S . -B build`, `cmake --build build`, then `ctest --test-dir build`.
-Use `BUILD_SHARED_LIBS=ON` for a shared library. CMake 3.28+ and C++23 are required.
-License: [GPLv3](LICENSE). Third-party notices: [LICENSES/THIRD_PARTY_NOTICES.md](LICENSES/THIRD_PARTY_NOTICES.md).
+The build finds or downloads its dependencies automatically.
 
-C++ applications link `yandex_music::cpp`, include `<yandex_music/yandex_music.hpp>`,
-and call `ym::version()` / `ym::build_info()`. The target supplies C++23.
+## Create a client
 
-Install with `cmake --install build --prefix /prefix`. Applications then use
-`find_package(yandex_music CONFIG REQUIRED)` and link the same target.
+```cpp
+#include <iostream>
 
-Private JSON dependency resolution supports AUTO, SYSTEM (never downloads), and FETCH.
-The fallback JSON 3.12.0 archive is pinned by SHA-256 in cmake/dependencies.cmake.
-Installed consumers do not need JSON headers.
+#include <yandex_music/yandex_music.hpp>
 
-The implemented foundations provide owned C error/client/result/request handles and
-C++23 RAII/expected facades. The request engine is caller-driven and uses a private
-transport seam; service endpoints and the real HTTP adapter are separate additions.
-Offline response decoding supports bounded JSON, explicit root/result selection,
-HTTP/service errors and owned metadata. Unknown wire fields are preserved.
-Reference-derived work credits Ilya (Marshal); see LICENSES/THIRD_PARTY_NOTICES.md. No endpoint or full Python parity is claimed yet.
+int main()
+{
+    auto client = ym::Client::create({.token = "YOUR_ACCESS_TOKEN"});
+    if (!client) {
+        std::cerr << client.error().message() << '\n';
+        return 1;
+    }
+}
+```
 
-The private curl resolver accepts `YM_CURL_DEPENDENCY_MODE=AUTO|SYSTEM|FETCH`.
-It reuses a parent `CURL::libcurl` target, otherwise AUTO searches before fetching
-the pinned source. SYSTEM never downloads. The fetched build uses native Windows
-TLS or OpenSSL on Unix; install OpenSSL development headers on Unix.
+Pass a Yandex Music OAuth access token when creating the client. Keep tokens outside source control.
 
-A shared SDK requires a shared curl library or a position-independent static curl.
-The fetched curl build enables position-independent code automatically.
+## Read an API response
 
-For development, install `requirements-dev.txt` and run `python3 scripts/format.py`
-(or `--check` to verify formatting).
+You can read saved or externally obtained JSON responses:
+
+```cpp
+auto response = ym::parse_response(R"({"result":{"title":"My playlist"}})");
+if (!response) {
+    std::cerr << response.error().message() << '\n';
+    return 1;
+}
+
+auto title = response->root().member("title");
+if (!title)
+    return 1;
+
+auto text = title->string();
+if (text)
+    std::cout << *text << '\n';
+```
+
+Responses own their data. Keep the response alive while using its text and list views.
+
+C++ operations report failures through `ym::Result<T>` rather than throwing exceptions. C applications include `<yandex_music/yandex_music.h>` and check the returned `ym_status`; `ym_error` provides the error message and HTTP status.
+
+## Install the library
+
+```sh
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release
+cmake --install build --config Release --prefix /your/install/path
+```
+
+Set `CMAKE_PREFIX_PATH` to that location when configuring your application:
+
+```cmake
+find_package(yandex_music CONFIG REQUIRED)
+target_link_libraries(my_app PRIVATE yandex_music::cpp)
+```
+
+Use `yandex_music::c` for C applications. Add `-DBUILD_SHARED_LIBS=ON` when configuring the library to build a shared library.
+
+## License and credits
+
+Licensed under [GPLv3](LICENSE). See [third-party notices](LICENSES/THIRD_PARTY_NOTICES.md) for component licenses and attribution.
+
+API behavior is informed by [MarshalX/yandex-music-api](https://github.com/MarshalX/yandex-music-api).
