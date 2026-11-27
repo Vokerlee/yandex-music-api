@@ -149,6 +149,15 @@ target_link_libraries(abi_request_owner PRIVATE ym_test_core)
 set_target_properties(abi_request_owner PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
 add_test(NAME abi.request_owner COMMAND abi_request_owner)
 
+add_executable(engine_cancellation engine.cancellation.cpp)
+target_include_directories(engine_cancellation PRIVATE "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(engine_cancellation PRIVATE ym_test_core)
+set_target_properties(
+    engine_cancellation
+    PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}"
+)
+add_test(NAME engine.cancellation COMMAND engine_cancellation)
+
 set_tests_properties(
     c.version
     cpp.version
@@ -169,5 +178,6 @@ set_tests_properties(
     transport.contract
     engine.scheduling
     abi.request_owner
+    engine.cancellation
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )

@@ -63,6 +63,7 @@ YM_API ym_request_state YM_CALL ym_request_get_state(const ym_request* request) 
 YM_API ym_status YM_CALL ym_request_get_status(const ym_request* request) YM_NOEXCEPT;
 
 /** Idempotent. Started mutations may report YM_OUTCOME_UNKNOWN. Delivery waits for poll. */
+YM_API ym_status YM_CALL ym_request_cancel(ym_request* request, ym_error* error) YM_NOEXCEPT;
 
 /** Result transfer is exactly once; outputs reset on every failure, including YM_PENDING. */
 YM_API ym_status YM_CALL ym_request_take_result(ym_request* request, ym_result** out,

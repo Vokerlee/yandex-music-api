@@ -46,7 +46,8 @@ void cancel_state(RequestState& s, ym_status reason, Engine* context) noexcept
         if (active && active->adapter)
             active->adapter->cancel(s.ticket);
     }
-    /* MUTATION_CANCEL */
+    if (started && s.input.mutating)
+        reason = YM_OUTCOME_UNKNOWN;
     finish(s, reason, "Request cancelled or expired");
 }
 
@@ -146,7 +147,10 @@ ym_status poll_engine(Engine& owner, uint64_t now, size_t budget, ym_error* erro
                 if (s->ticket != response->ticket || s->phase != YM_REQUEST_RUNNING)
                     continue;
                 if (response->status != YM_OK)
-                    finish(*s, response->status, "Transport failed");
+                    finish(*s,
+                        s->input.mutating ? static_cast<ym_status>(YM_OUTCOME_UNKNOWN)
+                                          : response->status,
+                        "Transport failed");
                 /* RESPONSE_LIMIT */
                 else {
                     ym_result* raw = nullptr;

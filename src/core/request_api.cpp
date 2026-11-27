@@ -155,3 +155,12 @@ void YM_CALL ym_request_destroy(ym_request* r) YM_NOEXCEPT
     /* DEFER_REQUEST_DESTRUCTION */
     delete r;
 }
+
+ym_status YM_CALL ym_request_cancel(ym_request* request, ym_error* error) YM_NOEXCEPT
+{
+    ym::detail::clear(error);
+    if (!request)
+        return ym::detail::fail(error, YM_INVALID_ARGUMENT, "Request is required");
+    ym::detail::cancel_state(*request->state);
+    return YM_OK;
+}
