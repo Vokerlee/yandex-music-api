@@ -55,6 +55,12 @@ YM_API void YM_CALL ym_request_options_init(ym_request_options* options) YM_NOEX
 YM_API ym_status YM_CALL ym_client_poll(ym_client* client, uint64_t monotonic_ms,
     size_t work_budget, ym_error* error) YM_NOEXCEPT;
 
+/** Polls until completion or timeout, then transfers the result. timeout_ms is relative;
+ * UINT64_MAX waits indefinitely. A timeout cancels the request. Do not destroy the
+ * waited request from a completion callback. Other queued work is also advanced. */
+YM_API ym_status YM_CALL ym_client_wait(ym_client* client, ym_request* request, uint64_t timeout_ms,
+    ym_result** out, ym_error* error) YM_NOEXCEPT;
+
 /** Cancels locally and suppresses pending callbacks. Repeated close is harmless. */
 YM_API ym_status YM_CALL ym_client_close(ym_client* client, ym_error* error) YM_NOEXCEPT;
 

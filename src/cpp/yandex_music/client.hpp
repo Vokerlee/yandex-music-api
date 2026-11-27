@@ -85,6 +85,24 @@ public:
         return {};
     }
 
+    [[nodiscard]] Result<Document> wait(Request& request, uint64_t timeout_ms = 30000) noexcept
+    {
+        ym_result* value = nullptr;
+        ym_error failure;
+        if (ym_client_wait(handle_.get(), request.native_handle(), timeout_ms, &value, &failure) !=
+            YM_OK)
+            return std::unexpected(Error{failure});
+        return Document{value};
+    }
+
+    [[nodiscard]] Result<Document> wait(Result<Request> request,
+        uint64_t timeout_ms = 30000) noexcept
+    {
+        if (!request)
+            return std::unexpected(request.error());
+        return wait(*request, timeout_ms);
+    }
+
     [[nodiscard]] Result<void> close() noexcept
     {
         ym_error failure;
