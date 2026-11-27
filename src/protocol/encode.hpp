@@ -29,6 +29,10 @@ enum class HttpMethod {
     patch,
     head,
 };
+enum class BodyKind {
+    none,
+    form,
+};
 
 struct RequestSpec {
     std::string origin{};
@@ -36,6 +40,8 @@ struct RequestSpec {
     std::vector<std::string> path{};
     std::vector<RequestField> query{};
     bool mutating = false;
+    BodyKind encoding = BodyKind::none;
+    std::vector<RequestField> body{};
 };
 
 std::expected<RequestInput, ym_error> encode(const RequestSpec&,
