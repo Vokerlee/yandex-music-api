@@ -26,6 +26,7 @@ set(YM_CORE_SOURCES
     src/protocol/encode.cpp
     src/protocol/json_write.cpp
     src/protocol/json_read.cpp
+    src/protocol/envelope.cpp
 )
 
 add_library(yandex_music_c src/c/version.cpp ${YM_CORE_SOURCES})
