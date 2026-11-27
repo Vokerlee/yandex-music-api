@@ -31,6 +31,7 @@ set(YM_CORE_SOURCES
     src/core/request_options.cpp
     src/core/scheduler.cpp
     src/core/request_api.cpp
+    src/core/wait.cpp
     src/protocol/percent.cpp
     src/protocol/fields.cpp
     src/protocol/encode.cpp

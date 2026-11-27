@@ -470,3 +470,8 @@ add_executable(api_request api.request.cpp)
 target_link_libraries(api_request PRIVATE ym_test_core)
 add_test(NAME api.request COMMAND api_request)
 ym_build_controls(api_request)
+
+add_executable(api_wait api.wait.cpp)
+target_link_libraries(api_wait PRIVATE ym_test_core)
+add_test(NAME api.wait COMMAND api_wait)
+ym_build_controls(api_wait)
