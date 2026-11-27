@@ -375,6 +375,16 @@ set_target_properties(
 add_test(NAME transport.url_policy COMMAND transport_url_policy)
 ym_build_controls(transport_url_policy)
 
+add_executable(transport_request_policy transport.request_policy.cpp)
+target_include_directories(transport_request_policy PRIVATE "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(transport_request_policy PRIVATE ym_test_core)
+set_target_properties(
+    transport_request_policy
+    PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}"
+)
+add_test(NAME transport.request_policy COMMAND transport_request_policy)
+ym_build_controls(transport_request_policy)
+
 set_tests_properties(
     c.version
     cpp.version
@@ -418,5 +428,6 @@ set_tests_properties(
     transport.body_sink
     transport.header_sink
     transport.url_policy
+    transport.request_policy
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )

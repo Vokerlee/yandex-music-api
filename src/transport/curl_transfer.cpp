@@ -104,16 +104,16 @@ std::expected<std::unique_ptr<CurlTransfer>, ym_error> prepare_transfer(
                 "Transfer requires an HTTPS URL without userinfo or fragments");
             return std::unexpected(error);
         }
-        if (input.method != "GET" || !input.body.empty() || !input.headers.empty()) {
-            fail(&error, YM_UNSUPPORTED, "Transfer requires a bodyless GET request");
-            return std::unexpected(error);
-        }
+
         auto transfer = std::make_unique<CurlTransfer>(std::move(runtime), policy.max_body);
         auto* handle = transfer->handle = curl_easy_init();
         if (!handle)
             throw std::bad_alloc();
         configure_handle(*transfer, input, policy);
+        configure_request(*transfer, input);
         return transfer;
+    } catch (const std::invalid_argument&) {
+        fail(&error, YM_INVALID_ARGUMENT, "Invalid HTTP method, header or body");
     } catch (const std::bad_alloc&) {
         fail(&error, YM_OUT_OF_MEMORY, "Transfer allocation failed");
     } catch (...) {
