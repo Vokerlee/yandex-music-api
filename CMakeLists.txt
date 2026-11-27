@@ -26,6 +26,7 @@ include(cmake/build.cmake)
 set(YM_CORE_SOURCES
     src/core/error.cpp
     src/core/client.cpp
+    src/core/api.cpp
     src/core/result.cpp
     src/core/request_options.cpp
     src/core/scheduler.cpp
@@ -83,6 +84,7 @@ target_sources(
                 src/c/yandex_music/types.h
                 src/c/yandex_music/error.h
                 src/c/yandex_music/client.h
+                src/c/yandex_music/api.h
                 src/c/yandex_music/result.h
                 src/c/yandex_music/request.h
                 src/c/yandex_music/response.h

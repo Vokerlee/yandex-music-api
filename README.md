@@ -2,7 +2,7 @@
 
 An unofficial Yandex Music library for C and C++.
 
-**Development status:** the current public API supports client setup and reading API responses. It does not yet expose methods for making music-service requests.
+**Development status:** under active development. The C and C++ interfaces support authenticated Yandex Music requests; API coverage is growing.
 
 ## Add it to your application
 

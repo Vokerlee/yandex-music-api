@@ -19,9 +19,10 @@
 #include <memory>
 #include <string_view>
 
+#include <yandex_music/api.h>
 #include <yandex_music/client.h>
 #include <yandex_music/error.hpp>
-#include <yandex_music/request.h>
+#include <yandex_music/request.hpp>
 
 namespace ym {
 
@@ -62,6 +63,16 @@ public:
     {
         const auto value = ym_client_language(handle_.get());
         return value.size ? std::string_view(value.data, value.size) : std::string_view{};
+    }
+
+    [[nodiscard]] Result<Request> request(const ym_api_call& call,
+        const ym_request_options* options = nullptr) noexcept
+    {
+        ym_request* value = nullptr;
+        ym_error failure;
+        if (ym_client_request(handle_.get(), &call, options, &value, &failure) != YM_OK)
+            return std::unexpected(Error{failure});
+        return Request{value};
     }
 
     [[nodiscard]] ym_client* native_handle() const noexcept { return handle_.get(); }
