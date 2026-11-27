@@ -34,6 +34,15 @@ YM_API ym_status YM_CALL ym_playlist_recommendations(ym_client* client, ym_strin
     ym_string_view kind, const ym_request_options* options, ym_request** out,
     ym_error* error) YM_NOEXCEPT;
 
+/** visibility is public or private. */
+YM_API ym_status YM_CALL ym_playlist_create(ym_client* client, ym_string_view user_id,
+    ym_string_view title, ym_string_view visibility, const ym_request_options* options,
+    ym_request** out, ym_error* error) YM_NOEXCEPT;
+
+YM_API ym_status YM_CALL ym_playlist_delete(ym_client* client, ym_string_view user_id,
+    ym_string_view kind, const ym_request_options* options, ym_request** out,
+    ym_error* error) YM_NOEXCEPT;
+
 #ifdef __cplusplus
 }
 #endif

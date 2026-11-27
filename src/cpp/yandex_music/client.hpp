@@ -201,6 +201,19 @@ public:
         return start(ym_playlist_recommendations, options, view(user_id), view(kind));
     }
 
+    [[nodiscard]] Result<Request> playlist_create(std::string_view user_id, std::string_view title,
+        std::string_view visibility = "private",
+        const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_playlist_create, options, view(user_id), view(title), view(visibility));
+    }
+
+    [[nodiscard]] Result<Request> playlist_delete(std::string_view user_id, std::string_view kind,
+        const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_playlist_delete, options, view(user_id), view(kind));
+    }
+
     [[nodiscard]] ym_client* native_handle() const noexcept { return handle_.get(); }
 
     [[nodiscard]] Result<void> poll(uint64_t now_ms, size_t budget = 64) noexcept
