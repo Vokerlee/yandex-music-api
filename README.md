@@ -83,6 +83,7 @@ Call these methods on your client, then pass the returned request to `wait` or p
 | Artist information, tracks and albums | `artist("7")`, `artist_tracks("7", 0, 50)`, `artist_albums("7")` |
 | Album information and track lists | `albums("8,9")`, `album_tracks("8")` |
 | Account and liked music | `account_status()`, `likes("USER_ID")`, `set_like("USER_ID", ym::LibraryType::track, "42")` |
+| Account playlists and recommendations | `playlists("USER_ID")`, `playlist("USER_ID", "100")`, `playlist_recommendations("USER_ID", "100")` |
 
 Get your account ID from `account_status()` → `account.uid`. Pass it as a string wherever `USER_ID` appears. Use `LibraryType::artist`, `album` or `playlist` with `likes` and `set_like` for those collections.
 
