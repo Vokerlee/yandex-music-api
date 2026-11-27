@@ -16,7 +16,7 @@
 
 #include <yandex_music/error.h>
 
-void YM_CALL ym_error_init(ym_error* error)
+void YM_CALL ym_error_init(ym_error* error) YM_NOEXCEPT
 {
     if (error) {
         *error = {};
@@ -24,7 +24,7 @@ void YM_CALL ym_error_init(ym_error* error)
     }
 }
 
-const char* YM_CALL ym_status_name(ym_status status)
+const char* YM_CALL ym_status_name(ym_status status) YM_NOEXCEPT
 {
     switch (status) {
 #define YM_CASE(value)                                                                             \
