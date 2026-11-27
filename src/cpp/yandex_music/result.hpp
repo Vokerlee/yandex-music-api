@@ -78,6 +78,34 @@ public:
         return value != 0;
     }
 
+    [[nodiscard]] Result<size_t> size() const noexcept
+    {
+        size_t value{};
+        ym_error failure;
+        if (ym_value_size(value_, &value, &failure) != YM_OK)
+            return std::unexpected(Error{failure});
+        return value;
+    }
+
+    [[nodiscard]] Result<ValueView> member(std::string_view name) const noexcept
+    {
+        const ym_value* value = nullptr;
+        ym_error failure;
+        const auto status = ym_value_member(value_, {name.data(), name.size()}, &value, &failure);
+        if (status != YM_OK && status != YM_NOT_FOUND)
+            return std::unexpected(Error{failure});
+        return ValueView{value};
+    }
+
+    [[nodiscard]] Result<ValueView> at(size_t index) const noexcept
+    {
+        const ym_value* value = nullptr;
+        ym_error failure;
+        if (ym_value_at(value_, index, &value, &failure) != YM_OK)
+            return std::unexpected(Error{failure});
+        return ValueView{value};
+    }
+
 private:
     const ym_value* value_{nullptr};
 };
