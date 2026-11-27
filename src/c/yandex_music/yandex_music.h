@@ -30,6 +30,7 @@
 #include <yandex_music/result.h>
 #include <yandex_music/search.h>
 #include <yandex_music/types.h>
+#include <yandex_music/wave.h>
 
 #ifdef __cplusplus
 extern "C" {

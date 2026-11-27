@@ -515,3 +515,8 @@ add_executable(api_recommendations api.recommendations.cpp)
 target_link_libraries(api_recommendations PRIVATE ym_test_core)
 add_test(NAME api.recommendations COMMAND api_recommendations)
 ym_build_controls(api_recommendations)
+
+add_executable(api_wave api.wave.cpp)
+target_link_libraries(api_wave PRIVATE ym_test_core)
+add_test(NAME api.wave COMMAND api_wave)
+ym_build_controls(api_wave)
