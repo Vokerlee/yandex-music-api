@@ -18,6 +18,7 @@
 #define YANDEX_MUSIC_H
 
 #include <yandex_music/api.h>
+#include <yandex_music/catalogue.h>
 #include <yandex_music/client.h>
 #include <yandex_music/error.h>
 #include <yandex_music/export.h>

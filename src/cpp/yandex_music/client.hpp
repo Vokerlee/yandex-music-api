@@ -20,6 +20,7 @@
 #include <string_view>
 
 #include <yandex_music/api.h>
+#include <yandex_music/catalogue.h>
 #include <yandex_music/client.h>
 #include <yandex_music/error.hpp>
 #include <yandex_music/request.hpp>
@@ -97,6 +98,24 @@ public:
         const ym_request_options* options = nullptr) noexcept
     {
         return start(ym_search_suggest, options, view(text));
+    }
+
+    [[nodiscard]] Result<Request> tracks(std::string_view ids,
+        const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_tracks, options, view(ids));
+    }
+
+    [[nodiscard]] Result<Request> track_similar(std::string_view track_id,
+        const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_track_similar, options, view(track_id));
+    }
+
+    [[nodiscard]] Result<Request> track_supplement(std::string_view track_id,
+        const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_track_supplement, options, view(track_id));
     }
 
     [[nodiscard]] ym_client* native_handle() const noexcept { return handle_.get(); }
