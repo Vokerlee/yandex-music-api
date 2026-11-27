@@ -15,6 +15,7 @@
  */
 
 #include "version_config.hpp"
+
 #include <nlohmann/json.hpp>
 #include <yandex_music/yandex_music.h>
 

@@ -21,8 +21,19 @@ target_link_libraries(cpp_version PRIVATE yandex_music::cpp)
 
 add_test(NAME cpp.version COMMAND cpp_version)
 
+add_executable(abi_errors abi.errors.cpp)
+
+target_include_directories(abi_errors PRIVATE "${PROJECT_SOURCE_DIR}/src")
+
+target_link_libraries(abi_errors PRIVATE yandex_music::cpp)
+
+set_target_properties(abi_errors PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
+
+add_test(NAME abi.errors COMMAND abi_errors)
+
 set_tests_properties(
     c.version
     cpp.version
+    abi.errors
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )

@@ -15,6 +15,7 @@
  */
 
 #include <iostream>
+
 #include <yandex_music/yandex_music.hpp>
 
 int main()
