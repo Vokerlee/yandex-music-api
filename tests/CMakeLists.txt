@@ -500,3 +500,8 @@ add_executable(api_account api.account.cpp)
 target_link_libraries(api_account PRIVATE ym_test_core)
 add_test(NAME api.account COMMAND api_account)
 ym_build_controls(api_account)
+
+add_executable(api_playlists api.playlists.cpp)
+target_link_libraries(api_playlists PRIVATE ym_test_core)
+add_test(NAME api.playlists COMMAND api_playlists)
+ym_build_controls(api_playlists)

@@ -24,6 +24,7 @@
 #include <yandex_music/catalogue.h>
 #include <yandex_music/client.h>
 #include <yandex_music/error.hpp>
+#include <yandex_music/playlists.h>
 #include <yandex_music/request.hpp>
 #include <yandex_music/search.h>
 
@@ -180,6 +181,24 @@ public:
     {
         return start(ym_set_like, options, view(user_id), static_cast<ym_library_type>(type),
             view(ids), static_cast<uint32_t>(liked));
+    }
+
+    [[nodiscard]] Result<Request> playlists(std::string_view user_id,
+        const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_playlists, options, view(user_id));
+    }
+
+    [[nodiscard]] Result<Request> playlist(std::string_view user_id, std::string_view kind,
+        const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_playlist, options, view(user_id), view(kind));
+    }
+
+    [[nodiscard]] Result<Request> playlist_recommendations(std::string_view user_id,
+        std::string_view kind, const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_playlist_recommendations, options, view(user_id), view(kind));
     }
 
     [[nodiscard]] ym_client* native_handle() const noexcept { return handle_.get(); }
