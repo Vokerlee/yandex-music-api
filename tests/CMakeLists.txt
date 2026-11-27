@@ -26,7 +26,7 @@ target_include_directories(
 )
 target_compile_features(ym_test_core PUBLIC cxx_std_23)
 target_compile_definitions(ym_test_core PUBLIC YM_STATIC)
-target_link_libraries(ym_test_core PRIVATE nlohmann_json::nlohmann_json CURL::libcurl)
+target_link_libraries(ym_test_core PRIVATE nlohmann_json::nlohmann_json PUBLIC CURL::libcurl)
 ym_build_controls(ym_test_core)
 
 add_executable(abi_errors abi.errors.cpp)
@@ -365,6 +365,16 @@ set_target_properties(
 add_test(NAME transport.header_sink COMMAND transport_header_sink)
 ym_build_controls(transport_header_sink)
 
+add_executable(transport_url_policy transport.url_policy.cpp)
+target_include_directories(transport_url_policy PRIVATE "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(transport_url_policy PRIVATE ym_test_core)
+set_target_properties(
+    transport_url_policy
+    PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}"
+)
+add_test(NAME transport.url_policy COMMAND transport_url_policy)
+ym_build_controls(transport_url_policy)
+
 set_tests_properties(
     c.version
     cpp.version
@@ -407,5 +417,6 @@ set_tests_properties(
     transport.curl_runtime
     transport.body_sink
     transport.header_sink
+    transport.url_policy
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )
