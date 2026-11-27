@@ -98,6 +98,15 @@ set_target_properties(
 )
 add_test(NAME abi.collection_views COMMAND abi_collection_views)
 
+add_executable(cpp_document_owner cpp.document_owner.cpp)
+target_include_directories(cpp_document_owner PRIVATE "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(cpp_document_owner PRIVATE ym_test_core)
+set_target_properties(
+    cpp_document_owner
+    PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}"
+)
+add_test(NAME cpp.document_owner COMMAND cpp_document_owner)
+
 set_tests_properties(
     c.version
     cpp.version
@@ -111,5 +120,6 @@ set_tests_properties(
     abi.result_owner
     abi.scalar_views
     abi.collection_views
+    cpp.document_owner
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )
