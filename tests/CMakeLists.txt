@@ -15,6 +15,17 @@ set_target_properties(cpp_version PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT
 target_link_libraries(cpp_version PRIVATE yandex_music::cpp)
 add_test(NAME cpp.version COMMAND cpp_version)
 
+list(TRANSFORM YM_CORE_SOURCES PREPEND "${PROJECT_SOURCE_DIR}/" OUTPUT_VARIABLE private_sources)
+
+add_library(ym_test_core STATIC ${private_sources})
+target_include_directories(
+    ym_test_core
+    PUBLIC "${PROJECT_SOURCE_DIR}/src" "${PROJECT_SOURCE_DIR}/src/c" "${PROJECT_SOURCE_DIR}/src/cpp"
+)
+target_compile_features(ym_test_core PUBLIC cxx_std_23)
+target_compile_definitions(ym_test_core PUBLIC YM_STATIC)
+target_link_libraries(ym_test_core PRIVATE nlohmann_json::nlohmann_json)
+
 add_executable(abi_errors abi.errors.cpp)
 target_include_directories(abi_errors PRIVATE "${PROJECT_SOURCE_DIR}/src")
 target_link_libraries(abi_errors PRIVATE yandex_music::cpp)
@@ -66,6 +77,12 @@ set_target_properties(
 )
 add_test(NAME abi.allocation_failure COMMAND abi_allocation_failure)
 
+add_executable(abi_result_owner abi.result_owner.cpp)
+target_include_directories(abi_result_owner PRIVATE "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(abi_result_owner PRIVATE ym_test_core)
+set_target_properties(abi_result_owner PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
+add_test(NAME abi.result_owner COMMAND abi_result_owner)
+
 set_tests_properties(
     c.version
     cpp.version
@@ -76,5 +93,6 @@ set_tests_properties(
     abi.option_prefixes
     cpp.client_owner
     abi.allocation_failure
+    abi.result_owner
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )
