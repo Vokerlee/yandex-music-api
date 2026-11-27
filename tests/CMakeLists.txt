@@ -505,3 +505,8 @@ add_executable(api_playlists api.playlists.cpp)
 target_link_libraries(api_playlists PRIVATE ym_test_core)
 add_test(NAME api.playlists COMMAND api_playlists)
 ym_build_controls(api_playlists)
+
+add_executable(api_playlist_editing api.playlist_editing.cpp)
+target_link_libraries(api_playlist_editing PRIVATE ym_test_core)
+add_test(NAME api.playlist_editing COMMAND api_playlist_editing)
+ym_build_controls(api_playlist_editing)
