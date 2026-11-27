@@ -34,9 +34,9 @@ typedef struct ym_error {
     char request_id[96];
 } ym_error;
 
-YM_API void YM_CALL ym_error_init(ym_error* error);
+YM_API void YM_CALL ym_error_init(ym_error* error) YM_NOEXCEPT;
 
-YM_API const char* YM_CALL ym_status_name(ym_status status);
+YM_API const char* YM_CALL ym_status_name(ym_status status) YM_NOEXCEPT;
 
 #ifdef __cplusplus
 }

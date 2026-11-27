@@ -17,11 +17,17 @@
 #include "test_support.hpp"
 
 #include <cstring>
+#include <type_traits>
 
 #include <yandex_music/yandex_music.hpp>
 
 int main()
 {
+    static_assert(std::is_nothrow_copy_constructible_v<ym::Error>);
+    static_assert(noexcept(ym_error_init(nullptr)));
+    static_assert(noexcept(ym_status_name(YM_OK)));
+    static_assert(noexcept(ym::version()) && noexcept(ym::build_info()));
+
     ym_error raw;
     ym_error_init(&raw);
     raw.code = YM_NOT_FOUND;
