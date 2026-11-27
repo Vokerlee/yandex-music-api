@@ -21,6 +21,7 @@
 #include <yandex_music/api.h>
 #include <yandex_music/catalogue.h>
 #include <yandex_music/client.h>
+#include <yandex_music/download.h>
 #include <yandex_music/error.h>
 #include <yandex_music/export.h>
 #include <yandex_music/playlists.h>
