@@ -151,6 +151,14 @@ public:
 
     [[nodiscard]] ym_result* native_handle() const noexcept { return handle_; }
 
+    [[nodiscard]] uint32_t http_status() const noexcept { return ym_result_http_status(handle_); }
+
+    [[nodiscard]] std::string_view request_id() const noexcept
+    {
+        const auto view = ym_result_request_id(handle_);
+        return view.size ? std::string_view(view.data, view.size) : std::string_view{};
+    }
+
 private:
     ym_result* handle_{nullptr};
 };

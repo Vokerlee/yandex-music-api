@@ -305,6 +305,16 @@ set_target_properties(
 add_test(NAME abi.response_decode COMMAND abi_response_decode)
 ym_build_controls(abi_response_decode)
 
+add_executable(protocol_response_metadata protocol.response_metadata.cpp)
+target_include_directories(protocol_response_metadata PRIVATE "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(protocol_response_metadata PRIVATE ym_test_core)
+set_target_properties(
+    protocol_response_metadata
+    PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}"
+)
+add_test(NAME protocol.response_metadata COMMAND protocol_response_metadata)
+ym_build_controls(protocol_response_metadata)
+
 set_tests_properties(
     c.version
     cpp.version
@@ -341,5 +351,6 @@ set_tests_properties(
     protocol.envelopes
     protocol.response_errors
     abi.response_decode
+    protocol.response_metadata
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )

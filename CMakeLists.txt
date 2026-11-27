@@ -29,6 +29,7 @@ set(YM_CORE_SOURCES
     src/protocol/envelope.cpp
     src/protocol/response_error.cpp
     src/c/response.cpp
+    src/protocol/response.cpp
 )
 
 add_library(yandex_music_c src/c/version.cpp ${YM_CORE_SOURCES})
