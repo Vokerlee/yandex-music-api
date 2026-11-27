@@ -62,7 +62,10 @@ target_sources(
     INTERFACE
         FILE_SET HEADERS
             BASE_DIRS src/cpp
-            FILES src/cpp/yandex_music/yandex_music.hpp src/cpp/yandex_music/error.hpp
+            FILES
+                src/cpp/yandex_music/yandex_music.hpp
+                src/cpp/yandex_music/error.hpp
+                src/cpp/yandex_music/client.hpp
 )
 
 option(YM_INSTALL "Install SDK headers, libraries and CMake targets" ${PROJECT_IS_TOP_LEVEL})
