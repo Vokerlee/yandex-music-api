@@ -17,6 +17,7 @@
 #ifndef YANDEX_MUSIC_H
 #define YANDEX_MUSIC_H
 
+#include <yandex_music/account.h>
 #include <yandex_music/api.h>
 #include <yandex_music/catalogue.h>
 #include <yandex_music/client.h>
