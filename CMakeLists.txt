@@ -13,7 +13,12 @@ configure_file(cmake/version_config.hpp.in generated/version_config.hpp @ONLY)
 
 include(cmake/dependencies.cmake)
 
-set(YM_CORE_SOURCES src/core/error.cpp src/core/client.cpp src/core/result.cpp)
+set(YM_CORE_SOURCES
+    src/core/error.cpp
+    src/core/client.cpp
+    src/core/result.cpp
+    src/core/request_options.cpp
+)
 
 add_library(yandex_music_c src/c/version.cpp ${YM_CORE_SOURCES})
 add_library(yandex_music::c ALIAS yandex_music_c)
@@ -49,6 +54,7 @@ target_sources(
                 src/c/yandex_music/error.h
                 src/c/yandex_music/client.h
                 src/c/yandex_music/result.h
+                src/c/yandex_music/request.h
 )
 
 target_link_libraries(yandex_music_c PRIVATE "$<BUILD_INTERFACE:nlohmann_json::nlohmann_json>")
