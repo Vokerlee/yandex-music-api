@@ -465,3 +465,8 @@ add_test(
         "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/http_fixture.py"
         "$<TARGET_FILE:transport_http>"
 )
+
+add_executable(api_request api.request.cpp)
+target_link_libraries(api_request PRIVATE ym_test_core)
+add_test(NAME api.request COMMAND api_request)
+ym_build_controls(api_request)
