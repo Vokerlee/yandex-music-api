@@ -40,6 +40,7 @@ set(YM_CORE_SOURCES
     src/c/response.cpp
     src/protocol/response.cpp
     src/transport/curl_runtime.cpp
+    src/transport/response_sink.cpp
 )
 
 add_library(yandex_music_c src/c/version.cpp ${YM_CORE_SOURCES})
