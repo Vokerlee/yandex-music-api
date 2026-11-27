@@ -33,6 +33,21 @@ YM_API ym_status YM_CALL ym_track_similar(ym_client* client, ym_string_view trac
 YM_API ym_status YM_CALL ym_track_supplement(ym_client* client, ym_string_view track_id,
     const ym_request_options* options, ym_request** out, ym_error* error) YM_NOEXCEPT;
 
+YM_API ym_status YM_CALL ym_artist(ym_client* client, ym_string_view artist_id,
+    const ym_request_options* options, ym_request** out, ym_error* error) YM_NOEXCEPT;
+
+/** page is zero-based; page_size must be positive. */
+YM_API ym_status YM_CALL ym_artist_tracks(ym_client* client, ym_string_view artist_id,
+    uint32_t page, uint32_t page_size, const ym_request_options* options, ym_request** out,
+    ym_error* error) YM_NOEXCEPT;
+
+YM_API ym_status YM_CALL ym_artist_albums(ym_client* client, ym_string_view artist_id,
+    uint32_t page, uint32_t page_size, const ym_request_options* options, ym_request** out,
+    ym_error* error) YM_NOEXCEPT;
+
+YM_API ym_status YM_CALL ym_artist_similar(ym_client* client, ym_string_view artist_id,
+    const ym_request_options* options, ym_request** out, ym_error* error) YM_NOEXCEPT;
+
 #ifdef __cplusplus
 }
 #endif

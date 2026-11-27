@@ -80,6 +80,7 @@ Call these methods on your client, then pass the returned request to `wait` or p
 | What you need | Client methods |
 | --- | --- |
 | Track details and similar music | `tracks("42,43")`, `track_similar("42")`, `track_supplement("42")` |
+| Artist information, tracks and albums | `artist("7")`, `artist_tracks("7", 0, 50)`, `artist_albums("7")` |
 
 ## Use the C API
 

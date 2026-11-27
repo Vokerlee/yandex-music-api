@@ -485,3 +485,8 @@ add_executable(api_tracks api.tracks.cpp)
 target_link_libraries(api_tracks PRIVATE ym_test_core)
 add_test(NAME api.tracks COMMAND api_tracks)
 ym_build_controls(api_tracks)
+
+add_executable(api_artists api.artists.cpp)
+target_link_libraries(api_artists PRIVATE ym_test_core)
+add_test(NAME api.artists COMMAND api_artists)
+ym_build_controls(api_artists)
