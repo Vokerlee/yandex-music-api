@@ -25,6 +25,7 @@
 #include <yandex_music/client.h>
 #include <yandex_music/error.hpp>
 #include <yandex_music/playlists.h>
+#include <yandex_music/recommendations.h>
 #include <yandex_music/request.hpp>
 #include <yandex_music/search.h>
 
@@ -212,6 +213,18 @@ public:
         const ym_request_options* options = nullptr) noexcept
     {
         return start(ym_playlist_delete, options, view(user_id), view(kind));
+    }
+
+    [[nodiscard]] Result<Request>
+    recommendations(const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_recommendations, options);
+    }
+
+    [[nodiscard]] Result<Request> personal_playlist(std::string_view id = "daily",
+        const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_personal_playlist, options, view(id));
     }
 
     [[nodiscard]] ym_client* native_handle() const noexcept { return handle_.get(); }
