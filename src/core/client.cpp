@@ -17,6 +17,7 @@
 #include "client.hpp"
 #include "error.hpp"
 #include "text.hpp"
+#include "transport/curl_adapter.hpp"
 
 #include <cstring>
 #include <expected>
@@ -105,6 +106,12 @@ make_client(const ym_client_options& options) noexcept
         client->max_pending_requests = options.max_pending_requests;
         client->execution->max_pending = options.max_pending_requests;
         client->execution->max_response_bytes = options.max_response_bytes;
+
+        auto adapter = ym::detail::make_curl_transport({.max_body = options.max_response_bytes});
+        if (!adapter)
+            return std::unexpected(adapter.error());
+
+        client->execution->adapter = std::move(*adapter);
 
         return client;
     } catch (const std::bad_alloc&) {
