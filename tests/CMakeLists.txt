@@ -137,6 +137,12 @@ set_target_properties(
 )
 add_test(NAME transport.contract COMMAND transport_contract)
 
+add_executable(engine_scheduling engine.scheduling.cpp)
+target_include_directories(engine_scheduling PRIVATE "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(engine_scheduling PRIVATE ym_test_core)
+set_target_properties(engine_scheduling PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
+add_test(NAME engine.scheduling COMMAND engine_scheduling)
+
 set_tests_properties(
     c.version
     cpp.version
@@ -155,5 +161,6 @@ set_tests_properties(
     cpp.collection_views
     domain.identities
     transport.contract
+    engine.scheduling
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )
