@@ -24,14 +24,19 @@ int main()
 {
     ym_error value;
     ym_error_init(&value);
+
     CHECK(value.code == YM_OK && value.retry_after_ms == -1);
     CHECK(value.message[0] == 0 && value.server_code[0] == 0);
+
     value.code = YM_UNAUTHORIZED;
     std::strcpy(value.message, "owned detail");
     const auto saved = value;
     ym_error_init(&value);
+
     CHECK(saved.code == YM_UNAUTHORIZED && std::strcmp(saved.message, "owned detail") == 0);
+
     CHECK(std::strcmp(ym_status_name(YM_CANCELLED), "YM_CANCELLED") == 0);
     CHECK(std::strcmp(ym_status_name(999), "YM_UNKNOWN_STATUS") == 0);
+
     ym_error_init(nullptr);
 }
