@@ -12,7 +12,7 @@ Include `<yandex_music/yandex_music.h>` and call `ym_version()`.
 C consumers enable `LANGUAGES C CXX` so CMake supplies the implementation runtime.
 Build with `cmake -S . -B build`, `cmake --build build`, then `ctest --test-dir build`.
 Use `BUILD_SHARED_LIBS=ON` for a shared library. CMake 3.28+ and C++23 are required.
-License: [GPLv3](LICENSE).
+License: [GPLv3](LICENSE). Third-party notices: [LICENSES/THIRD_PARTY_NOTICES.md](LICENSES/THIRD_PARTY_NOTICES.md).
 
 C++ applications link `yandex_music::cpp`, include `<yandex_music/yandex_music.hpp>`,
 and call `ym::version()` / `ym::build_info()`. The target supplies C++23.
