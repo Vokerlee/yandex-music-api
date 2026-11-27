@@ -178,9 +178,33 @@ ym_status poll_engine(Engine& owner, uint64_t now, size_t budget, ym_error* erro
                 break;
             }
         }
-        /* CALLBACKS */
+        for (size_t i = 0; i < count && used < budget; ++i) {
+            auto s = owner.requests[i];
+            if (pending(*s) || s->delivered || s->suppressed)
+                continue;
+            s->delivered = true;
+            if (auto callback = s->options.on_complete) {
+                auto* handle = s->handle;
+                if (!handle) {
+                    status = fail(error, YM_INTERNAL_ERROR, "Callback handle is missing");
+                    continue;
+                }
+                handle->in_callback = true;
+                try {
+                    callback(handle, s->failure.code, s->options.userdata);
+                } catch (...) {
+                    status = fail(error, YM_INTERNAL_ERROR, "Completion callback threw");
+                }
+                handle->in_callback = false;
+                if (handle->destroy_requested)
+                    delete handle;
+            }
+            ++used;
+            if (owner.stopping)
+                break;
+        }
         std::erase_if(owner.requests,
-            [](const auto& s) { return !pending(*s) /* RETIRE_POLICY */; });
+            [](const auto& s) { return !pending(*s) && (s->delivered || s->suppressed); });
     } catch (const std::bad_alloc&) {
         status = fail(error, YM_OUT_OF_MEMORY, "Poll allocation failed");
     } catch (...) {

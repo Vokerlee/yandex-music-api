@@ -92,7 +92,11 @@ void YM_CALL ym_client_destroy(ym_client* client) YM_NOEXCEPT
 {
     if (!client)
         return;
-    /* DEFER_CLIENT_DESTRUCTION */
+    if (client->execution->driving) {
+        client->destroy_requested = true;
+        client->execution->stopping = true;
+        return;
+    }
     ym_client_close(client, nullptr);
     delete client;
 }
@@ -104,7 +108,8 @@ ym_status YM_CALL ym_client_poll(ym_client* client, uint64_t now, size_t budget,
         return ym::detail::fail(error, YM_INVALID_ARGUMENT, "Client is required");
     auto owner = client->execution;
     const auto result = ym::detail::poll_engine(*owner, now, budget, error);
-    /* FINISH_CLIENT_DESTRUCTION */
+    if (client->destroy_requested)
+        ym_client_destroy(client);
     return result;
 }
 
@@ -152,7 +157,10 @@ void YM_CALL ym_request_destroy(ym_request* r) YM_NOEXCEPT
     ym::detail::cancel_state(*r->state);
     r->state->suppressed = true;
     r->state->handle = nullptr;
-    /* DEFER_REQUEST_DESTRUCTION */
+    if (r->in_callback) {
+        r->destroy_requested = true;
+        return;
+    }
     delete r;
 }
 
