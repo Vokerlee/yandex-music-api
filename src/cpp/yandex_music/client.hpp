@@ -118,6 +118,30 @@ public:
         return start(ym_track_supplement, options, view(track_id));
     }
 
+    [[nodiscard]] Result<Request> artist(std::string_view id,
+        const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_artist, options, view(id));
+    }
+
+    [[nodiscard]] Result<Request> artist_tracks(std::string_view id, uint32_t page = 0,
+        uint32_t page_size = 50, const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_artist_tracks, options, view(id), page, page_size);
+    }
+
+    [[nodiscard]] Result<Request> artist_albums(std::string_view id, uint32_t page = 0,
+        uint32_t page_size = 50, const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_artist_albums, options, view(id), page, page_size);
+    }
+
+    [[nodiscard]] Result<Request> artist_similar(std::string_view id,
+        const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_artist_similar, options, view(id));
+    }
+
     [[nodiscard]] ym_client* native_handle() const noexcept { return handle_.get(); }
 
     [[nodiscard]] Result<void> poll(uint64_t now_ms, size_t budget = 64) noexcept
