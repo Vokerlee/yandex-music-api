@@ -39,11 +39,6 @@ install(
 )
 
 install(
-    FILES "${CMAKE_CURRENT_SOURCE_DIR}/THIRD_PARTY_NOTICES.md"
-    DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/yandex_music
-)
-
-install(
     DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/LICENSES/"
     DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/yandex_music
 )

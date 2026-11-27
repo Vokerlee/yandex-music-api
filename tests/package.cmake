@@ -16,7 +16,6 @@ file(
         "${YM_SOURCE}/CMakeLists.txt"
         "${YM_SOURCE}/LICENSE"
         "${YM_SOURCE}/LICENSES"
-        "${YM_SOURCE}/THIRD_PARTY_NOTICES.md"
         "${YM_SOURCE}/src"
         "${YM_SOURCE}/cmake"
     DESTINATION "${YM_BINARY}/source"
