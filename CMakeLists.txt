@@ -27,6 +27,7 @@ set(YM_CORE_SOURCES
     src/core/error.cpp
     src/core/client.cpp
     src/core/api.cpp
+    src/service/tracks.cpp
     src/service/search.cpp
     src/core/result.cpp
     src/core/request_options.cpp
@@ -87,6 +88,7 @@ target_sources(
                 src/c/yandex_music/error.h
                 src/c/yandex_music/client.h
                 src/c/yandex_music/api.h
+                src/c/yandex_music/catalogue.h
                 src/c/yandex_music/search.h
                 src/c/yandex_music/result.h
                 src/c/yandex_music/request.h

@@ -1,4 +1,8 @@
 /*
+ * Request identity references MarshalX/yandex-music-api at
+ * 9ca132e5c18a72aab779c1fc68c169380a9357d0:
+ * yandex_music/utils/request_base.py.
+ * Copyright (C) 2019-2026 Ilya (Marshal) <https://github.com/MarshalX>
  * Copyright (c) 2026 Vokerlee <vokerlee@gmail.com>
  *
  * Yandex Music Native is free software: you can redistribute it and/or modify
@@ -21,6 +25,7 @@
 #include "protocol/encode.hpp"
 #include "protocol/response.hpp"
 
+#include <algorithm>
 #include <new>
 #include <stdexcept>
 
@@ -35,6 +40,14 @@ inline std::string text(ym_string_view value)
     if (!value.data && value.size)
         throw std::invalid_argument("Text data is required");
     return value.size ? std::string(value.data, value.size) : std::string{};
+}
+
+inline std::string identifier(ym_string_view value)
+{
+    auto result = text(value);
+    if (result.empty() || result == "." || result == "..")
+        throw std::invalid_argument("An identifier is required");
+    return result;
 }
 
 inline wire::RequestField field(std::string name, std::string value)
@@ -55,10 +68,13 @@ ym_status start_api(ym_client* client, Build&& build, const ym_request_options* 
         wire::RequestSpec spec;
         spec.origin = "https://api.music.yandex.net";
         build(spec);
+        if (std::ranges::none_of(spec.headers,
+                [](const auto& header) { return header.first == "X-Yandex-Music-Client"; }))
+            spec.headers.emplace_back("X-Yandex-Music-Client", "YandexMusicAndroid/24023621");
+        spec.headers.emplace_back("User-Agent", "Yandex-Music-Native");
         spec.headers.emplace_back("Accept-Language", client->language);
         if (!client->token.empty())
             spec.headers.emplace_back("Authorization", "OAuth " + client->token);
-        spec.mutating = spec.verb != wire::HttpMethod::get && spec.verb != wire::HttpMethod::head;
 
         auto input = wire::encode(spec);
         if (!input) {

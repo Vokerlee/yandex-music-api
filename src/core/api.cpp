@@ -62,6 +62,8 @@ ym_status YM_CALL ym_client_request(ym_client* client, const ym_api_call* call,
             if (!call || !call->path || !call->path_count)
                 throw std::invalid_argument("API path is required");
             spec.verb = method(call->method);
+            spec.mutating = spec.verb != ym::detail::wire::HttpMethod::get &&
+                spec.verb != ym::detail::wire::HttpMethod::head;
             for (size_t i = 0; i < call->path_count; ++i) {
                 auto segment = ym::detail::text(call->path[i]);
                 if (segment.empty() || segment == "." || segment == "..")

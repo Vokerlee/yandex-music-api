@@ -480,3 +480,8 @@ add_executable(api_search api.search.cpp)
 target_link_libraries(api_search PRIVATE ym_test_core)
 add_test(NAME api.search COMMAND api_search)
 ym_build_controls(api_search)
+
+add_executable(api_tracks api.tracks.cpp)
+target_link_libraries(api_tracks PRIVATE ym_test_core)
+add_test(NAME api.tracks COMMAND api_tracks)
+ym_build_controls(api_tracks)

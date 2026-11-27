@@ -73,6 +73,14 @@ Responses own their data. Keep the response alive while using its text and list 
 
 C++ calls report errors through `ym::Result<T>` and do not throw exceptions. Use `client->wait(request)` for a blocking call, or keep the request and advance it with `client->poll(monotonic_ms)` in your event loop. Pending requests can be cancelled.
 
+## Explore your music
+
+Call these methods on your client, then pass the returned request to `wait` or poll it asynchronously.
+
+| What you need | Client methods |
+| --- | --- |
+| Track details and similar music | `tracks("42,43")`, `track_similar("42")`, `track_supplement("42")` |
+
 ## Use the C API
 
 Include `<yandex_music/yandex_music.h>` and link `yandex_music::c`. Functions return `ym_status`; an optional `ym_error` contains the message and HTTP status.
