@@ -248,6 +248,16 @@ set_target_properties(
 add_test(NAME protocol.form_body COMMAND protocol_form_body)
 ym_build_controls(protocol_form_body)
 
+add_executable(protocol_json_body protocol.json_body.cpp)
+target_include_directories(protocol_json_body PRIVATE "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(protocol_json_body PRIVATE ym_test_core)
+set_target_properties(
+    protocol_json_body
+    PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}"
+)
+add_test(NAME protocol.json_body COMMAND protocol_json_body)
+ym_build_controls(protocol_json_body)
+
 set_tests_properties(
     c.version
     cpp.version
@@ -278,5 +288,6 @@ set_tests_properties(
     protocol.fields
     protocol.uri
     protocol.form_body
+    protocol.json_body
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )
