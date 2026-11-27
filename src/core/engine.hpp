@@ -51,6 +51,8 @@ struct Engine {
     ~Engine();
 };
 
+ym_status submit(ym_client*, RequestInput, ResponseDecoder, const ym_request_options*, ym_request**,
+    ym_error*) noexcept;
 bool pending(const RequestState&) noexcept;
 void cancel_state(RequestState&, ym_status reason = YM_CANCELLED,
     Engine* context = nullptr) noexcept;

@@ -16,11 +16,15 @@
 
 #pragma once
 
+#include "engine.hpp"
+
 #include <string>
 
 #include <yandex_music/client.h>
 
 struct ym_client {
+    std::shared_ptr<ym::detail::Engine> execution = std::make_shared<ym::detail::Engine>();
+    bool destroy_requested = false;
     std::string token;
     std::string language;
     size_t max_response_bytes = 0;
