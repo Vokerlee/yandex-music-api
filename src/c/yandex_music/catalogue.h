@@ -48,6 +48,14 @@ YM_API ym_status YM_CALL ym_artist_albums(ym_client* client, ym_string_view arti
 YM_API ym_status YM_CALL ym_artist_similar(ym_client* client, ym_string_view artist_id,
     const ym_request_options* options, ym_request** out, ym_error* error) YM_NOEXCEPT;
 
+/** Comma-separated album IDs; returns album metadata. */
+YM_API ym_status YM_CALL ym_albums(ym_client* client, ym_string_view ids,
+    const ym_request_options* options, ym_request** out, ym_error* error) YM_NOEXCEPT;
+
+/** Returns the album with tracks grouped in volumes (discs). */
+YM_API ym_status YM_CALL ym_album_tracks(ym_client* client, ym_string_view album_id,
+    const ym_request_options* options, ym_request** out, ym_error* error) YM_NOEXCEPT;
+
 #ifdef __cplusplus
 }
 #endif

@@ -27,6 +27,7 @@ set(YM_CORE_SOURCES
     src/core/error.cpp
     src/core/client.cpp
     src/core/api.cpp
+    src/service/albums.cpp
     src/service/artists.cpp
     src/service/tracks.cpp
     src/service/search.cpp
