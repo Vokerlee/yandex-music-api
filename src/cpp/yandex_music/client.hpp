@@ -142,6 +142,18 @@ public:
         return start(ym_artist_similar, options, view(id));
     }
 
+    [[nodiscard]] Result<Request> albums(std::string_view ids,
+        const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_albums, options, view(ids));
+    }
+
+    [[nodiscard]] Result<Request> album_tracks(std::string_view id,
+        const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_album_tracks, options, view(id));
+    }
+
     [[nodiscard]] ym_client* native_handle() const noexcept { return handle_.get(); }
 
     [[nodiscard]] Result<void> poll(uint64_t now_ms, size_t budget = 64) noexcept
