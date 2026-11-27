@@ -16,6 +16,7 @@
 
 #include "client.hpp"
 #include "error.hpp"
+#include "text.hpp"
 
 #include <cstring>
 #include <expected>
@@ -27,7 +28,9 @@ namespace {
 bool valid_text(ym_string_view input) noexcept
 {
     return (input.data || input.size == 0) &&
-        (!input.size || !std::memchr(input.data, 0, input.size));
+        (!input.size ||
+            (!std::memchr(input.data, 0, input.size) &&
+                ym::detail::valid_utf8({input.data, input.size})));
 }
 
 template<class T>

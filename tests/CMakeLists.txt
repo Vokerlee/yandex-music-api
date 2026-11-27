@@ -210,6 +210,13 @@ set_target_properties(cpp_request_owner PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${P
 add_test(NAME cpp.request_owner COMMAND cpp_request_owner)
 ym_build_controls(cpp_request_owner)
 
+add_executable(text_utf8 text.utf8.cpp)
+target_include_directories(text_utf8 PRIVATE "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(text_utf8 PRIVATE ym_test_core)
+set_target_properties(text_utf8 PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
+add_test(NAME text.utf8 COMMAND text_utf8)
+ym_build_controls(text_utf8)
+
 set_tests_properties(
     c.version
     cpp.version
@@ -235,5 +242,6 @@ set_tests_properties(
     engine.callbacks
     engine.callback_lifetimes
     cpp.request_owner
+    text.utf8
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )
