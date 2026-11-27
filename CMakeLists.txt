@@ -12,6 +12,15 @@ option(YM_BUILD_TESTS "Build SDK tests" ${PROJECT_IS_TOP_LEVEL})
 configure_file(cmake/version_config.hpp.in generated/version_config.hpp @ONLY)
 
 include(cmake/dependencies.cmake)
+
+option(YM_INSTALL "Install SDK headers, libraries and CMake targets" ${PROJECT_IS_TOP_LEVEL})
+
+include(cmake/curl.cmake)
+
+ym_resolve_curl()
+
+FetchContent_GetProperties(ym_curl SOURCE_DIR YM_CURL_SOURCE_DIR)
+
 include(cmake/build.cmake)
 
 set(YM_CORE_SOURCES
@@ -34,6 +43,8 @@ set(YM_CORE_SOURCES
 
 add_library(yandex_music_c src/c/version.cpp ${YM_CORE_SOURCES})
 add_library(yandex_music::c ALIAS yandex_music_c)
+
+target_link_libraries(yandex_music_c PRIVATE CURL::libcurl)
 
 target_compile_features(yandex_music_c PRIVATE cxx_std_23)
 
@@ -118,7 +129,8 @@ if(PROJECT_IS_TOP_LEVEL)
         add_test(
             NAME consumers.source
             COMMAND
-                "${CMAKE_COMMAND}" -DYM_SOURCE=${CMAKE_CURRENT_SOURCE_DIR}
+                "${CMAKE_COMMAND}" -DYM_CURL_SOURCE=${YM_CURL_SOURCE_DIR}
+                -DYM_CURL_MODE=${YM_CURL_DEPENDENCY_MODE} -DYM_SOURCE=${CMAKE_CURRENT_SOURCE_DIR}
                 -DYM_BINARY=${CMAKE_CURRENT_BINARY_DIR}/consumers.source
                 -DYM_SHARED=${BUILD_SHARED_LIBS} -DYM_JSON_SOURCE=${YM_JSON_SOURCE_DIR}
                 "-DYM_PREFIX_PATH=${CMAKE_PREFIX_PATH}" -DYM_MODE=${YM_DEPENDENCY_MODE} -P
@@ -127,7 +139,8 @@ if(PROJECT_IS_TOP_LEVEL)
         add_test(
             NAME consumers.installed
             COMMAND
-                "${CMAKE_COMMAND}" -DYM_SOURCE=${CMAKE_CURRENT_SOURCE_DIR}
+                "${CMAKE_COMMAND}" -DYM_CURL_SOURCE=${YM_CURL_SOURCE_DIR}
+                -DYM_CURL_MODE=${YM_CURL_DEPENDENCY_MODE} -DYM_SOURCE=${CMAKE_CURRENT_SOURCE_DIR}
                 -DYM_BINARY=${CMAKE_CURRENT_BINARY_DIR}/consumers.installed
                 -DYM_SHARED=${BUILD_SHARED_LIBS} -DYM_JSON_SOURCE=${YM_JSON_SOURCE_DIR}
                 "-DYM_PREFIX_PATH=${CMAKE_PREFIX_PATH}" -DYM_MODE=${YM_DEPENDENCY_MODE} -P
@@ -136,7 +149,8 @@ if(PROJECT_IS_TOP_LEVEL)
         add_test(
             NAME dependencies.modes
             COMMAND
-                "${CMAKE_COMMAND}" -DYM_SOURCE=${CMAKE_CURRENT_SOURCE_DIR}
+                "${CMAKE_COMMAND}" -DYM_CURL_SOURCE=${YM_CURL_SOURCE_DIR}
+                -DYM_CURL_MODE=${YM_CURL_DEPENDENCY_MODE} -DYM_SOURCE=${CMAKE_CURRENT_SOURCE_DIR}
                 -DYM_BINARY=${CMAKE_CURRENT_BINARY_DIR}/dependencies.modes
                 -DYM_SHARED=${BUILD_SHARED_LIBS} -DYM_JSON_SOURCE=${YM_JSON_SOURCE_DIR}
                 "-DYM_PREFIX_PATH=${CMAKE_PREFIX_PATH}" -DYM_MODE=${YM_DEPENDENCY_MODE} -P
@@ -145,7 +159,8 @@ if(PROJECT_IS_TOP_LEVEL)
         add_test(
             NAME dependencies.curl
             COMMAND
-                "${CMAKE_COMMAND}" -DYM_SOURCE=${CMAKE_CURRENT_SOURCE_DIR}
+                "${CMAKE_COMMAND}" -DYM_CURL_SOURCE=${YM_CURL_SOURCE_DIR}
+                -DYM_CURL_MODE=${YM_CURL_DEPENDENCY_MODE} -DYM_SOURCE=${CMAKE_CURRENT_SOURCE_DIR}
                 -DYM_BINARY=${CMAKE_CURRENT_BINARY_DIR}/dependencies.curl
                 -DYM_SHARED=${BUILD_SHARED_LIBS} -DYM_JSON_SOURCE=${YM_JSON_SOURCE_DIR}
                 "-DYM_PREFIX_PATH=${CMAKE_PREFIX_PATH}" -DYM_MODE=${YM_DEPENDENCY_MODE} -P

@@ -11,3 +11,9 @@ Copyright (C) 2019-2026. Original LGPLv3 text is retained in LICENSES.
 Native files retain their own notices; reference-based independently written code
 retains GPLv3, and translated response code retains LGPL-3.0-only.
 Attribution does not imply upstream review or endorsement.
+
+## curl
+
+The optional fetched transport dependency is curl 8.23.0, distributed under the
+curl license. Its original copyright and permission notice is in
+`curl.txt`. System or parent-provided builds retain their own notices.
