@@ -44,6 +44,7 @@ struct RequestSpec {
     BodyKind encoding = BodyKind::none;
     std::vector<RequestField> body{};
     std::optional<ym_value> json_root{};
+    std::vector<std::pair<std::string, std::string>> headers{};
 };
 
 std::expected<RequestInput, ym_error> encode(const RequestSpec&,
