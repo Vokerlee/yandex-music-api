@@ -12,6 +12,7 @@ option(YM_BUILD_TESTS "Build SDK tests" ${PROJECT_IS_TOP_LEVEL})
 configure_file(cmake/version_config.hpp.in generated/version_config.hpp @ONLY)
 
 include(cmake/dependencies.cmake)
+include(cmake/build.cmake)
 
 set(YM_CORE_SOURCES
     src/core/error.cpp
@@ -60,6 +61,8 @@ target_sources(
 )
 
 target_link_libraries(yandex_music_c PRIVATE "$<BUILD_INTERFACE:nlohmann_json::nlohmann_json>")
+
+ym_build_controls(yandex_music_c)
 
 add_library(yandex_music_cpp INTERFACE)
 add_library(yandex_music::cpp ALIAS yandex_music_cpp)
