@@ -21,6 +21,7 @@
 
 #include <yandex_music/client.h>
 #include <yandex_music/error.hpp>
+#include <yandex_music/request.h>
 
 namespace ym {
 
@@ -64,6 +65,22 @@ public:
     }
 
     [[nodiscard]] ym_client* native_handle() const noexcept { return handle_.get(); }
+
+    [[nodiscard]] Result<void> poll(uint64_t now_ms, size_t budget = 64) noexcept
+    {
+        ym_error failure;
+        if (ym_client_poll(handle_.get(), now_ms, budget, &failure) != YM_OK)
+            return std::unexpected(Error{failure});
+        return {};
+    }
+
+    [[nodiscard]] Result<void> close() noexcept
+    {
+        ym_error failure;
+        if (ym_client_close(handle_.get(), &failure) != YM_OK)
+            return std::unexpected(Error{failure});
+        return {};
+    }
 
 private:
     struct Deleter {
