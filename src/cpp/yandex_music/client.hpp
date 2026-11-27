@@ -23,8 +23,20 @@
 #include <yandex_music/client.h>
 #include <yandex_music/error.hpp>
 #include <yandex_music/request.hpp>
+#include <yandex_music/search.h>
 
 namespace ym {
+
+enum class SearchType : uint32_t {
+    all = YM_SEARCH_ALL,
+    track = YM_SEARCH_TRACK,
+    artist = YM_SEARCH_ARTIST,
+    album = YM_SEARCH_ALBUM,
+    playlist = YM_SEARCH_PLAYLIST,
+    user = YM_SEARCH_USER,
+    podcast = YM_SEARCH_PODCAST,
+    podcast_episode = YM_SEARCH_PODCAST_EPISODE,
+};
 
 struct ClientOptions {
     std::string_view token{};
@@ -75,6 +87,18 @@ public:
         return Request{value};
     }
 
+    [[nodiscard]] Result<Request> search(std::string_view text, SearchType type = SearchType::all,
+        uint32_t page = 0, const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_search, options, view(text), static_cast<ym_search_type>(type), page);
+    }
+
+    [[nodiscard]] Result<Request> search_suggest(std::string_view text,
+        const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_search_suggest, options, view(text));
+    }
+
     [[nodiscard]] ym_client* native_handle() const noexcept { return handle_.get(); }
 
     [[nodiscard]] Result<void> poll(uint64_t now_ms, size_t budget = 64) noexcept
@@ -112,6 +136,22 @@ public:
     }
 
 private:
+    static constexpr ym_string_view view(std::string_view input) noexcept
+    {
+        return {input.data(), input.size()};
+    }
+
+    template<class Function, class... Args>
+    Result<Request> start(Function function, const ym_request_options* options,
+        Args... args) noexcept
+    {
+        ym_request* value = nullptr;
+        ym_error failure;
+        if (function(handle_.get(), args..., options, &value, &failure) != YM_OK)
+            return std::unexpected(Error{failure});
+        return Request{value};
+    }
+
     struct Deleter {
         void operator()(ym_client* value) const noexcept { ym_client_destroy(value); }
     };
