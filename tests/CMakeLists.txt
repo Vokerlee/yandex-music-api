@@ -57,6 +57,15 @@ target_link_libraries(cpp_client_owner PRIVATE yandex_music::cpp)
 set_target_properties(cpp_client_owner PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
 add_test(NAME cpp.client_owner COMMAND cpp_client_owner)
 
+add_executable(abi_allocation_failure abi.allocation_failure.cpp)
+target_include_directories(abi_allocation_failure PRIVATE "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(abi_allocation_failure PRIVATE yandex_music::cpp)
+set_target_properties(
+    abi_allocation_failure
+    PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}"
+)
+add_test(NAME abi.allocation_failure COMMAND abi_allocation_failure)
+
 set_tests_properties(
     c.version
     cpp.version
@@ -66,5 +75,6 @@ set_tests_properties(
     abi.client_owner
     abi.option_prefixes
     cpp.client_owner
+    abi.allocation_failure
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )
