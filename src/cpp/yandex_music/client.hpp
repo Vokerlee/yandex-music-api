@@ -28,6 +28,7 @@
 #include <yandex_music/recommendations.h>
 #include <yandex_music/request.hpp>
 #include <yandex_music/search.h>
+#include <yandex_music/wave.h>
 
 namespace ym {
 
@@ -225,6 +226,26 @@ public:
         const ym_request_options* options = nullptr) noexcept
     {
         return start(ym_personal_playlist, options, view(id));
+    }
+
+    [[nodiscard]] Result<Request> wave_start(std::string_view seed = "user:onyourwave",
+        const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_wave_start, options, view(seed));
+    }
+
+    [[nodiscard]] Result<Request> wave_next(std::string_view session_id,
+        std::string_view queue = {}, const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_wave_next, options, view(session_id), view(queue));
+    }
+
+    [[nodiscard]] Result<Request> wave_feedback(std::string_view session_id, std::string_view event,
+        std::string_view track_id = {}, double played_seconds = 0, std::string_view batch_id = {},
+        const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_wave_feedback, options, view(session_id), view(event), view(track_id),
+            played_seconds, view(batch_id));
     }
 
     [[nodiscard]] ym_client* native_handle() const noexcept { return handle_.get(); }

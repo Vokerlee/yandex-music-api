@@ -86,8 +86,26 @@ Call these methods on your client, then pass the returned request to `wait` or p
 | Account playlists and recommendations | `playlists("USER_ID")`, `playlist("USER_ID", "100")`, `playlist_recommendations("USER_ID", "100")` |
 | Create or delete a playlist | `playlist_create("USER_ID", "Road trip")`, `playlist_delete("USER_ID", "100")` |
 | Personal recommendations | `recommendations()`, `personal_playlist("daily")` |
+| My Wave and seeded radio | `wave_start()`, `wave_next(session_id)`, `wave_feedback(session_id, event, track_id)` |
 
 Get your account ID from `account_status()` → `account.uid`. Pass it as a string wherever `USER_ID` appears. Use `LibraryType::artist`, `album` or `playlist` with `likes` and `set_like` for those collections.
+
+## Listen to My Wave
+
+```cpp
+auto wave = client->wait(client->wave_start());
+if (!wave)
+    return 1;
+
+auto session = wave->root()["radioSessionId"].string();
+if (!session)
+    return 1;
+
+auto next = client->wait(client->wave_next(*session, "42:8,43"));
+auto feedback = client->wait(client->wave_feedback(*session, "skip", "42:8", 12.5));
+```
+
+The response's `sequence` contains the suggested tracks. Pass the IDs you already received as `queue` to avoid repeats. Replace the sample IDs with tracks from your session. Report `radioStarted`, `trackStarted`, `trackFinished` and `skip` as playback progresses. You can also seed a station with an artist, track or genre, such as `wave_start("genre:rock")`.
 
 ## Use the C API
 
