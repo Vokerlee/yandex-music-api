@@ -25,9 +25,9 @@
 extern "C" {
 #endif
 
-YM_API const char* YM_CALL ym_version(void);
+YM_API const char* YM_CALL ym_version(void) YM_NOEXCEPT;
 
-YM_API const char* YM_CALL ym_build_info(void);
+YM_API const char* YM_CALL ym_build_info(void) YM_NOEXCEPT;
 
 #ifdef __cplusplus
 }

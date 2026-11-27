@@ -35,4 +35,10 @@
 #define YM_CALL
 #endif
 
+#ifdef __cplusplus
+#define YM_NOEXCEPT noexcept
+#else
+#define YM_NOEXCEPT
+#endif
+
 #endif
