@@ -82,6 +82,9 @@ Call these methods on your client, then pass the returned request to `wait` or p
 | Track details and similar music | `tracks("42,43")`, `track_similar("42")`, `track_supplement("42")` |
 | Artist information, tracks and albums | `artist("7")`, `artist_tracks("7", 0, 50)`, `artist_albums("7")` |
 | Album information and track lists | `albums("8,9")`, `album_tracks("8")` |
+| Account and liked music | `account_status()`, `likes("USER_ID")`, `set_like("USER_ID", ym::LibraryType::track, "42")` |
+
+Get your account ID from `account_status()` → `account.uid`. Pass it as a string wherever `USER_ID` appears. Use `LibraryType::artist`, `album` or `playlist` with `likes` and `set_like` for those collections.
 
 ## Use the C API
 

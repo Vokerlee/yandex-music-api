@@ -495,3 +495,8 @@ add_executable(api_albums api.albums.cpp)
 target_link_libraries(api_albums PRIVATE ym_test_core)
 add_test(NAME api.albums COMMAND api_albums)
 ym_build_controls(api_albums)
+
+add_executable(api_account api.account.cpp)
+target_link_libraries(api_account PRIVATE ym_test_core)
+add_test(NAME api.account COMMAND api_account)
+ym_build_controls(api_account)

@@ -19,6 +19,7 @@
 #include <memory>
 #include <string_view>
 
+#include <yandex_music/account.h>
 #include <yandex_music/api.h>
 #include <yandex_music/catalogue.h>
 #include <yandex_music/client.h>
@@ -27,6 +28,13 @@
 #include <yandex_music/search.h>
 
 namespace ym {
+
+enum class LibraryType : uint32_t {
+    track = YM_LIBRARY_TRACK,
+    artist = YM_LIBRARY_ARTIST,
+    album = YM_LIBRARY_ALBUM,
+    playlist = YM_LIBRARY_PLAYLIST,
+};
 
 enum class SearchType : uint32_t {
     all = YM_SEARCH_ALL,
@@ -152,6 +160,26 @@ public:
         const ym_request_options* options = nullptr) noexcept
     {
         return start(ym_album_tracks, options, view(id));
+    }
+
+    [[nodiscard]] Result<Request>
+    account_status(const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_account_status, options);
+    }
+
+    [[nodiscard]] Result<Request> likes(std::string_view user_id,
+        LibraryType type = LibraryType::track, const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_likes, options, view(user_id), static_cast<ym_library_type>(type));
+    }
+
+    [[nodiscard]] Result<Request> set_like(std::string_view user_id, LibraryType type,
+        std::string_view ids, bool liked = true,
+        const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_set_like, options, view(user_id), static_cast<ym_library_type>(type),
+            view(ids), static_cast<uint32_t>(liked));
     }
 
     [[nodiscard]] ym_client* native_handle() const noexcept { return handle_.get(); }
