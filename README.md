@@ -53,29 +53,46 @@ int main()
 
 Pass a Yandex Music OAuth access token when creating the client. Keep tokens outside source control.
 
-## Read an API response
-
-You can read saved or externally obtained JSON responses:
+## Search for music
 
 ```cpp
-auto response = ym::parse_response(R"({"result":{"title":"My playlist"}})");
+auto response = client->wait(client->search("Radiohead", ym::SearchType::track));
 if (!response) {
     std::cerr << response.error().message() << '\n';
     return 1;
 }
 
-auto title = response->root().member("title");
-if (!title)
-    return 1;
-
-auto text = title->string();
-if (text)
-    std::cout << *text << '\n';
+auto tracks = response->root()["tracks"]["results"];
+for (size_t i = 0; i < tracks.size().value_or(0); ++i)
+    std::cout << tracks[i]["title"].string().value_or("") << '\n';
 ```
 
-Responses own their data. Keep the response alive while using its text and list views.
+Choose `SearchType::artist`, `album`, `playlist`, `podcast` or `podcast_episode` to search another category. Pages start at zero; pass the page as the third argument. Each category contains `results`, `total` and `perPage`.
 
-C++ operations report failures through `ym::Result<T>` rather than throwing exceptions. C applications include `<yandex_music/yandex_music.h>` and check the returned `ym_status`; `ym_error` provides the error message and HTTP status.
+Responses own their data. Keep the response alive while using its text and list views. `operator[]` returns an empty view for missing fields; typed accessors return a result that you can check or read with `value_or`.
+
+C++ calls report errors through `ym::Result<T>` and do not throw exceptions. Use `client->wait(request)` for a blocking call, or keep the request and advance it with `client->poll(monotonic_ms)` in your event loop. Pending requests can be cancelled.
+
+## Use the C API
+
+Include `<yandex_music/yandex_music.h>` and link `yandex_music::c`. Functions return `ym_status`; an optional `ym_error` contains the message and HTTP status.
+
+```c
+ym_request* request = NULL;
+ym_result* response = NULL;
+ym_error error;
+
+ym_status status = ym_search(client, (ym_string_view){"Radiohead", 9},
+    YM_SEARCH_TRACK, 0, NULL, &request, &error);
+if (status == YM_OK)
+    status = ym_client_wait(client, request, 30000, &response, &error);
+
+/* Read response with ym_result_root and ym_value_member/at/string. */
+ym_result_destroy(response);
+ym_request_destroy(request);
+```
+
+Create the C client with `ym_client_options_init` and `ym_client_create`, then release it with `ym_client_destroy`. Request inputs are copied, and results remain valid until you destroy them.
 
 ## Install the library
 

@@ -31,6 +31,23 @@ public:
     {
     }
 
+    /** Optional lookup: missing members, wrong types and invalid indexes produce an empty view. */
+    [[nodiscard]] ValueView operator[](std::string_view name) const noexcept
+    {
+        const ym_value* child = nullptr;
+        ym_value_member(value_, {name.data(), name.size()}, &child, nullptr);
+        return ValueView{child};
+    }
+
+    [[nodiscard]] ValueView operator[](size_t index) const noexcept
+    {
+        const ym_value* child = nullptr;
+        ym_value_at(value_, index, &child, nullptr);
+        return ValueView{child};
+    }
+
+    [[nodiscard]] explicit operator bool() const noexcept { return value_ != nullptr; }
+
     [[nodiscard]] ym_value_type type() const noexcept { return ym_value_typeof(value_); }
 
     [[nodiscard]] Result<std::string_view> string() const noexcept
