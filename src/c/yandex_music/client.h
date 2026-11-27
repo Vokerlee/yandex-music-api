@@ -40,10 +40,14 @@ typedef struct ym_client_options {
 YM_API void YM_CALL ym_client_options_init(ym_client_options* options) YM_NOEXCEPT;
 
 /** options may be NULL for defaults. On failure *out is NULL. No HTTP is performed. */
+YM_API ym_status YM_CALL ym_client_create(const ym_client_options* options, ym_client** out,
+    ym_error* error) YM_NOEXCEPT;
 
 /** Local destruction; NULL is harmless. Calls on one client must be serialized. */
+YM_API void YM_CALL ym_client_destroy(ym_client* client) YM_NOEXCEPT;
 
 /** Borrowed until client destruction; NULL client returns an empty span. */
+YM_API ym_string_view YM_CALL ym_client_language(const ym_client* client) YM_NOEXCEPT;
 
 #ifdef __cplusplus
 }
