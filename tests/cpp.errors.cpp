@@ -27,11 +27,11 @@ int main()
     raw.code = YM_NOT_FOUND;
     std::strcpy(raw.message, "missing");
 
-    ym::result<int> result = std::unexpected(ym::error(raw));
+    ym::Result<int> result = std::unexpected(ym::Error(raw));
     ym_error_init(&raw);
 
-    CHECK(
-        !result && result.error().code() == YM_NOT_FOUND && result.error().message() == "missing");
+    CHECK(!result && result.error().code() == YM_NOT_FOUND &&
+        result.error().message() == "missing");
 
     result = 42;
 

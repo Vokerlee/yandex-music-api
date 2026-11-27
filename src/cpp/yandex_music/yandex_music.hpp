@@ -21,8 +21,7 @@
 #include <yandex_music/error.hpp>
 #include <yandex_music/yandex_music.h>
 
-namespace ym
-{
+namespace ym {
 
 [[nodiscard]] inline std::string_view version() noexcept
 {

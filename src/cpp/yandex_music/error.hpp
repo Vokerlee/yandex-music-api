@@ -21,17 +21,14 @@
 
 #include <yandex_music/error.h>
 
-namespace ym
-{
-class error
-{
-    ym_error value_ { };
+namespace ym {
 
+class Error {
 public:
-    error() noexcept { ym_error_init(&value_); }
+    Error() noexcept { ym_error_init(&value_); }
 
-    explicit error(ym_error value) noexcept
-        : value_(value)
+    explicit Error(ym_error value) noexcept
+        : value_{value}
     {
     }
 
@@ -40,6 +37,11 @@ public:
     [[nodiscard]] std::string_view message() const noexcept { return value_.message; }
 
     [[nodiscard]] const ym_error& native() const noexcept { return value_; }
+
+private:
+    ym_error value_{};
 };
-template <class T> using result = std::expected<T, error>;
+template<class T>
+using Result = std::expected<T, Error>;
+
 } // namespace ym

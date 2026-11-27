@@ -31,7 +31,7 @@ const char* YM_CALL ym_version(void)
 
 const char* YM_CALL ym_build_info(void)
 {
-    return "Yandex Music Native " YM_VERSION
-           "; C++23 core; C ABI v1; JSON " YM_STRINGIFY(NLOHMANN_JSON_VERSION_MAJOR) "." YM_STRINGIFY(
-               NLOHMANN_JSON_VERSION_MINOR) "." YM_STRINGIFY(NLOHMANN_JSON_VERSION_PATCH);
+    return "Yandex Music Native " YM_VERSION "; C++23 core; C ABI v1; JSON " YM_STRINGIFY(
+        NLOHMANN_JSON_VERSION_MAJOR
+    ) "." YM_STRINGIFY(NLOHMANN_JSON_VERSION_MINOR) "." YM_STRINGIFY(NLOHMANN_JSON_VERSION_PATCH);
 }

@@ -19,7 +19,7 @@
 void YM_CALL ym_error_init(ym_error* error)
 {
     if (error) {
-        *error = { };
+        *error = {};
         error->retry_after_ms = -1;
     }
 }
