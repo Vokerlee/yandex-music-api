@@ -42,6 +42,15 @@ target_link_libraries(abi_client_owner PRIVATE yandex_music::cpp)
 set_target_properties(abi_client_owner PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
 add_test(NAME abi.client_owner COMMAND abi_client_owner)
 
+add_executable(abi_option_prefixes abi.option_prefixes.cpp)
+target_include_directories(abi_option_prefixes PRIVATE "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(abi_option_prefixes PRIVATE yandex_music::cpp)
+set_target_properties(
+    abi_option_prefixes
+    PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}"
+)
+add_test(NAME abi.option_prefixes COMMAND abi_option_prefixes)
+
 set_tests_properties(
     c.version
     cpp.version
@@ -49,5 +58,6 @@ set_tests_properties(
     cpp.errors
     abi.client_options
     abi.client_owner
+    abi.option_prefixes
     PROPERTIES ENVIRONMENT_MODIFICATION "PATH=path_list_prepend:$<TARGET_FILE_DIR:yandex_music::c>"
 )
