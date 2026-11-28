@@ -1,1 +1,2 @@
 add_subdirectory(read_response)
+add_subdirectory(ownership)

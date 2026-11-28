@@ -82,6 +82,8 @@ Network examples read `YANDEX_MUSIC_TOKEN`; obtain it using the [authorization g
 
 | [values/read_response/main.c](values/read_response/main.c) | [values/read_response/main.cpp](values/read_response/main.cpp) | Decode an offline response and read arrays, objects, scalar values and optional fields | `` |
 
+| [values/ownership/main.c](values/ownership/main.c) | [values/ownership/main.cpp](values/ownership/main.cpp) | Keep a cloned response after destroying the original owner | `` |
+
 ## Customize My Wave
 
 List the service's current labels and seeds first:
