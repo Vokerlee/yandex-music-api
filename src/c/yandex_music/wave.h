@@ -27,6 +27,11 @@ extern "C" {
 YM_API ym_status YM_CALL ym_wave_start(ym_client* client, ym_string_view seed,
     const ym_request_options* options, ym_request** out, ym_error* error) YM_NOEXCEPT;
 
+/** Combines station, genre, artist and setting seeds. All spans are copied. */
+YM_API ym_status YM_CALL ym_wave_start_seeds(ym_client* client, const ym_string_view* seeds,
+    size_t seed_count, const ym_request_options* options, ym_request** out,
+    ym_error* error) YM_NOEXCEPT;
+
 /** queue is a comma-separated list of already received track IDs (or track:album pairs). */
 YM_API ym_status YM_CALL ym_wave_next(ym_client* client, ym_string_view session_id,
     ym_string_view queue, const ym_request_options* options, ym_request** out,

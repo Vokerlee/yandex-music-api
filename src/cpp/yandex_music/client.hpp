@@ -16,7 +16,9 @@
 
 #pragma once
 
+#include <array>
 #include <memory>
+#include <span>
 #include <string_view>
 
 #include <yandex_music/account.h>
@@ -233,6 +235,19 @@ public:
         const ym_request_options* options = nullptr) noexcept
     {
         return start(ym_wave_start, options, view(seed));
+    }
+
+    [[nodiscard]] Result<Request> wave_start_seeds(std::span<const ym_string_view> seeds,
+        const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_wave_start_seeds, options, seeds.data(), seeds.size());
+    }
+
+    template<class... Seeds>
+    [[nodiscard]] Result<Request> wave_start_with(Seeds&&... seeds) noexcept
+    {
+        const std::array<ym_string_view, sizeof...(Seeds)> native{view(seeds)...};
+        return wave_start_seeds(native);
     }
 
     [[nodiscard]] Result<Request> wave_next(std::string_view session_id,
