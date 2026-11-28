@@ -36,6 +36,12 @@ print(client.me.account.login)
 
 ### Asynchronous
 
+Install the optional asynchronous dependencies first:
+
+```sh
+python -m pip install --upgrade "yandex-music[async]"
+```
+
 ```python
 import asyncio
 
