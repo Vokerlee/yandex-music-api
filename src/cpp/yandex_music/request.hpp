@@ -23,6 +23,11 @@
 
 namespace ym {
 
+[[nodiscard]] inline uint64_t monotonic_ms() noexcept
+{
+    return ym_monotonic_ms();
+}
+
 class Request {
 public:
     explicit Request(ym_request* handle = nullptr) noexcept

@@ -21,6 +21,14 @@
 #include <chrono>
 #include <thread>
 
+uint64_t YM_CALL ym_monotonic_ms(void) YM_NOEXCEPT
+{
+    const auto now = std::chrono::steady_clock::now().time_since_epoch();
+    return static_cast<uint64_t>(
+        std::chrono::duration_cast<std::chrono::milliseconds>(now).count()
+    );
+}
+
 ym_status YM_CALL ym_client_wait(ym_client* client, ym_request* request, uint64_t timeout_ms,
     ym_result** out, ym_error* error) YM_NOEXCEPT
 {
@@ -48,11 +56,9 @@ ym_status YM_CALL ym_client_wait(ym_client* client, ym_request* request, uint64_
                 cancel_state(*state, YM_DEADLINE_EXCEEDED);
                 break;
             }
-            const auto ticks =
-                std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch())
-                    .count();
-            const auto status = ym_client_poll(client,
-                std::max(owner->last_time, static_cast<uint64_t>(ticks)), 64, error);
+            const auto ticks = ym_monotonic_ms();
+            const auto status =
+                ym_client_poll(client, std::max(owner->last_time, ticks), 64, error);
             if (status != YM_OK)
                 return status;
             if (pending(*state))

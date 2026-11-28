@@ -276,6 +276,8 @@ public:
 
     [[nodiscard]] ym_client* native_handle() const noexcept { return handle_.get(); }
 
+    [[nodiscard]] Result<void> poll() noexcept { return poll(monotonic_ms()); }
+
     [[nodiscard]] Result<void> poll(uint64_t now_ms, size_t budget = 64) noexcept
     {
         ym_error failure;
