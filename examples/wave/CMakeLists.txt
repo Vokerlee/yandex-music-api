@@ -1,3 +1,5 @@
 add_subdirectory(start)
 add_subdirectory(next)
 add_subdirectory(feedback)
+add_subdirectory(settings)
+add_subdirectory(stations)
