@@ -231,6 +231,18 @@ public:
         return start(ym_personal_playlist, options, view(id));
     }
 
+    [[nodiscard]] Result<Request> wave_settings(std::string_view seeds = "user:onyourwave",
+        const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_wave_settings, options, view(seeds));
+    }
+
+    [[nodiscard]] Result<Request>
+    wave_stations(const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_wave_stations, options);
+    }
+
     [[nodiscard]] Result<Request> wave_start(std::string_view seed = "user:onyourwave",
         const ym_request_options* options = nullptr) noexcept
     {
