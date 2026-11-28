@@ -76,6 +76,8 @@ Network examples read `YANDEX_MUSIC_TOKEN`; obtain it using the [authorization g
 
 | [requests/polling/main.c](requests/polling/main.c) | [requests/polling/main.cpp](requests/polling/main.cpp) | Drive a request in an event loop with a 30-second deadline | `QUERY` |
 
+| [requests/completion/main.c](requests/completion/main.c) | [requests/completion/main.cpp](requests/completion/main.cpp) | Receive completion on the thread driving the client | `QUERY` |
+
 ## Customize My Wave
 
 List the service's current labels and seeds first:
