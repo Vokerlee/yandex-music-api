@@ -68,6 +68,10 @@ Network examples read `YANDEX_MUSIC_TOKEN`; obtain it using the [authorization g
 
 | [downloads/file_info/main.c](downloads/file_info/main.c) | [downloads/file_info/main.cpp](downloads/file_info/main.cpp) | Resolve raw audio metadata and the server-provided URL | `TRACK_ID` |
 
+| [downloads/track/main.c](downloads/track/main.c) | [downloads/track/main.cpp](downloads/track/main.cpp) | Save a high-quality MP3 copy of a track | `TRACK_ID FILENAME` |
+
+| [downloads/file/main.c](downloads/file/main.c) | [downloads/file/main.cpp](downloads/file/main.cpp) | Save a file from its HTTPS URL without forwarding an account token | `HTTPS_URL FILENAME` |
+
 ## Customize My Wave
 
 List the service's current labels and seeds first:
