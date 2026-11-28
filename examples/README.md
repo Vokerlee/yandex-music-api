@@ -60,3 +60,4 @@ Network examples read `YANDEX_MUSIC_TOKEN`; obtain it using the [authorization g
 | [wave/stations/main.c](wave/stations/main.c) | [wave/stations/main.cpp](wave/stations/main.cpp) | List genre, mood and activity station names and usable IDs | `` |
 | [wave/discovery/main.c](wave/discovery/main.c) | [wave/discovery/main.cpp](wave/discovery/main.cpp) | Start unfamiliar discovery | `` |
 | [wave/mood/main.c](wave/mood/main.c) | [wave/mood/main.cpp](wave/mood/main.cpp) | Start an available mood such as active or calm | `CHOICE` |
+| [wave/artist/main.c](wave/artist/main.c) | [wave/artist/main.cpp](wave/artist/main.cpp) | Start radio similar to an artist | `ARTIST_ID` |
