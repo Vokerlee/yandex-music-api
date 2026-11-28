@@ -24,3 +24,4 @@ endfunction()
 
 add_subdirectory(basics)
 add_subdirectory(search)
+add_subdirectory(tracks)
