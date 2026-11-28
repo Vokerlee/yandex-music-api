@@ -23,7 +23,7 @@
 
 #include <chrono>
 
-#include <yandex_music/download.h>
+#include <yandex_music/c/download.h>
 
 ym_status YM_CALL ym_track_download_info(ym_client* client, ym_string_view id,
     const ym_request_options* options, ym_request** out, ym_error* error) YM_NOEXCEPT

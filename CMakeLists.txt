@@ -54,7 +54,7 @@ set(YM_CORE_SOURCES
     src/protocol/json_read.cpp
     src/protocol/envelope.cpp
     src/protocol/response_error.cpp
-    src/c/response.cpp
+    src/yandex_music/c/response.cpp
     src/protocol/response.cpp
     src/transport/curl_runtime.cpp
     src/transport/response_sink.cpp
@@ -65,7 +65,7 @@ set(YM_CORE_SOURCES
     src/transport/curl_adapter.cpp
 )
 
-add_library(yandex_music_c src/c/version.cpp ${YM_CORE_SOURCES})
+add_library(yandex_music_c src/yandex_music/c/version.cpp ${YM_CORE_SOURCES})
 add_library(yandex_music::c ALIAS yandex_music_c)
 
 if(WIN32)
@@ -100,24 +100,24 @@ target_sources(
     yandex_music_c
     PUBLIC
         FILE_SET HEADERS
-            BASE_DIRS src/c
+            BASE_DIRS src
             FILES
-                src/c/yandex_music/yandex_music.h
-                src/c/yandex_music/export.h
-                src/c/yandex_music/types.h
-                src/c/yandex_music/error.h
-                src/c/yandex_music/client.h
-                src/c/yandex_music/api.h
-                src/c/yandex_music/download.h
-                src/c/yandex_music/wave.h
-                src/c/yandex_music/recommendations.h
-                src/c/yandex_music/playlists.h
-                src/c/yandex_music/account.h
-                src/c/yandex_music/catalogue.h
-                src/c/yandex_music/search.h
-                src/c/yandex_music/result.h
-                src/c/yandex_music/request.h
-                src/c/yandex_music/response.h
+                src/yandex_music/c/yandex_music.h
+                src/yandex_music/c/export.h
+                src/yandex_music/c/types.h
+                src/yandex_music/c/error.h
+                src/yandex_music/c/client.h
+                src/yandex_music/c/api.h
+                src/yandex_music/c/download.h
+                src/yandex_music/c/wave.h
+                src/yandex_music/c/recommendations.h
+                src/yandex_music/c/playlists.h
+                src/yandex_music/c/account.h
+                src/yandex_music/c/catalogue.h
+                src/yandex_music/c/search.h
+                src/yandex_music/c/result.h
+                src/yandex_music/c/request.h
+                src/yandex_music/c/response.h
 )
 
 target_link_libraries(yandex_music_c PRIVATE "$<BUILD_INTERFACE:nlohmann_json::nlohmann_json>")
@@ -135,16 +135,16 @@ target_sources(
     yandex_music_cpp
     INTERFACE
         FILE_SET HEADERS
-            BASE_DIRS src/cpp
+            BASE_DIRS src
             FILES
-                src/cpp/yandex_music/yandex_music.hpp
-                src/cpp/yandex_music/error.hpp
-                src/cpp/yandex_music/client.hpp
-                src/cpp/yandex_music/download.hpp
-                src/cpp/yandex_music/result.hpp
-                src/cpp/yandex_music/ids.hpp
-                src/cpp/yandex_music/request.hpp
-                src/cpp/yandex_music/response.hpp
+                src/yandex_music/cpp/yandex_music.hpp
+                src/yandex_music/cpp/error.hpp
+                src/yandex_music/cpp/client.hpp
+                src/yandex_music/cpp/download.hpp
+                src/yandex_music/cpp/result.hpp
+                src/yandex_music/cpp/ids.hpp
+                src/yandex_music/cpp/request.hpp
+                src/yandex_music/cpp/response.hpp
 )
 
 option(YM_INSTALL "Install SDK headers, libraries and CMake targets" ${PROJECT_IS_TOP_LEVEL})

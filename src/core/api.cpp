@@ -19,7 +19,7 @@
 
 #include <array>
 
-#include <yandex_music/api.h>
+#include <yandex_music/c/api.h>
 
 namespace {
 

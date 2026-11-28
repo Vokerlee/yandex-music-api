@@ -22,7 +22,7 @@ list(TRANSFORM YM_CORE_SOURCES PREPEND "${PROJECT_SOURCE_DIR}/" OUTPUT_VARIABLE 
 add_library(ym_test_core STATIC ${private_sources})
 target_include_directories(
     ym_test_core
-    PUBLIC "${PROJECT_SOURCE_DIR}/src" "${PROJECT_SOURCE_DIR}/src/c" "${PROJECT_SOURCE_DIR}/src/cpp"
+    PUBLIC "${PROJECT_SOURCE_DIR}/src" "${PROJECT_SOURCE_DIR}/src" "${PROJECT_SOURCE_DIR}/src"
 )
 target_compile_features(ym_test_core PUBLIC cxx_std_23)
 target_compile_definitions(ym_test_core PUBLIC YM_STATIC)

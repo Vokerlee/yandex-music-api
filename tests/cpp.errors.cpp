@@ -19,7 +19,7 @@
 #include <cstring>
 #include <type_traits>
 
-#include <yandex_music/yandex_music.hpp>
+#include <yandex_music/cpp/yandex_music.hpp>
 
 int main()
 {

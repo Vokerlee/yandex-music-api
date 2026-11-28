@@ -18,7 +18,7 @@
 #include "protocol/json_read.hpp"
 #include "test_support.hpp"
 
-#include <yandex_music/result.hpp>
+#include <yandex_music/cpp/result.hpp>
 using namespace ym::detail;
 
 int main()

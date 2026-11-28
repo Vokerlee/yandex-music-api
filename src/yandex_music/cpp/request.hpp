@@ -18,8 +18,8 @@
 
 #include <utility>
 
-#include <yandex_music/request.h>
-#include <yandex_music/result.hpp>
+#include <yandex_music/c/request.h>
+#include <yandex_music/cpp/result.hpp>
 
 namespace ym {
 

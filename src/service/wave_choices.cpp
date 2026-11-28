@@ -20,7 +20,7 @@
 
 #include "core/api.hpp"
 
-#include <yandex_music/wave.h>
+#include <yandex_music/c/wave.h>
 
 ym_status YM_CALL ym_wave_settings(ym_client* client, ym_string_view seeds,
     const ym_request_options* options, ym_request** out, ym_error* error) YM_NOEXCEPT

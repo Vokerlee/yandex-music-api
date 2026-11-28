@@ -19,7 +19,7 @@
 #include <expected>
 #include <memory>
 
-#include <yandex_music/error.h>
+#include <yandex_music/c/error.h>
 
 namespace ym::detail {
 

@@ -23,7 +23,7 @@
 
 #include <memory>
 
-#include <yandex_music/download.h>
+#include <yandex_music/c/download.h>
 
 ym_status YM_CALL ym_file_download(ym_string_view url, ym_string_view filename, uint64_t timeout_ms,
     ym_download_progress_fn progress, void* userdata, ym_error* error) YM_NOEXCEPT

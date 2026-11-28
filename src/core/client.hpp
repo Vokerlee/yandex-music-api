@@ -20,7 +20,7 @@
 
 #include <string>
 
-#include <yandex_music/client.h>
+#include <yandex_music/c/client.h>
 
 struct ym_client {
     std::shared_ptr<ym::detail::Engine> execution = std::make_shared<ym::detail::Engine>();

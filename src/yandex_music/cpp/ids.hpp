@@ -23,7 +23,7 @@
 #include <string_view>
 #include <utility>
 
-#include <yandex_music/error.hpp>
+#include <yandex_music/cpp/error.hpp>
 
 namespace ym {
 

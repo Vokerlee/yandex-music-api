@@ -17,21 +17,21 @@
 #ifndef YANDEX_MUSIC_H
 #define YANDEX_MUSIC_H
 
-#include <yandex_music/account.h>
-#include <yandex_music/api.h>
-#include <yandex_music/catalogue.h>
-#include <yandex_music/client.h>
-#include <yandex_music/download.h>
-#include <yandex_music/error.h>
-#include <yandex_music/export.h>
-#include <yandex_music/playlists.h>
-#include <yandex_music/recommendations.h>
-#include <yandex_music/request.h>
-#include <yandex_music/response.h>
-#include <yandex_music/result.h>
-#include <yandex_music/search.h>
-#include <yandex_music/types.h>
-#include <yandex_music/wave.h>
+#include <yandex_music/c/account.h>
+#include <yandex_music/c/api.h>
+#include <yandex_music/c/catalogue.h>
+#include <yandex_music/c/client.h>
+#include <yandex_music/c/download.h>
+#include <yandex_music/c/error.h>
+#include <yandex_music/c/export.h>
+#include <yandex_music/c/playlists.h>
+#include <yandex_music/c/recommendations.h>
+#include <yandex_music/c/request.h>
+#include <yandex_music/c/response.h>
+#include <yandex_music/c/result.h>
+#include <yandex_music/c/search.h>
+#include <yandex_music/c/types.h>
+#include <yandex_music/c/wave.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -21,17 +21,17 @@
 #include <span>
 #include <string_view>
 
-#include <yandex_music/account.h>
-#include <yandex_music/api.h>
-#include <yandex_music/catalogue.h>
-#include <yandex_music/client.h>
-#include <yandex_music/download.h>
-#include <yandex_music/error.hpp>
-#include <yandex_music/playlists.h>
-#include <yandex_music/recommendations.h>
-#include <yandex_music/request.hpp>
-#include <yandex_music/search.h>
-#include <yandex_music/wave.h>
+#include <yandex_music/c/account.h>
+#include <yandex_music/c/api.h>
+#include <yandex_music/c/catalogue.h>
+#include <yandex_music/c/client.h>
+#include <yandex_music/c/download.h>
+#include <yandex_music/c/playlists.h>
+#include <yandex_music/c/recommendations.h>
+#include <yandex_music/c/search.h>
+#include <yandex_music/c/wave.h>
+#include <yandex_music/cpp/error.hpp>
+#include <yandex_music/cpp/request.hpp>
 
 namespace ym {
 

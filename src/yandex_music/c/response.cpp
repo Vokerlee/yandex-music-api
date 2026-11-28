@@ -24,7 +24,7 @@
 #include <memory>
 #include <new>
 
-#include <yandex_music/response.h>
+#include <yandex_music/c/response.h>
 
 namespace {
 

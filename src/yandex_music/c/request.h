@@ -17,8 +17,8 @@
 #ifndef YANDEX_MUSIC_REQUEST_H
 #define YANDEX_MUSIC_REQUEST_H
 
-#include <yandex_music/client.h>
-#include <yandex_music/result.h>
+#include <yandex_music/c/client.h>
+#include <yandex_music/c/result.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -22,7 +22,7 @@
 #include <deque>
 #include <map>
 
-#include <yandex_music/yandex_music.hpp>
+#include <yandex_music/cpp/yandex_music.hpp>
 using namespace ym::detail;
 
 struct FakeTransport final : Transport {

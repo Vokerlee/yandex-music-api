@@ -17,7 +17,7 @@
 #ifndef YANDEX_MUSIC_RESULT_H
 #define YANDEX_MUSIC_RESULT_H
 
-#include <yandex_music/error.h>
+#include <yandex_music/c/error.h>
 
 #ifdef __cplusplus
 extern "C" {

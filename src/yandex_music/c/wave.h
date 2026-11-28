@@ -17,7 +17,7 @@
 #ifndef YANDEX_MUSIC_WAVE_H
 #define YANDEX_MUSIC_WAVE_H
 
-#include <yandex_music/api.h>
+#include <yandex_music/c/api.h>
 
 #ifdef __cplusplus
 extern "C" {

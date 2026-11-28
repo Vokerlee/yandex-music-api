@@ -24,7 +24,7 @@
 #include <cmath>
 #include <ctime>
 
-#include <yandex_music/wave.h>
+#include <yandex_music/c/wave.h>
 
 namespace {
 

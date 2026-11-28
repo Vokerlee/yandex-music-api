@@ -20,7 +20,7 @@
 
 #include "core/api.hpp"
 
-#include <yandex_music/playlists.h>
+#include <yandex_music/c/playlists.h>
 
 ym_status YM_CALL ym_playlist_create(ym_client* client, ym_string_view user, ym_string_view title,
     ym_string_view visibility, const ym_request_options* options, ym_request** out,

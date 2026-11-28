@@ -18,7 +18,7 @@
 
 #include <string_view>
 
-#include <yandex_music/download.h>
+#include <yandex_music/c/download.h>
 
 namespace ym::detail {
 

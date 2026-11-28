@@ -16,32 +16,22 @@
 
 #pragma once
 
-#include <expected>
 #include <string_view>
 
-#include <yandex_music/error.h>
+#include <yandex_music/c/download.h>
+#include <yandex_music/cpp/error.hpp>
 
 namespace ym {
 
-class Error {
-public:
-    Error() noexcept { ym_error_init(&value_); }
-
-    explicit Error(ym_error value) noexcept
-        : value_{value}
-    {
-    }
-
-    [[nodiscard]] ym_status code() const noexcept { return value_.code; }
-
-    [[nodiscard]] std::string_view message() const noexcept { return value_.message; }
-
-    [[nodiscard]] const ym_error& native() const noexcept { return value_; }
-
-private:
-    ym_error value_{};
-};
-template<class T>
-using Result = std::expected<T, Error>;
+[[nodiscard]] inline Result<void> download_file(std::string_view url, std::string_view filename,
+    uint64_t timeout_ms = 30000, ym_download_progress_fn progress = nullptr,
+    void* userdata = nullptr) noexcept
+{
+    ym_error failure;
+    if (ym_file_download({url.data(), url.size()}, {filename.data(), filename.size()}, timeout_ms,
+            progress, userdata, &failure) != YM_OK)
+        return std::unexpected(Error{failure});
+    return {};
+}
 
 } // namespace ym

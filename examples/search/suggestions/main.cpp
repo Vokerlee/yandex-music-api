@@ -17,7 +17,7 @@
 #include <cstdlib>
 #include <iostream>
 
-#include <yandex_music/yandex_music.hpp>
+#include <yandex_music/cpp/yandex_music.hpp>
 
 int main(int argc, char** argv)
 {
