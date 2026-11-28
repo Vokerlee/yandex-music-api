@@ -27,6 +27,7 @@
 #include <cstdio>
 #include <filesystem>
 #include <limits>
+#include <string>
 #include <system_error>
 #include <utility>
 
@@ -40,7 +41,7 @@ namespace {
 class OutputFile {
 public:
     explicit OutputFile(std::string_view filename)
-        : destination_{std::filesystem::u8path(filename)}
+        : destination_{std::u8string(filename.begin(), filename.end())}
         , partial_{destination_}
     {
         partial_ += ".part";
