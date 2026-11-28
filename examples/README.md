@@ -61,3 +61,36 @@ Network examples read `YANDEX_MUSIC_TOKEN`; obtain it using the [authorization g
 | [wave/discovery/main.c](wave/discovery/main.c) | [wave/discovery/main.cpp](wave/discovery/main.cpp) | Start unfamiliar discovery | `` |
 | [wave/mood/main.c](wave/mood/main.c) | [wave/mood/main.cpp](wave/mood/main.cpp) | Start an available mood such as active or calm | `CHOICE` |
 | [wave/artist/main.c](wave/artist/main.c) | [wave/artist/main.cpp](wave/artist/main.cpp) | Start radio similar to an artist | `ARTIST_ID` |
+| [wave/genre/main.c](wave/genre/main.c) | [wave/genre/main.cpp](wave/genre/main.cpp) | Find a genre such as rap by its returned name or tag, then start its wave | `GENRE_NAME_OR_TAG` |
+| [wave/custom/main.c](wave/custom/main.c) | [wave/custom/main.cpp](wave/custom/main.cpp) | Combine a genre or artist with discovery, mood or language settings | `BASE_SEED SETTING_SEED ANOTHER_SETTING_SEED` |
+
+## Customize My Wave
+
+List the service's current labels and seeds first:
+
+```sh
+./build/ym_example_cpp_wave_settings
+./build/ym_example_cpp_wave_stations
+```
+
+Use the same arguments with the neighboring C program by changing `cpp` to `c` in the executable name.
+
+```sh
+# Unfamiliar tracks
+./build/ym_example_cpp_wave_discovery
+
+# Energetic/explosive or calm/chillout mood: select the returned mood value
+./build/ym_example_cpp_wave_mood active
+./build/ym_example_cpp_wave_mood calm
+
+# Rap, or another genre's returned name/tag
+./build/ym_example_cpp_wave_genre rap
+
+# Music similar to an artist
+./build/ym_example_cpp_wave_artist ARTIST_ID
+
+# Combine a station and two settings printed by wave/settings
+./build/ym_example_cpp_wave_custom user:onyourwave settingDiversity:discover settingMoodEnergy:active
+```
+
+Available labels and choices depend on the account and service. The mood and discovery programs resolve the chosen value through `serializedSeed`; the genre program uses the returned station ID.
