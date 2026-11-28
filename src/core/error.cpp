@@ -52,6 +52,7 @@ const char* YM_CALL ym_status_name(ym_status status) YM_NOEXCEPT
         YM_CASE(YM_INTERNAL_ERROR);
         YM_CASE(YM_INVALID_STATE);
         YM_CASE(YM_REENTRANT_CALL);
+        YM_CASE(YM_IO_ERROR);
 #undef YM_CASE
     default:
         return "YM_UNKNOWN_STATUS";

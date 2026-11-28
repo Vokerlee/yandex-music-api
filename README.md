@@ -88,6 +88,7 @@ Call these methods on your client, then pass the returned request to `wait` or p
 | Personal recommendations | `recommendations()`, `personal_playlist("daily")` |
 | My Wave and seeded radio | `wave_start()`, `wave_next(session_id)`, `wave_feedback(session_id, event, track_id)` |
 | Available audio formats and URLs | `track_download_info("42")`, `track_file_info("42", "hq", "mp3")` |
+| Download audio to a local file | `download_track("42", "song.mp3")` |
 
 Get your account ID from `account_status()` → `account.uid`. Pass it as a string wherever `USER_ID` appears. Use `LibraryType::artist`, `album` or `playlist` with `likes` and `set_like` for those collections.
 
@@ -107,6 +108,18 @@ auto feedback = client->wait(client->wave_feedback(*session, "skip", "42:8", 12.
 ```
 
 The response's `sequence` contains the suggested tracks. Pass the IDs you already received as `queue` to avoid repeats. Replace the sample IDs with tracks from your session. Report `radioStarted`, `trackStarted`, `trackFinished` and `skip` as playback progresses. You can also seed a station with an artist, track or genre, such as `wave_start("genre:rock")`.
+
+## Save a local copy
+
+```cpp
+auto saved = client->download_track("TRACK_ID", "song.mp3");
+if (!saved)
+    std::cerr << saved.error().message() << '\n';
+```
+
+The default requests high-quality MP3. For another format, inspect `track_file_info(id, quality, codecs)` and choose a filename for the returned codec/container. Available formats and quality depend on the track and account; `quality` can be `nq`, `hq` or `lossless`.
+
+This is a blocking call. For a GUI, use a separate client on a worker thread. Call a given client from one thread at a time. Downloads stream to disk and replace the destination after a successful transfer. You can supply a progress callback and cancel by returning nonzero. Encrypted audio delivery is not supported.
 
 ## Use the C API
 

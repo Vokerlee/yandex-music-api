@@ -53,5 +53,6 @@ enum {
     YM_INTERNAL_ERROR = 19,
     YM_INVALID_STATE = 20,
     YM_REENTRANT_CALL = 21,
+    YM_IO_ERROR = 22,
 };
 #endif

@@ -27,6 +27,8 @@ set(YM_CORE_SOURCES
     src/core/error.cpp
     src/core/client.cpp
     src/core/api.cpp
+    src/service/downloads.cpp
+    src/service/download_file.cpp
     src/service/download_info.cpp
     src/service/file_signature.cpp
     src/service/wave.cpp
@@ -136,6 +138,7 @@ target_sources(
                 src/cpp/yandex_music/yandex_music.hpp
                 src/cpp/yandex_music/error.hpp
                 src/cpp/yandex_music/client.hpp
+                src/cpp/yandex_music/download.hpp
                 src/cpp/yandex_music/result.hpp
                 src/cpp/yandex_music/ids.hpp
                 src/cpp/yandex_music/request.hpp

@@ -529,3 +529,13 @@ add_executable(api_download_info api.download_info.cpp)
 target_link_libraries(api_download_info PRIVATE ym_test_core)
 add_test(NAME api.download_info COMMAND api_download_info)
 ym_build_controls(api_download_info)
+
+add_executable(api_downloads api.downloads.cpp)
+target_link_libraries(api_downloads PRIVATE ym_test_core)
+add_test(
+    NAME api.downloads
+    COMMAND
+        "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/download_fixture.py"
+        $<TARGET_FILE:api_downloads>
+)
+ym_build_controls(api_downloads)
