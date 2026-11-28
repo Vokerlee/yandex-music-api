@@ -1,4 +1,4 @@
-# Yandex Music Native
+# Yandex Music API
 
 An unofficial Yandex Music library for C and C++.
 
@@ -37,13 +37,20 @@ The build finds or downloads its dependencies automatically.
 ## Create a client
 
 ```cpp
+#include <cstdlib>
 #include <iostream>
 
 #include <yandex_music/yandex_music.hpp>
 
 int main()
 {
-    auto client = ym::Client::create({.token = "YOUR_ACCESS_TOKEN"});
+    const char* token = std::getenv("YANDEX_MUSIC_TOKEN");
+    if (!token) {
+        std::cerr << "Set YANDEX_MUSIC_TOKEN first\n";
+        return 1;
+    }
+
+    auto client = ym::Client::create({.token = token});
     if (!client) {
         std::cerr << client.error().message() << '\n';
         return 1;
@@ -51,7 +58,7 @@ int main()
 }
 ```
 
-Pass a Yandex Music OAuth access token when creating the client. Keep tokens outside source control.
+Get an access token using the [English authorization guide](docs/authentication.md), then set `YANDEX_MUSIC_TOKEN`. Keep tokens outside source control.
 
 ## Search for music
 
