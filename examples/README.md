@@ -46,3 +46,8 @@ Network examples read `YANDEX_MUSIC_TOKEN`; obtain it using the [authorization g
 | [account/liked_albums/main.c](account/liked_albums/main.c) | [account/liked_albums/main.cpp](account/liked_albums/main.cpp) | List liked albums | `USER_ID` |
 | [account/liked_playlists/main.c](account/liked_playlists/main.c) | [account/liked_playlists/main.cpp](account/liked_playlists/main.cpp) | List liked playlists | `USER_ID` |
 | [account/set_like/main.c](account/set_like/main.c) | [account/set_like/main.cpp](account/set_like/main.cpp) | Like or unlike comma-separated tracks | `USER_ID TRACK_IDS like_or_unlike` |
+| [playlists/list/main.c](playlists/list/main.c) | [playlists/list/main.cpp](playlists/list/main.cpp) | List an account's playlist IDs and titles | `USER_ID` |
+| [playlists/tracks/main.c](playlists/tracks/main.c) | [playlists/tracks/main.cpp](playlists/tracks/main.cpp) | Read the tracks in a playlist | `USER_ID KIND` |
+| [playlists/recommendations/main.c](playlists/recommendations/main.c) | [playlists/recommendations/main.cpp](playlists/recommendations/main.cpp) | Get recommendations for a playlist | `USER_ID KIND` |
+| [playlists/create/main.c](playlists/create/main.c) | [playlists/create/main.cpp](playlists/create/main.cpp) | Create a private playlist | `USER_ID TITLE` |
+| [playlists/delete/main.c](playlists/delete/main.c) | [playlists/delete/main.cpp](playlists/delete/main.cpp) | Delete the specified playlist | `USER_ID KIND` |
