@@ -78,6 +78,8 @@ Network examples read `YANDEX_MUSIC_TOKEN`; obtain it using the [authorization g
 
 | [requests/completion/main.c](requests/completion/main.c) | [requests/completion/main.cpp](requests/completion/main.cpp) | Receive completion on the thread driving the client | `QUERY` |
 
+| [requests/cancel/main.c](requests/cancel/main.c) | [requests/cancel/main.cpp](requests/cancel/main.cpp) | Cancel a queued request before starting network work | `` |
+
 ## Customize My Wave
 
 List the service's current labels and seeds first:
