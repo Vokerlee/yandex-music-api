@@ -1,0 +1,8 @@
+ym_test(engine.scheduling scheduling.cpp ym_test_core)
+ym_test(engine.cancellation cancellation.cpp ym_test_core)
+ym_test(engine.limits limits.cpp ym_test_core)
+ym_test(engine.callbacks callbacks.cpp ym_test_core)
+ym_test(engine.callback_lifetimes callback_lifetimes.cpp ym_test_core)
+ym_test(text.utf8 utf8.cpp ym_test_core)
+ym_test(api.request api_request.cpp ym_test_core)
+ym_test(api.wait api_wait.cpp ym_test_core)

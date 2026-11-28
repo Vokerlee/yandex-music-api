@@ -3,7 +3,7 @@ function(ym_add_example path)
 
     foreach(language IN ITEMS c cpp)
         set(target "ym_example_${language}_${name}")
-        add_executable(${target} "${path}/main.${language}")
+        add_executable(${target} "${PROJECT_SOURCE_DIR}/examples/${path}/main.${language}")
         target_link_libraries(${target} PRIVATE "yandex_music::${language}")
         set_target_properties(
             ${target}
@@ -22,20 +22,5 @@ function(ym_add_example path)
     endforeach()
 endfunction()
 
-ym_add_example(basics/version)
-
-ym_add_example(basics/client)
-
-ym_add_example(search/tracks)
-
-ym_add_example(search/artists)
-
-ym_add_example(search/albums)
-
-ym_add_example(search/playlists)
-
-ym_add_example(search/podcasts)
-
-ym_add_example(search/episodes)
-
-ym_add_example(search/suggestions)
+add_subdirectory(basics)
+add_subdirectory(search)
