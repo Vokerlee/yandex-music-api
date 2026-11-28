@@ -56,3 +56,5 @@ Network examples read `YANDEX_MUSIC_TOKEN`; obtain it using the [authorization g
 | [wave/start/main.c](wave/start/main.c) | [wave/start/main.cpp](wave/start/main.cpp) | Start My Wave or a station and print its session and tracks | `SEED` |
 | [wave/next/main.c](wave/next/main.c) | [wave/next/main.cpp](wave/next/main.cpp) | Request more tracks without repeating the received IDs | `SESSION_ID RECEIVED_TRACK_IDS` |
 | [wave/feedback/main.c](wave/feedback/main.c) | [wave/feedback/main.cpp](wave/feedback/main.cpp) | Report the start of track playback to the session | `SESSION_ID TRACK_ID BATCH_ID` |
+| [wave/settings/main.c](wave/settings/main.c) | [wave/settings/main.cpp](wave/settings/main.cpp) | List available discovery, mood and language options and their seeds | `` |
+| [wave/stations/main.c](wave/stations/main.c) | [wave/stations/main.cpp](wave/stations/main.cpp) | List genre, mood and activity station names and usable IDs | `` |
