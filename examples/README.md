@@ -38,3 +38,5 @@ Network examples read `YANDEX_MUSIC_TOKEN`; obtain it using the [authorization g
 | [artists/tracks/main.c](artists/tracks/main.c) | [artists/tracks/main.cpp](artists/tracks/main.cpp) | List the first page of an artist's tracks | `ARTIST_ID` |
 | [artists/albums/main.c](artists/albums/main.c) | [artists/albums/main.cpp](artists/albums/main.cpp) | List the first page of an artist's albums | `ARTIST_ID` |
 | [artists/similar/main.c](artists/similar/main.c) | [artists/similar/main.cpp](artists/similar/main.cpp) | Find artists similar to an artist | `ARTIST_ID` |
+| [albums/metadata/main.c](albums/metadata/main.c) | [albums/metadata/main.cpp](albums/metadata/main.cpp) | Fetch album metadata for comma-separated IDs | `ALBUM_IDS` |
+| [albums/tracks/main.c](albums/tracks/main.c) | [albums/tracks/main.cpp](albums/tracks/main.cpp) | Read all album tracks grouped by disc | `ALBUM_ID` |
