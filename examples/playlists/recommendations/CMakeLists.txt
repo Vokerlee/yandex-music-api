@@ -1,0 +1,1 @@
+ym_add_example(playlists/recommendations)

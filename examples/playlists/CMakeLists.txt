@@ -1,0 +1,5 @@
+add_subdirectory(list)
+add_subdirectory(tracks)
+add_subdirectory(recommendations)
+add_subdirectory(create)
+add_subdirectory(delete)
