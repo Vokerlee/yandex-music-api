@@ -40,3 +40,9 @@ Network examples read `YANDEX_MUSIC_TOKEN`; obtain it using the [authorization g
 | [artists/similar/main.c](artists/similar/main.c) | [artists/similar/main.cpp](artists/similar/main.cpp) | Find artists similar to an artist | `ARTIST_ID` |
 | [albums/metadata/main.c](albums/metadata/main.c) | [albums/metadata/main.cpp](albums/metadata/main.cpp) | Fetch album metadata for comma-separated IDs | `ALBUM_IDS` |
 | [albums/tracks/main.c](albums/tracks/main.c) | [albums/tracks/main.cpp](albums/tracks/main.cpp) | Read all album tracks grouped by disc | `ALBUM_ID` |
+| [account/profile/main.c](account/profile/main.c) | [account/profile/main.cpp](account/profile/main.cpp) | Read the current account ID and login | `` |
+| [account/liked_tracks/main.c](account/liked_tracks/main.c) | [account/liked_tracks/main.cpp](account/liked_tracks/main.cpp) | List liked track IDs and album IDs | `USER_ID` |
+| [account/liked_artists/main.c](account/liked_artists/main.c) | [account/liked_artists/main.cpp](account/liked_artists/main.cpp) | List liked artists | `USER_ID` |
+| [account/liked_albums/main.c](account/liked_albums/main.c) | [account/liked_albums/main.cpp](account/liked_albums/main.cpp) | List liked albums | `USER_ID` |
+| [account/liked_playlists/main.c](account/liked_playlists/main.c) | [account/liked_playlists/main.cpp](account/liked_playlists/main.cpp) | List liked playlists | `USER_ID` |
+| [account/set_like/main.c](account/set_like/main.c) | [account/set_like/main.cpp](account/set_like/main.cpp) | Like or unlike comma-separated tracks | `USER_ID TRACK_IDS like_or_unlike` |

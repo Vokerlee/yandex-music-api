@@ -1,0 +1,6 @@
+add_subdirectory(profile)
+add_subdirectory(liked_tracks)
+add_subdirectory(liked_artists)
+add_subdirectory(liked_albums)
+add_subdirectory(liked_playlists)
+add_subdirectory(set_like)
