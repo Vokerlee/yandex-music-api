@@ -88,6 +88,8 @@ Network examples read `YANDEX_MUSIC_TOKEN`; obtain it using the [authorization g
 
 | [downloads/progress/main.c](downloads/progress/main.c) | [downloads/progress/main.cpp](downloads/progress/main.cpp) | Report received bytes and optionally cancel a file download | `HTTPS_URL FILENAME CANCEL_AFTER_BYTES` |
 
+| [basics/identifiers/main.c](basics/identifiers/main.c) | [basics/identifiers/main.cpp](basics/identifiers/main.cpp) | Represent track/album identities and an owner-scoped playlist key | `TRACK_ID ALBUM_ID USER_ID PLAYLIST_KIND` |
+
 ## Customize My Wave
 
 List the service's current labels and seeds first:
