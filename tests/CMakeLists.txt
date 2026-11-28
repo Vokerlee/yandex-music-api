@@ -544,3 +544,8 @@ add_executable(api_wave_seeds api.wave_seeds.cpp)
 target_link_libraries(api_wave_seeds PRIVATE ym_test_core)
 add_test(NAME api.wave_seeds COMMAND api_wave_seeds)
 ym_build_controls(api_wave_seeds)
+
+add_executable(api_wave_choices api.wave_choices.cpp)
+target_link_libraries(api_wave_choices PRIVATE ym_test_core)
+add_test(NAME api.wave_choices COMMAND api_wave_choices)
+ym_build_controls(api_wave_choices)

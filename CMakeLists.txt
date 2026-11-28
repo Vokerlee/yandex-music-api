@@ -32,6 +32,7 @@ set(YM_CORE_SOURCES
     src/service/download_info.cpp
     src/service/file_signature.cpp
     src/service/wave.cpp
+    src/service/wave_choices.cpp
     src/service/recommendations.cpp
     src/service/playlist_editing.cpp
     src/service/playlists.cpp

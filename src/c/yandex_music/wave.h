@@ -23,6 +23,15 @@
 extern "C" {
 #endif
 
+/** Available activities and setting values, including serializedSeed for each choice.
+ * seeds may be empty, or contain comma-separated current seeds. */
+YM_API ym_status YM_CALL ym_wave_settings(ym_client* client, ym_string_view seeds,
+    const ym_request_options* options, ym_request** out, ym_error* error) YM_NOEXCEPT;
+
+/** Station names and IDs for genres, moods and activities, in the client's language. */
+YM_API ym_status YM_CALL ym_wave_stations(ym_client* client, const ym_request_options* options,
+    ym_request** out, ym_error* error) YM_NOEXCEPT;
+
 /** seed examples: user:onyourwave, artist:42, track:123, genre:rock. */
 YM_API ym_status YM_CALL ym_wave_start(ym_client* client, ym_string_view seed,
     const ym_request_options* options, ym_request** out, ym_error* error) YM_NOEXCEPT;
