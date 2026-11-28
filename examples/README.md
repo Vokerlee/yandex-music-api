@@ -86,6 +86,8 @@ Network examples read `YANDEX_MUSIC_TOKEN`; obtain it using the [authorization g
 
 | [search/pagination/main.c](search/pagination/main.c) | [search/pagination/main.cpp](search/pagination/main.cpp) | Read a selected zero-based search page | `QUERY PAGE` |
 
+| [downloads/progress/main.c](downloads/progress/main.c) | [downloads/progress/main.cpp](downloads/progress/main.cpp) | Report received bytes and optionally cancel a file download | `HTTPS_URL FILENAME CANCEL_AFTER_BYTES` |
+
 ## Customize My Wave
 
 List the service's current labels and seeds first:
