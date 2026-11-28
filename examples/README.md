@@ -84,6 +84,8 @@ Network examples read `YANDEX_MUSIC_TOKEN`; obtain it using the [authorization g
 
 | [values/ownership/main.c](values/ownership/main.c) | [values/ownership/main.cpp](values/ownership/main.cpp) | Keep a cloned response after destroying the original owner | `` |
 
+| [search/pagination/main.c](search/pagination/main.c) | [search/pagination/main.cpp](search/pagination/main.cpp) | Read a selected zero-based search page | `QUERY PAGE` |
+
 ## Customize My Wave
 
 List the service's current labels and seeds first:
