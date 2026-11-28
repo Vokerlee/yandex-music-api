@@ -64,6 +64,10 @@ Network examples read `YANDEX_MUSIC_TOKEN`; obtain it using the [authorization g
 | [wave/genre/main.c](wave/genre/main.c) | [wave/genre/main.cpp](wave/genre/main.cpp) | Find a genre such as rap by its returned name or tag, then start its wave | `GENRE_NAME_OR_TAG` |
 | [wave/custom/main.c](wave/custom/main.c) | [wave/custom/main.cpp](wave/custom/main.cpp) | Combine a genre or artist with discovery, mood or language settings | `BASE_SEED SETTING_SEED ANOTHER_SETTING_SEED` |
 
+| [downloads/formats/main.c](downloads/formats/main.c) | [downloads/formats/main.cpp](downloads/formats/main.cpp) | List available legacy codecs and bitrates | `TRACK_ID` |
+
+| [downloads/file_info/main.c](downloads/file_info/main.c) | [downloads/file_info/main.cpp](downloads/file_info/main.cpp) | Resolve raw audio metadata and the server-provided URL | `TRACK_ID` |
+
 ## Customize My Wave
 
 List the service's current labels and seeds first:
