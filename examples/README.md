@@ -51,3 +51,5 @@ Network examples read `YANDEX_MUSIC_TOKEN`; obtain it using the [authorization g
 | [playlists/recommendations/main.c](playlists/recommendations/main.c) | [playlists/recommendations/main.cpp](playlists/recommendations/main.cpp) | Get recommendations for a playlist | `USER_ID KIND` |
 | [playlists/create/main.c](playlists/create/main.c) | [playlists/create/main.cpp](playlists/create/main.cpp) | Create a private playlist | `USER_ID TITLE` |
 | [playlists/delete/main.c](playlists/delete/main.c) | [playlists/delete/main.cpp](playlists/delete/main.cpp) | Delete the specified playlist | `USER_ID KIND` |
+| [recommendations/feed/main.c](recommendations/feed/main.c) | [recommendations/feed/main.cpp](recommendations/feed/main.cpp) | List the account's generated discovery playlists | `` |
+| [recommendations/personal/main.c](recommendations/personal/main.c) | [recommendations/personal/main.cpp](recommendations/personal/main.cpp) | Read a personal playlist such as daily or neverHeard | `PLAYLIST_ID` |
