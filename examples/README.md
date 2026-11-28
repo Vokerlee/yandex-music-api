@@ -24,3 +24,10 @@ Network examples read `YANDEX_MUSIC_TOKEN`; obtain it using the [authorization g
 | --- | --- | --- | --- |
 | [basics/version/main.c](basics/version/main.c) | [basics/version/main.cpp](basics/version/main.cpp) | Print the SDK version and build information | `` |
 | [basics/client/main.c](basics/client/main.c) | [basics/client/main.cpp](basics/client/main.cpp) | Create, configure, inspect and close a client | `` |
+| [search/tracks/main.c](search/tracks/main.c) | [search/tracks/main.cpp](search/tracks/main.cpp) | Search tracks by name and print matching IDs and titles | `QUERY` |
+| [search/artists/main.c](search/artists/main.c) | [search/artists/main.cpp](search/artists/main.cpp) | Search artists by name and print matching IDs and titles | `QUERY` |
+| [search/albums/main.c](search/albums/main.c) | [search/albums/main.cpp](search/albums/main.cpp) | Search albums by name and print matching IDs and titles | `QUERY` |
+| [search/playlists/main.c](search/playlists/main.c) | [search/playlists/main.cpp](search/playlists/main.cpp) | Search playlists by name and print matching IDs and titles | `QUERY` |
+| [search/podcasts/main.c](search/podcasts/main.c) | [search/podcasts/main.cpp](search/podcasts/main.cpp) | Search podcasts by name and print matching IDs and titles | `QUERY` |
+| [search/episodes/main.c](search/episodes/main.c) | [search/episodes/main.cpp](search/episodes/main.cpp) | Search episodes by name and print matching IDs and titles | `QUERY` |
+| [search/suggestions/main.c](search/suggestions/main.c) | [search/suggestions/main.cpp](search/suggestions/main.cpp) | Request search suggestions | `PREFIX` |
