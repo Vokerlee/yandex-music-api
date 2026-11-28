@@ -63,31 +63,18 @@ Network examples read `YANDEX_MUSIC_TOKEN`; obtain it using the [authorization g
 | [wave/artist/main.c](wave/artist/main.c) | [wave/artist/main.cpp](wave/artist/main.cpp) | Start radio similar to an artist | `ARTIST_ID` |
 | [wave/genre/main.c](wave/genre/main.c) | [wave/genre/main.cpp](wave/genre/main.cpp) | Find a genre such as rap by its returned name or tag, then start its wave | `GENRE_NAME_OR_TAG` |
 | [wave/custom/main.c](wave/custom/main.c) | [wave/custom/main.cpp](wave/custom/main.cpp) | Combine a genre or artist with discovery, mood or language settings | `BASE_SEED SETTING_SEED ANOTHER_SETTING_SEED` |
-
 | [downloads/formats/main.c](downloads/formats/main.c) | [downloads/formats/main.cpp](downloads/formats/main.cpp) | List available legacy codecs and bitrates | `TRACK_ID` |
-
 | [downloads/file_info/main.c](downloads/file_info/main.c) | [downloads/file_info/main.cpp](downloads/file_info/main.cpp) | Resolve raw audio metadata and the server-provided URL | `TRACK_ID` |
-
 | [downloads/track/main.c](downloads/track/main.c) | [downloads/track/main.cpp](downloads/track/main.cpp) | Save a high-quality MP3 copy of a track | `TRACK_ID FILENAME` |
-
 | [downloads/file/main.c](downloads/file/main.c) | [downloads/file/main.cpp](downloads/file/main.cpp) | Save a file from its HTTPS URL without forwarding an account token | `HTTPS_URL FILENAME` |
-
 | [requests/generic/main.c](requests/generic/main.c) | [requests/generic/main.cpp](requests/generic/main.cpp) | Call an API route and inspect HTTP/request metadata | `` |
-
 | [requests/polling/main.c](requests/polling/main.c) | [requests/polling/main.cpp](requests/polling/main.cpp) | Drive a request in an event loop with a 30-second deadline | `QUERY` |
-
 | [requests/completion/main.c](requests/completion/main.c) | [requests/completion/main.cpp](requests/completion/main.cpp) | Receive completion on the thread driving the client | `QUERY` |
-
 | [requests/cancel/main.c](requests/cancel/main.c) | [requests/cancel/main.cpp](requests/cancel/main.cpp) | Cancel a queued request before starting network work | `` |
-
 | [values/read_response/main.c](values/read_response/main.c) | [values/read_response/main.cpp](values/read_response/main.cpp) | Decode an offline response and read arrays, objects, scalar values and optional fields | `` |
-
 | [values/ownership/main.c](values/ownership/main.c) | [values/ownership/main.cpp](values/ownership/main.cpp) | Keep a cloned response after destroying the original owner | `` |
-
 | [search/pagination/main.c](search/pagination/main.c) | [search/pagination/main.cpp](search/pagination/main.cpp) | Read a selected zero-based search page | `QUERY PAGE` |
-
 | [downloads/progress/main.c](downloads/progress/main.c) | [downloads/progress/main.cpp](downloads/progress/main.cpp) | Report received bytes and optionally cancel a file download | `HTTPS_URL FILENAME CANCEL_AFTER_BYTES` |
-
 | [basics/identifiers/main.c](basics/identifiers/main.c) | [basics/identifiers/main.cpp](basics/identifiers/main.cpp) | Represent track/album identities and an owner-scoped playlist key | `TRACK_ID ALBUM_ID USER_ID PLAYLIST_KIND` |
 
 ## Customize My Wave

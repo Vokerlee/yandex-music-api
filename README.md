@@ -78,7 +78,7 @@ Choose `SearchType::artist`, `album`, `playlist`, `podcast` or `podcast_episode`
 
 Responses own their data. Keep the response alive while using its text and list views. `operator[]` returns an empty view for missing fields; typed accessors return a result that you can check or read with `value_or`.
 
-C++ calls report errors through `ym::Result<T>` and do not throw exceptions. Use `client->wait(request)` for a blocking call, or keep the request and advance it with `client->poll(monotonic_ms)` in your event loop. Pending requests can be cancelled.
+C++ calls report errors through `ym::Result<T>` and do not throw exceptions. Use `client->wait(request)` for a blocking call, or keep the request and advance it with `client->poll()` in your event loop. Pending requests can be cancelled.
 
 ## Explore your music
 
@@ -115,6 +115,15 @@ auto feedback = client->wait(client->wave_feedback(*session, "skip", "42:8", 12.
 ```
 
 The response's `sequence` contains the suggested tracks. Pass the IDs you already received as `queue` to avoid repeats. Replace the sample IDs with tracks from your session. Report `radioStarted`, `trackStarted`, `trackFinished` and `skip` as playback progresses. You can also seed a station with an artist, track or genre, such as `wave_start("genre:rock")`.
+
+To customize the selection, inspect `wave_settings()` for discovery, mood and language choices, and `wave_stations()` for genres and activities. Use the returned `serializedSeed` values and station IDs with `wave_start_with(...)`:
+
+```cpp
+auto wave = client->wait(client->wave_start_with(
+    "user:onyourwave", "settingDiversity:discover", "settingMoodEnergy:active"));
+```
+
+Choices depend on the account and service. See the [My Wave examples](examples/README.md#customize-my-wave) for unfamiliar tracks, energetic or calm moods, rap and other genres, and music similar to an artist.
 
 ## Save a local copy
 
