@@ -72,6 +72,8 @@ Network examples read `YANDEX_MUSIC_TOKEN`; obtain it using the [authorization g
 
 | [downloads/file/main.c](downloads/file/main.c) | [downloads/file/main.cpp](downloads/file/main.cpp) | Save a file from its HTTPS URL without forwarding an account token | `HTTPS_URL FILENAME` |
 
+| [requests/generic/main.c](requests/generic/main.c) | [requests/generic/main.cpp](requests/generic/main.cpp) | Call an API route and inspect HTTP/request metadata | `` |
+
 ## Customize My Wave
 
 List the service's current labels and seeds first:
