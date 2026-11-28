@@ -34,3 +34,7 @@ Network examples read `YANDEX_MUSIC_TOKEN`; obtain it using the [authorization g
 | [tracks/metadata/main.c](tracks/metadata/main.c) | [tracks/metadata/main.cpp](tracks/metadata/main.cpp) | Fetch track metadata for comma-separated IDs | `TRACK_IDS` |
 | [tracks/similar/main.c](tracks/similar/main.c) | [tracks/similar/main.cpp](tracks/similar/main.cpp) | List tracks recommended as similar to a track | `TRACK_ID` |
 | [tracks/supplement/main.c](tracks/supplement/main.c) | [tracks/supplement/main.cpp](tracks/supplement/main.cpp) | Read the available track supplement description | `TRACK_ID` |
+| [artists/info/main.c](artists/info/main.c) | [artists/info/main.cpp](artists/info/main.cpp) | Read an artist profile | `ARTIST_ID` |
+| [artists/tracks/main.c](artists/tracks/main.c) | [artists/tracks/main.cpp](artists/tracks/main.cpp) | List the first page of an artist's tracks | `ARTIST_ID` |
+| [artists/albums/main.c](artists/albums/main.c) | [artists/albums/main.cpp](artists/albums/main.cpp) | List the first page of an artist's albums | `ARTIST_ID` |
+| [artists/similar/main.c](artists/similar/main.c) | [artists/similar/main.cpp](artists/similar/main.cpp) | Find artists similar to an artist | `ARTIST_ID` |
