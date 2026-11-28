@@ -262,6 +262,18 @@ public:
         return start(ym_track_file_info, options, view(id), view(quality), view(codecs));
     }
 
+    [[nodiscard]] Result<void> download_track(std::string_view id, std::string_view filename,
+        std::string_view quality = "hq", std::string_view codecs = "mp3",
+        uint64_t timeout_ms = 30000, ym_download_progress_fn progress = nullptr,
+        void* userdata = nullptr) noexcept
+    {
+        ym_error failure;
+        if (ym_track_download(handle_.get(), view(id), view(filename), view(quality), view(codecs),
+                timeout_ms, progress, userdata, &failure) != YM_OK)
+            return std::unexpected(Error{failure});
+        return {};
+    }
+
     [[nodiscard]] ym_client* native_handle() const noexcept { return handle_.get(); }
 
     [[nodiscard]] Result<void> poll(uint64_t now_ms, size_t budget = 64) noexcept

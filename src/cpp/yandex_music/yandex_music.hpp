@@ -19,6 +19,7 @@
 #include <string_view>
 
 #include <yandex_music/client.hpp>
+#include <yandex_music/download.hpp>
 #include <yandex_music/error.hpp>
 #include <yandex_music/ids.hpp>
 #include <yandex_music/request.hpp>
