@@ -80,6 +80,8 @@ Network examples read `YANDEX_MUSIC_TOKEN`; obtain it using the [authorization g
 
 | [requests/cancel/main.c](requests/cancel/main.c) | [requests/cancel/main.cpp](requests/cancel/main.cpp) | Cancel a queued request before starting network work | `` |
 
+| [values/read_response/main.c](values/read_response/main.c) | [values/read_response/main.cpp](values/read_response/main.cpp) | Decode an offline response and read arrays, objects, scalar values and optional fields | `` |
+
 ## Customize My Wave
 
 List the service's current labels and seeds first:
