@@ -21,7 +21,7 @@
 #include <string>
 #include <vector>
 
-#include <yandex_music/request.h>
+#include <yandex_music/c/request.h>
 
 namespace ym::detail {
 

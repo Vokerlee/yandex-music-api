@@ -21,7 +21,7 @@
 
 #include <optional>
 
-#include <yandex_music/yandex_music.hpp>
+#include <yandex_music/cpp/yandex_music.hpp>
 
 struct ApiTransport final : ym::detail::Transport {
     ym::detail::RequestInput input;

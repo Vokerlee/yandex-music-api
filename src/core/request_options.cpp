@@ -14,7 +14,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <yandex_music/request.h>
+#include <yandex_music/c/request.h>
 
 void YM_CALL ym_request_options_init(ym_request_options* options) YM_NOEXCEPT
 {

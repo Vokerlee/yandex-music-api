@@ -22,7 +22,7 @@
 
 #include <array>
 
-#include <yandex_music/account.h>
+#include <yandex_music/c/account.h>
 
 namespace {
 

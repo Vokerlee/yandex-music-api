@@ -14,24 +14,25 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef YANDEX_MUSIC_RECOMMENDATIONS_H
+#define YANDEX_MUSIC_RECOMMENDATIONS_H
 
-#include <string_view>
+#include <yandex_music/c/api.h>
 
-#include <yandex_music/download.h>
-#include <yandex_music/error.hpp>
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-namespace ym {
+/** Personalized feed for the authenticated account. */
+YM_API ym_status YM_CALL ym_recommendations(ym_client* client, const ym_request_options* options,
+    ym_request** out, ym_error* error) YM_NOEXCEPT;
 
-[[nodiscard]] inline Result<void> download_file(std::string_view url, std::string_view filename,
-    uint64_t timeout_ms = 30000, ym_download_progress_fn progress = nullptr,
-    void* userdata = nullptr) noexcept
-{
-    ym_error failure;
-    if (ym_file_download({url.data(), url.size()}, {filename.data(), filename.size()}, timeout_ms,
-            progress, userdata, &failure) != YM_OK)
-        return std::unexpected(Error{failure});
-    return {};
+/** Known IDs include daily, missedLikes, recentTracks and neverHeard. */
+YM_API ym_status YM_CALL ym_personal_playlist(ym_client* client, ym_string_view playlist_id,
+    const ym_request_options* options, ym_request** out, ym_error* error) YM_NOEXCEPT;
+
+#ifdef __cplusplus
 }
+#endif
 
-} // namespace ym
+#endif

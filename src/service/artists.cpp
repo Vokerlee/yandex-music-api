@@ -20,7 +20,7 @@
 
 #include "core/api.hpp"
 
-#include <yandex_music/catalogue.h>
+#include <yandex_music/c/catalogue.h>
 
 namespace {
 

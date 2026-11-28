@@ -40,7 +40,7 @@ The build finds or downloads its dependencies automatically.
 #include <cstdlib>
 #include <iostream>
 
-#include <yandex_music/yandex_music.hpp>
+#include <yandex_music/cpp/yandex_music.hpp>
 
 int main()
 {
@@ -130,7 +130,7 @@ This is a blocking call. For a GUI, use a separate client on a worker thread. Ca
 
 ## Use the C API
 
-Include `<yandex_music/yandex_music.h>` and link `yandex_music::c`. Functions return `ym_status`; an optional `ym_error` contains the message and HTTP status.
+Include `<yandex_music/c/yandex_music.h>` and link `yandex_music::c`. Functions return `ym_status`; an optional `ym_error` contains the message and HTTP status.
 
 ```c
 ym_request* request = NULL;

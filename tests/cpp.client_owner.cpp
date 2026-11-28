@@ -19,7 +19,7 @@
 #include <type_traits>
 #include <utility>
 
-#include <yandex_music/yandex_music.hpp>
+#include <yandex_music/cpp/yandex_music.hpp>
 
 int main()
 {

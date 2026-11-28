@@ -16,7 +16,7 @@
 
 #include "test_support.hpp"
 
-#include <yandex_music/yandex_music.h>
+#include <yandex_music/c/yandex_music.h>
 
 int main()
 {

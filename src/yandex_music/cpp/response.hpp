@@ -16,8 +16,8 @@
 
 #pragma once
 
-#include <yandex_music/response.h>
-#include <yandex_music/result.hpp>
+#include <yandex_music/c/response.h>
+#include <yandex_music/cpp/result.hpp>
 
 namespace ym {
 

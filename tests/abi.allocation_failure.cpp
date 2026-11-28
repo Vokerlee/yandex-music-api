@@ -19,7 +19,7 @@
 #include <cstdlib>
 #include <new>
 
-#include <yandex_music/yandex_music.hpp>
+#include <yandex_music/cpp/yandex_music.hpp>
 
 #if defined(YM_STATIC)
 static bool fail_allocation = false;

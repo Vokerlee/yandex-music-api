@@ -20,7 +20,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include <yandex_music/export.h>
+#include <yandex_music/c/export.h>
 
 /** UTF-8 byte span. NULL is valid only when size is zero. */
 typedef struct ym_string_view {

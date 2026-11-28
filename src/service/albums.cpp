@@ -20,7 +20,7 @@
 
 #include "core/api.hpp"
 
-#include <yandex_music/catalogue.h>
+#include <yandex_music/c/catalogue.h>
 
 ym_status YM_CALL ym_albums(ym_client* client, ym_string_view ids,
     const ym_request_options* options, ym_request** out, ym_error* error) YM_NOEXCEPT

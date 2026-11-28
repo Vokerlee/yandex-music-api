@@ -20,7 +20,7 @@
 
 #include "core/api.hpp"
 
-#include <yandex_music/recommendations.h>
+#include <yandex_music/c/recommendations.h>
 
 ym_status YM_CALL ym_recommendations(ym_client* client, const ym_request_options* options,
     ym_request** out, ym_error* error) YM_NOEXCEPT

@@ -21,7 +21,7 @@
 #include <variant>
 #include <vector>
 
-#include <yandex_music/result.h>
+#include <yandex_music/c/result.h>
 
 struct ym_value {
     using Array = std::vector<ym_value>;

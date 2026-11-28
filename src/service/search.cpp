@@ -22,7 +22,7 @@
 
 #include <array>
 
-#include <yandex_music/search.h>
+#include <yandex_music/c/search.h>
 
 ym_status YM_CALL ym_search(ym_client* client, ym_string_view query, ym_search_type type,
     uint32_t page, const ym_request_options* options, ym_request** out, ym_error* error) YM_NOEXCEPT

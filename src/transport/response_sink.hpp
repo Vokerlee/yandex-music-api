@@ -18,7 +18,7 @@
 
 #include <string>
 
-#include <yandex_music/types.h>
+#include <yandex_music/c/types.h>
 
 namespace ym::detail {
 

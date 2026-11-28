@@ -18,14 +18,14 @@
 
 #include <string_view>
 
-#include <yandex_music/client.hpp>
-#include <yandex_music/download.hpp>
-#include <yandex_music/error.hpp>
-#include <yandex_music/ids.hpp>
-#include <yandex_music/request.hpp>
-#include <yandex_music/response.hpp>
-#include <yandex_music/result.hpp>
-#include <yandex_music/yandex_music.h>
+#include <yandex_music/c/yandex_music.h>
+#include <yandex_music/cpp/client.hpp>
+#include <yandex_music/cpp/download.hpp>
+#include <yandex_music/cpp/error.hpp>
+#include <yandex_music/cpp/ids.hpp>
+#include <yandex_music/cpp/request.hpp>
+#include <yandex_music/cpp/response.hpp>
+#include <yandex_music/cpp/result.hpp>
 
 namespace ym {
 

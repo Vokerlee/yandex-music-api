@@ -17,7 +17,7 @@
 #include "version_config.hpp"
 
 #include <nlohmann/json.hpp>
-#include <yandex_music/yandex_music.h>
+#include <yandex_music/c/yandex_music.h>
 
 static_assert(NLOHMANN_JSON_VERSION_MAJOR == 3 && NLOHMANN_JSON_VERSION_MINOR >= 12,
     "The SDK requires nlohmann_json >= 3.12");

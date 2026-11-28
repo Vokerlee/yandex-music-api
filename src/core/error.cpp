@@ -14,7 +14,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <yandex_music/error.h>
+#include <yandex_music/c/error.h>
 
 void YM_CALL ym_error_init(ym_error* error) YM_NOEXCEPT
 {

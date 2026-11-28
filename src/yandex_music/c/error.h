@@ -17,7 +17,7 @@
 #ifndef YANDEX_MUSIC_ERROR_H
 #define YANDEX_MUSIC_ERROR_H
 
-#include <yandex_music/types.h>
+#include <yandex_music/c/types.h>
 
 #ifdef __cplusplus
 extern "C" {
