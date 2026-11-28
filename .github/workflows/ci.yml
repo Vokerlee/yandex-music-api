@@ -23,7 +23,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-      - run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS=${{ matrix.shared }}
+      - run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS=${{ matrix.shared }} -DYM_BUILD_EXAMPLES=ON
       - run: cmake --build build --config Debug --parallel 2
       - run: ctest --test-dir build -C Debug --output-on-failure --no-tests=error
 

@@ -149,6 +149,15 @@ ym_request_destroy(request);
 
 Create the C client with `ym_client_options_init` and `ym_client_create`, then release it with `ym_client_destroy`. Request inputs are copied, and results remain valid until you destroy them.
 
+## Runnable examples
+
+See the [paired C and C++ programs](examples/README.md). Every example has its own `main`; matching implementations live side by side.
+
+```sh
+cmake -S . -B build -DYM_BUILD_EXAMPLES=ON
+cmake --build build --config Debug --parallel
+```
+
 ## Install the library
 
 ```sh

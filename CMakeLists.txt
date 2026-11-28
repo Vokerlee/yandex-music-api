@@ -8,6 +8,7 @@ endif()
 
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 option(YM_BUILD_TESTS "Build SDK tests" ${PROJECT_IS_TOP_LEVEL})
+option(YM_BUILD_EXAMPLES "Build standalone C and C++ examples" OFF)
 
 configure_file(cmake/version_config.hpp.in generated/version_config.hpp @ONLY)
 
@@ -206,4 +207,8 @@ if(PROJECT_IS_TOP_LEVEL)
                 ${CMAKE_CURRENT_SOURCE_DIR}/tests/curl-dependency.cmake
         )
     endif()
+endif()
+
+if(YM_BUILD_EXAMPLES)
+    add_subdirectory(examples)
 endif()
