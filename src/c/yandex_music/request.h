@@ -51,6 +51,9 @@ typedef struct ym_request_options {
 
 YM_API void YM_CALL ym_request_options_init(ym_request_options* options) YM_NOEXCEPT;
 
+/** Monotonic milliseconds for poll timestamps and request deadlines. */
+YM_API uint64_t YM_CALL ym_monotonic_ms(void) YM_NOEXCEPT;
+
 /** Advances ready work without sleeping. Time must not move backwards; budget must be >0. */
 YM_API ym_status YM_CALL ym_client_poll(ym_client* client, uint64_t monotonic_ms,
     size_t work_budget, ym_error* error) YM_NOEXCEPT;
