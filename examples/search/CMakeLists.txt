@@ -1,0 +1,7 @@
+add_subdirectory(albums)
+add_subdirectory(artists)
+add_subdirectory(episodes)
+add_subdirectory(playlists)
+add_subdirectory(podcasts)
+add_subdirectory(suggestions)
+add_subdirectory(tracks)

@@ -1,0 +1,12 @@
+function(ym_core_sources)
+    target_sources(yandex_music_c PRIVATE ${ARGN})
+    if(TARGET ym_test_core)
+        target_sources(ym_test_core PRIVATE ${ARGN})
+    endif()
+endfunction()
+
+add_subdirectory(yandex_music)
+add_subdirectory(core)
+add_subdirectory(protocol)
+add_subdirectory(transport)
+add_subdirectory(service)
