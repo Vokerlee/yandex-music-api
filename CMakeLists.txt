@@ -27,6 +27,8 @@ set(YM_CORE_SOURCES
     src/core/error.cpp
     src/core/client.cpp
     src/core/api.cpp
+    src/service/download_info.cpp
+    src/service/file_signature.cpp
     src/service/wave.cpp
     src/service/recommendations.cpp
     src/service/playlist_editing.cpp
@@ -62,7 +64,14 @@ set(YM_CORE_SOURCES
 add_library(yandex_music_c src/c/version.cpp ${YM_CORE_SOURCES})
 add_library(yandex_music::c ALIAS yandex_music_c)
 
-target_link_libraries(yandex_music_c PRIVATE CURL::libcurl)
+if(WIN32)
+    set(YM_CRYPTO_LIBRARY bcrypt)
+else()
+    find_package(OpenSSL REQUIRED COMPONENTS Crypto)
+    set(YM_CRYPTO_LIBRARY OpenSSL::Crypto)
+endif()
+
+target_link_libraries(yandex_music_c PRIVATE CURL::libcurl ${YM_CRYPTO_LIBRARY})
 
 target_compile_features(yandex_music_c PRIVATE cxx_std_23)
 
@@ -95,6 +104,7 @@ target_sources(
                 src/c/yandex_music/error.h
                 src/c/yandex_music/client.h
                 src/c/yandex_music/api.h
+                src/c/yandex_music/download.h
                 src/c/yandex_music/wave.h
                 src/c/yandex_music/recommendations.h
                 src/c/yandex_music/playlists.h

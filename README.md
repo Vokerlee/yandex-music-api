@@ -6,7 +6,7 @@ An unofficial Yandex Music library for C and C++.
 
 ## Add it to your application
 
-Requirements: CMake 3.28 or newer and a compiler with C++23 support. On Linux and macOS, OpenSSL development headers are needed when building libcurl from source. Windows uses its native TLS support.
+Requirements: CMake 3.28 or newer and a compiler with C++23 support. Linux and macOS also need the OpenSSL development package. Windows 10 or newer uses native TLS and cryptography.
 
 Fetch the library from GitHub and link the C++ target:
 
@@ -87,6 +87,7 @@ Call these methods on your client, then pass the returned request to `wait` or p
 | Create or delete a playlist | `playlist_create("USER_ID", "Road trip")`, `playlist_delete("USER_ID", "100")` |
 | Personal recommendations | `recommendations()`, `personal_playlist("daily")` |
 | My Wave and seeded radio | `wave_start()`, `wave_next(session_id)`, `wave_feedback(session_id, event, track_id)` |
+| Available audio formats and URLs | `track_download_info("42")`, `track_file_info("42", "hq", "mp3")` |
 
 Get your account ID from `account_status()` → `account.uid`. Pass it as a string wherever `USER_ID` appears. Use `LibraryType::artist`, `album` or `playlist` with `likes` and `set_like` for those collections.
 

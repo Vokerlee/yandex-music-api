@@ -23,6 +23,7 @@
 #include <yandex_music/api.h>
 #include <yandex_music/catalogue.h>
 #include <yandex_music/client.h>
+#include <yandex_music/download.h>
 #include <yandex_music/error.hpp>
 #include <yandex_music/playlists.h>
 #include <yandex_music/recommendations.h>
@@ -246,6 +247,19 @@ public:
     {
         return start(ym_wave_feedback, options, view(session_id), view(event), view(track_id),
             played_seconds, view(batch_id));
+    }
+
+    [[nodiscard]] Result<Request> track_download_info(std::string_view id,
+        const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_track_download_info, options, view(id));
+    }
+
+    [[nodiscard]] Result<Request> track_file_info(std::string_view id,
+        std::string_view quality = "hq", std::string_view codecs = "mp3",
+        const ym_request_options* options = nullptr) noexcept
+    {
+        return start(ym_track_file_info, options, view(id), view(quality), view(codecs));
     }
 
     [[nodiscard]] ym_client* native_handle() const noexcept { return handle_.get(); }

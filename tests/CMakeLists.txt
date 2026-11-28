@@ -26,7 +26,11 @@ target_include_directories(
 )
 target_compile_features(ym_test_core PUBLIC cxx_std_23)
 target_compile_definitions(ym_test_core PUBLIC YM_STATIC)
-target_link_libraries(ym_test_core PRIVATE nlohmann_json::nlohmann_json PUBLIC CURL::libcurl)
+target_link_libraries(
+    ym_test_core
+    PRIVATE nlohmann_json::nlohmann_json ${YM_CRYPTO_LIBRARY}
+    PUBLIC CURL::libcurl
+)
 ym_build_controls(ym_test_core)
 
 add_executable(abi_errors abi.errors.cpp)
@@ -520,3 +524,8 @@ add_executable(api_wave api.wave.cpp)
 target_link_libraries(api_wave PRIVATE ym_test_core)
 add_test(NAME api.wave COMMAND api_wave)
 ym_build_controls(api_wave)
+
+add_executable(api_download_info api.download_info.cpp)
+target_link_libraries(api_download_info PRIVATE ym_test_core)
+add_test(NAME api.download_info COMMAND api_download_info)
+ym_build_controls(api_download_info)
