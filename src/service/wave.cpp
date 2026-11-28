@@ -49,20 +49,40 @@ void post(ym::detail::wire::RequestSpec& spec)
     spec.mutating = true;
 }
 
+void new_wave(ym::detail::wire::RequestSpec& spec, ym_value::Array seeds)
+{
+    spec.path = {"rotor", "session", "new"};
+    post(spec);
+    spec.body = {
+        {"seeds",                   ym_value{std::move(seeds)}},
+        {"includeTracksInResponse", ym_value{true}            }
+    };
+}
+
 } // namespace
 
 ym_status YM_CALL ym_wave_start(ym_client* client, ym_string_view seed,
     const ym_request_options* options, ym_request** out, ym_error* error) YM_NOEXCEPT
 {
     return ym::detail::start_api(
+        client, [&](auto& spec) { new_wave(spec, {ym_value{ym::detail::identifier(seed)}}); },
+        options, out, error
+    );
+}
+
+ym_status YM_CALL ym_wave_start_seeds(ym_client* client, const ym_string_view* seeds, size_t count,
+    const ym_request_options* options, ym_request** out, ym_error* error) YM_NOEXCEPT
+{
+    return ym::detail::start_api(
         client,
         [&](auto& spec) {
-            spec.path = {"rotor", "session", "new"};
-            post(spec);
-            spec.body = {
-                {"seeds",                   ym_value{ym_value::Array{ym_value{ym::detail::identifier(seed)}}}},
-                {"includeTracksInResponse", ym_value{true}                                                   }
-            };
+            if (!seeds || !count)
+                throw std::invalid_argument("At least one wave seed is required");
+            ym_value::Array values;
+            values.reserve(count);
+            for (size_t i = 0; i < count; ++i)
+                values.emplace_back(ym::detail::identifier(seeds[i]));
+            new_wave(spec, std::move(values));
         },
         options, out, error
     );

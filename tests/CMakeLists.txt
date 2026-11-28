@@ -539,3 +539,8 @@ add_test(
         $<TARGET_FILE:api_downloads>
 )
 ym_build_controls(api_downloads)
+
+add_executable(api_wave_seeds api.wave_seeds.cpp)
+target_link_libraries(api_wave_seeds PRIVATE ym_test_core)
+add_test(NAME api.wave_seeds COMMAND api_wave_seeds)
+ym_build_controls(api_wave_seeds)
